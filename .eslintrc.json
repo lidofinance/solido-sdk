@@ -1,0 +1,28 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": ["airbnb", "@lidofinance", "prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
+    "import/extensions": "off",
+    "import/no-mutable-exports": "off",
+    "react/prop-types": "off",
+    "react/destructuring-assignment": "off",
+    "react/require-default-props": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/function-component-definition": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "react/jsx-no-duplicate-props": ["error", { "ignoreCase": false }],
+    "jsx-a11y/anchor-is-valid": "off",
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "consistent-return": "off",
+    "no-bitwise": "off",
+    "no-nested-ternary": "off",
+    "no-restricted-syntax": "off",
+    "no-case-declarations": "off"
+  }
+}
