@@ -1,5 +1,1 @@
-function main() {
-  console.log('Hello rollup!');
-}
-
-export default main;
+export {default as LidoStakeBanner} from './banner';

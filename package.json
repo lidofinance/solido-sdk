@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc --init",
-    "build": "rollup -c ./rollup.config.ts"
+    "build": "rollup -c ./rollup.config.ts",
+    "docz:dev": "docz dev",
+    "docz:build": "docz build"
   },
   "repository": {
     "type": "git",
@@ -24,16 +26,19 @@
   },
   "homepage": "https://github.com/lidofinance/solido-sdk#readme",
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "@lidofinance/lido-ui": "^2.7.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "rollup": "^2.75.7",
     "typescript": "^4.7.4"
   },
   "devDependencies": {
+    "@emotion/core": "^10.1.1",
     "@lidofinance/eslint-config": "^0.0.2",
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
-    "eslint": "^8.18.0",
+    "docz": "^2.4.0",
+    "eslint": "^7.32.0",
     "prettier": "^2.7.1"
   }
 }
