@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import { Button, Box, Text, themeLight } from '@lidofinance/lido-ui';
 import LidoLogo from '../assets/lido-logo.inline.svg';
 import Background from '../assets/background.svg';
 import { ThemeProvider } from 'styled-components';
+import { getStakeApy, STATIC_DEFAULT_APY } from '../api/stakeApy';
 
 type Props = {
   referrerId: number;
 }
 
 const LidoStakeBanner: React.FC<Props> = () => {
+  const [apy, setApy] = useState(STATIC_DEFAULT_APY);
+
+  useEffect(() => {
+    getStakeApy()
+      .then((apy) => {
+        setApy(apy)
+      });
+  });
+
   return (
     <ThemeProvider theme={themeLight}>
       <style>{`
@@ -30,12 +40,11 @@ const LidoStakeBanner: React.FC<Props> = () => {
           <Box mb={12} />
 
           <Text style={{fontSize: 36}} strong>
-            5.71% APY + DeFi Yields
+            {`${apy} APY + DeFi Yields`}
           </Text>
           <Text size="sm">
             Stake SOL with Lido and receive stSOL while staking. <br/>
-            Put stSOL in to <strong>DeFI integrations</strong> and earn up to
-            <strong>231.34% APY</strong>
+            Put stSOL in to <strong>DeFI integrations</strong> and earn up to <strong>231.34% APY</strong>
           </Text>
         </Box>
 
