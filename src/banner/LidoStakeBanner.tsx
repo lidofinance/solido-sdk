@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Box, Text, themeLight, Link, useBreakpoint } from '@lidofinance/lido-ui';
+import { Button, Box, Text, Link, useBreakpoint } from '@lidofinance/lido-ui';
 
 import LidoLogo from '../assets/lido-logo.inline.svg';
 import Background from '../assets/background.svg';
@@ -7,6 +7,7 @@ import BackgroundVertical from '../assets/background_vertical.svg';
 
 import { getStakeApy, STATIC_DEFAULT_APY } from '../api/stakeApy';
 import { getStakeLink, getDefiLink } from '../utils/getLinkWIthReferrer';
+import { BannerWrapper } from './styles';
 
 export type Props = {
   /**
@@ -49,56 +50,43 @@ const LidoStakeBanner: React.FC<Props> = (props) => {
     : `url(${Background}) right center / cover`;
 
   return (
-    <>
-      <style>{`
-          @import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700);
-      `}</style>
-      <Box
-        px={isVertical ? 30 : 60}
-        py={40}
-        display="flex"
-        flexDirection={isVertical ? 'column' : 'row'}
-        justifyContent="space-between"
-        borderRadius={10}
-        color={themeLight.colors.secondary}
-        fontFamily="Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto"
-        background={background}
-        maxWidth={width}
-        style={{ boxSizing: 'border-box' }}
-      >
-        <Box mr={8}>
-          <LidoLogo />
+    <BannerWrapper
+      background={background}
+      maxWidth={width}
+      isVertical={isVertical}
+    >
+      <Box mr={8}>
+        <LidoLogo />
 
-          <Box mb={12} />
+        <Box mb={12} />
 
-          <Text style={{fontSize: 36}} strong>
-            {`${apy} APY + DeFi Yields`}
-          </Text>
-          <Text size="sm">
-            Stake SOL with Lido and receive stSOL while staking. <br/>
-            Put stSOL in to <strong>DeFI integrations</strong> and earn up to <strong>231.34% APY</strong>
-          </Text>
-        </Box>
-
-        {isVertical && <Box mb={20} />}
-
-        <Box display="flex" flexDirection="column" width={isVertical ? '100%' : 294}>
-          <Link href={stakeLink}>
-            <Button color="secondary" size="lg" fullwidth square>
-              Stake SOL
-            </Button>
-          </Link>
-
-          <Box mb={16} />
-
-          <Link href={defiLink}>
-            <Button variant="outlined" color="secondary" size="lg" fullwidth square>
-              Explore 30+ integrations
-            </Button>
-          </Link>
-        </Box>
+        <Text style={{fontSize: 36}} strong>
+          {`${apy} APY + DeFi Yields`}
+        </Text>
+        <Text size="sm">
+          Stake SOL with Lido and receive stSOL while staking. <br/>
+          Put stSOL in to <strong>DeFI integrations</strong> and earn up to <strong>231.34% APY</strong>
+        </Text>
       </Box>
-    </>
+
+      {isVertical && <Box mb={20} />}
+
+      <Box display="flex" flexDirection="column" justifyContent="center" width={isVertical ? '100%' : 294}>
+        <Link href={stakeLink}>
+          <Button color="secondary" size="lg" fullwidth square>
+            Stake SOL
+          </Button>
+        </Link>
+
+        <Box mb={16} />
+
+        <Link href={defiLink}>
+          <Button variant="outlined" color="secondary" size="lg" fullwidth square>
+            Explore 30+ integrations
+          </Button>
+        </Link>
+      </Box>
+    </BannerWrapper>
   );
 };
 
