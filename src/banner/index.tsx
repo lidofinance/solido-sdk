@@ -1,15 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { Button, Box, Text, themeLight } from '@lidofinance/lido-ui';
+import React, { useEffect, useState } from 'react';
+import { ThemeProvider } from 'styled-components';
+import { Button, Box, Text, themeLight, Link } from '@lidofinance/lido-ui';
+
 import LidoLogo from '../assets/lido-logo.inline.svg';
 import Background from '../assets/background.svg';
-import { ThemeProvider } from 'styled-components';
+import BackgroundVertical from '../assets/background_vertical.svg';
+
 import { getStakeApy, STATIC_DEFAULT_APY } from '../api/stakeApy';
+import { getStakeLink, getDefiLink } from '../utils/getLinkWIthReferrer';
 
 type Props = {
   referrerId: number;
+  variant?: 'horizontal' | 'vertical';
 }
 
-const LidoStakeBanner: React.FC<Props> = () => {
+const LidoStakeBanner: React.FC<Props> = (props) => {
+  const {referrerId, variant = 'horizontal'} = props;
+  const stakeLink = getStakeLink(referrerId);
+  const defiLink = getDefiLink(referrerId);
+
   const [apy, setApy] = useState(STATIC_DEFAULT_APY);
 
   useEffect(() => {
@@ -30,7 +39,7 @@ const LidoStakeBanner: React.FC<Props> = () => {
         display="flex"
         justifyContent="space-between"
         borderRadius={10}
-        color="#273852"
+        color={themeLight.colors.secondary}
         fontFamily="Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto"
         background={`url(${Background}) right center / cover`}
       >
@@ -48,16 +57,20 @@ const LidoStakeBanner: React.FC<Props> = () => {
           </Text>
         </Box>
 
-        <Box display="flex" flexDirection="column">
-          <Button color="secondary" size="lg">
-            Stake SOL
-          </Button>
+        <Box display="flex" flexDirection="column" width={294}>
+          <Link href={stakeLink}>
+            <Button color="secondary" size="lg" fullwidth>
+              Stake SOL
+            </Button>
+          </Link>
 
           <Box mb={16} />
 
-          <Button variant="outlined" color="secondary" size="lg">
-            Explore 30+ integrations
-          </Button>
+          <Link href={defiLink}>
+            <Button variant="outlined" color="secondary" size="lg" fullwidth>
+              Explore 30+ integrations
+            </Button>
+          </Link>
         </Box>
       </Box>
     </ThemeProvider>
