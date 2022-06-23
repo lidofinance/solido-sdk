@@ -55,15 +55,15 @@ const LidoStakeBanner: React.FC<Props> = (props) => {
       maxWidth={width}
       isVertical={isVertical}
     >
-      <Box mr={8}>
+      <Box mr={isVertical ? 0 : 8}>
         <LidoLogo />
 
         <Box mb={12} />
 
-        <Text style={{fontSize: 36}} strong>
+        <Text style={{fontSize: 36, lineHeight: '50px'}} strong>
           {`${apy} APY + DeFi Yields`}
         </Text>
-        <Text size="sm">
+        <Text size="sm" style={{lineHeight: '26px'}}>
           Stake SOL with Lido and receive stSOL while staking. <br/>
           Put stSOL in to <strong>DeFI integrations</strong> and earn up to <strong>231.34% APY</strong>
         </Text>
