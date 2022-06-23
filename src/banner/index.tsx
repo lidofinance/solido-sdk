@@ -12,4 +12,8 @@ const Wrapper: React.FC<Props> = (props) => {
   )
 }
 
+Wrapper.defaultProps = {
+  width: '335px',
+}
+
 export default Wrapper;

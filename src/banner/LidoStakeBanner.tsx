@@ -9,12 +9,15 @@ import { getStakeApy, STATIC_DEFAULT_APY } from '../api/stakeApy';
 import { getStakeLink, getDefiLink } from '../utils/getLinkWIthReferrer';
 
 export type Props = {
-  referrerId: number;
+  /**
+   * This is a pretty good description for this prop.
+   */
+  referrerId: string;
   direction: 'horizontal';
 } | {
-  referrerId: number;
+  referrerId: string;
   direction: 'vertical';
-  width?: string;
+  width: string;
 }
 
 const LidoStakeBanner: React.FC<Props> = (props) => {
@@ -63,7 +66,7 @@ const LidoStakeBanner: React.FC<Props> = (props) => {
         maxWidth={width}
         style={{ boxSizing: 'border-box' }}
       >
-        <Box>
+        <Box mr={8}>
           <LidoLogo />
 
           <Box mb={12} />
