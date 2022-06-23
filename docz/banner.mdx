@@ -4,14 +4,20 @@ route: /
 ---
 
 import { Playground, Props } from 'docz';
-import LidoStakeBanner from '../src/banner/index';
+import LidoStakeBanner from '../src/banner';
 
 ## Props
 
 <Props of={LidoStakeBanner} />
 
-## Basic usage
+## Horizontal mode
 
 <Playground>
-  <LidoStakeBanner referrerId="49AU2DtPxfyAUqCUEd6EvenES3sm3nrgLJqPgxGVgKae" />
+  <LidoStakeBanner referrerId="49AU2DtPxfyAUqCUEd6EvenES3sm3nrgLJqPgxGVgKae" direction="horizontal" />
+</Playground>
+
+## Vertical mode
+
+<Playground>
+  <LidoStakeBanner referrerId="49AU2DtPxfyAUqCUEd6EvenES3sm3nrgLJqPgxGVgKae" direction="vertical" />
 </Playground>
