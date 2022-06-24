@@ -34,7 +34,6 @@
     "typescript": "^4.7.4"
   },
   "devDependencies": {
-    "styled-components": "^5.3.5",
     "@emotion/core": "^10.1.1",
     "@lidofinance/eslint-config": "^0.0.2",
     "@types/react": "^18.0.14",
@@ -43,6 +42,7 @@
     "@types/styled-system": "^5.1.15",
     "docz": "^2.4.0",
     "eslint": "^7.32.0",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "styled-components": "^5.3.5"
   }
 }
