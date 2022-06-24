@@ -1,21 +1,3 @@
-<style>
-    .header {
-        display: flex;
-        align-items: center;
-        gap: 18px;
-        font-size: 30px;
-        width: 100%;
-        justify-content: center;
-    }
-</style>
-<div class="header">
-    <img src="./docz/assets/lido.svg" alt="Lido" />
-    &
-    <img src="./docz/assets/solana.svg" alt="Solana" />
-    =️
-    <img src="./docz/assets/stsol.svg" width="64" alt="StSOL" />
-</div>
-
 # Lido on Solana - Frontend SDK
 
 ### About us
