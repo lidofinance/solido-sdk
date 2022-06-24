@@ -12,13 +12,18 @@ import { BannerWrapper } from './styles';
 
 export type Props = {
   /**
-   * This is a pretty good description for this prop.
+   * Solana Referral Address, example 6She3Tz55nCFhkMzfrGZ194KrtJb6MapnWpK2fDfSbDM.
+   * Read more here https://help.lido.fi/en/articles/5847184-lido-referral-program-for-solana-integration-guide
    */
   referrerId: string;
   direction: 'horizontal';
 } | {
   referrerId: string;
   direction: 'vertical';
+  /**
+   * This option is for customizing width of vertical banner. Default and best fit value is 335px.
+   * For horizontal mode always 100%, use wrapper, if need limited.
+   */
   width: string;
 }
 
@@ -37,7 +42,7 @@ const LidoStakeBanner: React.FC<Props> = (props) => {
 
   useEffect(() => {
     if (direction === 'vertical') {
-      setWidth(props.width || '335px') // TODO, constants
+      setWidth(props.width);
     }
   }, [direction]);
 
