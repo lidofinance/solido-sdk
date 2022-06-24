@@ -6,6 +6,7 @@ import Background from '../assets/background.svg';
 import BackgroundVertical from '../assets/background_vertical.svg';
 
 import { getStakeApy, STATIC_DEFAULT_APY } from '../api/stakeApy';
+import { getDefiApy } from '../api/defiApy';
 import { getStakeLink, getDefiLink } from '../utils/getLinkWIthReferrer';
 import { BannerWrapper } from './styles';
 
@@ -23,8 +24,10 @@ export type Props = {
 
 const LidoStakeBanner: React.FC<Props> = (props) => {
   const {referrerId, direction} = props;
+
   const stakeLink = getStakeLink(referrerId);
   const defiLink = getDefiLink(referrerId);
+  const defiApy = getDefiApy();
 
   const [apy, setApy] = useState(STATIC_DEFAULT_APY);
   const [width, setWidth] = useState('100%');
@@ -65,7 +68,7 @@ const LidoStakeBanner: React.FC<Props> = (props) => {
         </Text>
         <Text size="sm" style={{lineHeight: '26px'}}>
           Stake SOL with Lido and receive stSOL while staking. <br/>
-          Put stSOL in to <strong>DeFI integrations</strong> and earn up to <strong>231.34% APY</strong>
+          Put stSOL in to <strong>DeFI integrations</strong> and earn up to <strong>{defiApy}% APY</strong>
         </Text>
       </Box>
 
