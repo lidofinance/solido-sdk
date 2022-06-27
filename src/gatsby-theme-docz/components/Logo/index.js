@@ -1,5 +1,5 @@
 import React from 'react'
-import StsolLogo from '@/assets/logo.inline.svg';
+import { ReactComponent as StsolLogo  } from '@/assets/logo.inline.svg';
 import { Box } from '@lidofinance/lido-ui';
 
 export const Logo = () => (

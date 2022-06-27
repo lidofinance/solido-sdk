@@ -3,7 +3,7 @@ name: Deploy RC version
 on:
   push:
     branches:
-      - main
+      - release-rc
 
 jobs:
   deploy:
