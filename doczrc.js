@@ -1,4 +1,6 @@
 export default {
   typescript: true,
-  ignore: ['README.md']
+  ignore: ['README.md'],
+  dest: '/docs',
+  base: '/solido-sdk',
 }
