@@ -30,10 +30,11 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
           npm publish --tag=latest
 
-      - name: Build Docz
-        run: npm run docz:build
-      - name: Deploy Docz
-        uses: JamesIves/github-pages-deploy-action@4.1.4
-        with:
-          branch: gh-pages
-          folder: .docz/dist
+#       TODO: return to it
+#      - name: Build Docz
+#        run: npm run docz:build
+#      - name: Deploy Docz
+#        uses: JamesIves/github-pages-deploy-action@4.1.4
+#        with:
+#          branch: gh-pages
+#          folder: .docz/dist
