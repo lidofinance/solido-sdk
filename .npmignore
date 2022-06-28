@@ -1,0 +1,13 @@
+.git
+.prettierrc
+.gitignore
+.github
+.idea
+.docz
+tsconfig.json
+rollup.config.ts
+src
+doczrc.js
+docz
+gatsby-config.js
+gatsby-node.js
