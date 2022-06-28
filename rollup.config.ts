@@ -40,6 +40,7 @@ export default {
     }),
     url({
       fileName: '[dirname][hash][extname]',
+      limit: 30720,
     }),
     svgr(),
   ],
