@@ -4,6 +4,7 @@ import { struct, u8, nu64 } from '@solana/buffer-layout';
 import BN from 'bn.js';
 
 import { Lamports } from '@/types';
+import { INSTRUCTIONS } from '@/constants';
 
 export const calculateReserveAccount = async (lidoAddress, programId) => {
   const bufferArray = [lidoAddress.toBuffer(), Buffer.from('reserve_account')];
@@ -21,7 +22,7 @@ const calculateMintAuthority = async (lidoAddress, programId) => {
   return mint[0];
 };
 
-type DepositInstructionProps = {
+export type DepositInstructionProps = {
   amount: Lamports;
   payerAddress: PublicKey,
   recipientStSolAddress: PublicKey,
@@ -30,7 +31,7 @@ type DepositInstructionProps = {
   stSolMintAddress: PublicKey;
 }
 
-type DepositInstructionStruct = {
+export type DepositInstructionStruct = {
   instruction: number;
   amount: BN;
 }
@@ -43,7 +44,7 @@ export const getDepositInstruction = async (props: DepositInstructionProps) => {
 
   dataLayout.encode(
     {
-      instruction: 1,
+      instruction: INSTRUCTIONS.STAKE,
       amount: amount.lamports,
     },
     data,
