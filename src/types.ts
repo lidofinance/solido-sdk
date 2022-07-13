@@ -17,4 +17,3 @@ export interface ProgramAddresses {
   solidoInstanceId: PublicKey;
   stSolMintAddress: PublicKey;
 }
-

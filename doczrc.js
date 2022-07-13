@@ -3,5 +3,5 @@ export default {
   ignore: ['README.md'],
   dest: '/docs',
   base: '/solido-sdk',
-  menu: ['Introduction', 'Banner']
-}
+  menu: ['Introduction', 'Banner'],
+};

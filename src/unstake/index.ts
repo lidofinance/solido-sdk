@@ -13,7 +13,14 @@ export const unstake = async (connection, payer, stSolAddress, amount, config) =
   const { blockhash } = await connection.getLatestBlockhash();
   transaction.recentBlockhash = blockhash;
 
-  const withdrawInstruction = await getWithdrawInstruction(amount, payer, stSolAddress, newStakeAccount, accountInfo, config);
+  const withdrawInstruction = await getWithdrawInstruction(
+    amount,
+    payer,
+    stSolAddress,
+    newStakeAccount,
+    accountInfo,
+    config,
+  );
   transaction.add(withdrawInstruction);
 
   const deactivateTransaction = StakeProgram.deactivate({

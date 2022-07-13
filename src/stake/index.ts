@@ -7,12 +7,12 @@ import { ensureTokenAccount } from './ensureTokenAccount';
 type StakeProps = {
   connection: Connection;
   amount: Lamports;
-  payerAddress: PublicKey,
-  recipientStSolAddress: PublicKey,
+  payerAddress: PublicKey;
+  recipientStSolAddress: PublicKey;
   solidoProgramId: PublicKey;
   solidoInstanceId: PublicKey;
   stSolMintAddress: PublicKey;
-}
+};
 
 export const stake = async (props: StakeProps) => {
   const { stSolMintAddress, connection, payerAddress } = props;

@@ -1,4 +1,10 @@
-import { PublicKey, StakeProgram, SystemProgram, SYSVAR_CLOCK_PUBKEY, TransactionInstruction } from '@solana/web3.js';
+import {
+  PublicKey,
+  StakeProgram,
+  SystemProgram,
+  SYSVAR_CLOCK_PUBKEY,
+  TransactionInstruction,
+} from '@solana/web3.js';
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { nu64, struct, u8 } from '@solana/buffer-layout';
 import { DepositInstructionStruct } from '@/stake/getDepositInstruction';

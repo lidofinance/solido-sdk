@@ -24,20 +24,21 @@ const calculateMintAuthority = async (lidoAddress, programId) => {
 
 export type DepositInstructionProps = {
   amount: Lamports;
-  payerAddress: PublicKey,
-  recipientStSolAddress: PublicKey,
+  payerAddress: PublicKey;
+  recipientStSolAddress: PublicKey;
   solidoProgramId: PublicKey;
   solidoInstanceId: PublicKey;
   stSolMintAddress: PublicKey;
-}
+};
 
 export type DepositInstructionStruct = {
   instruction: number;
   amount: BN;
-}
+};
 
 export const getDepositInstruction = async (props: DepositInstructionProps) => {
-  const { amount, payerAddress, recipientStSolAddress, solidoProgramId, stSolMintAddress, solidoInstanceId } = props;
+  const { amount, payerAddress, recipientStSolAddress, solidoProgramId, stSolMintAddress, solidoInstanceId } =
+    props;
 
   const dataLayout = struct<DepositInstructionStruct>([u8('instruction'), nu64('amount')]);
   const data = Buffer.alloc(dataLayout.span);

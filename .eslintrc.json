@@ -23,6 +23,12 @@
     "no-bitwise": "off",
     "no-nested-ternary": "off",
     "no-restricted-syntax": "off",
-    "no-case-declarations": "off"
+    "no-case-declarations": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
   }
 }
