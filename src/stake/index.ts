@@ -1,21 +1,21 @@
 import { Connection, PublicKey, Transaction } from '@solana/web3.js';
 import { Lamports } from '@/types';
 
-import { getDepositInstruction } from './getDepositInstruction';
 import { ensureTokenAccount } from './ensureTokenAccount';
+import { SolidoSDK } from '@/index';
+
+export * from './getDepositInstruction';
 
 type StakeProps = {
   connection: Connection;
   amount: Lamports;
   payerAddress: PublicKey;
   recipientStSolAddress: PublicKey;
-  solidoProgramId: PublicKey;
-  solidoInstanceId: PublicKey;
-  stSolMintAddress: PublicKey;
 };
 
-export const stake = async (props: StakeProps) => {
-  const { stSolMintAddress, connection, payerAddress } = props;
+export async function stake(this: SolidoSDK, props: StakeProps) {
+  const { connection, payerAddress } = props;
+  const { stSolMintAddress } = this.programAddresses;
 
   const transaction = new Transaction({ feePayer: payerAddress });
   const { blockhash } = await connection.getLatestBlockhash();
@@ -27,7 +27,7 @@ export const stake = async (props: StakeProps) => {
     recipient = await ensureTokenAccount(transaction, payerAddress, stSolMintAddress);
   }
 
-  const depositInstruction = await getDepositInstruction({
+  const depositInstruction = await this.getDepositInstruction({
     ...props,
     recipientStSolAddress: recipient,
   });

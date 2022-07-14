@@ -7,9 +7,10 @@ import {
 } from '@solana/web3.js';
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { nu64, struct, u8 } from '@solana/buffer-layout';
-import { DepositInstructionStruct } from '@/stake/getDepositInstruction';
-import { INSTRUCTIONS } from '@/constants';
 import BN from 'bn.js';
+
+import { INSTRUCTIONS } from '@/constants';
+import { InstructionStruct } from '@/types';
 
 export const calculateStakeAuthority = async (lidoAddress, programId) => {
   const bufferArray = [lidoAddress.toBuffer(), Buffer.from('stake_authority')];
@@ -103,7 +104,7 @@ export const getWithdrawInstruction = async (
   config,
 ) => {
   const { programId } = config;
-  const dataLayout = struct<DepositInstructionStruct>([u8('instruction'), nu64('amount')]);
+  const dataLayout = struct<InstructionStruct>([u8('instruction'), nu64('amount')]);
 
   const data = Buffer.alloc(dataLayout.span);
   dataLayout.encode(

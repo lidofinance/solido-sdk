@@ -1,46 +1,31 @@
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { PublicKey, SystemProgram, TransactionInstruction } from '@solana/web3.js';
 import { struct, u8, nu64 } from '@solana/buffer-layout';
-import BN from 'bn.js';
 
-import { Lamports } from '@/types';
+import { InstructionStruct, Lamports } from '@/types';
 import { INSTRUCTIONS } from '@/constants';
+import { SolidoSDK } from '@/index';
 
-export const calculateReserveAccount = async (lidoAddress, programId) => {
-  const bufferArray = [lidoAddress.toBuffer(), Buffer.from('reserve_account')];
-
-  const reserve = await PublicKey.findProgramAddress(bufferArray, programId);
-
-  return reserve[0];
-};
-
-const calculateMintAuthority = async (lidoAddress, programId) => {
-  const bufferArray = [lidoAddress.toBuffer(), Buffer.from('mint_authority')];
-
-  const mint = await PublicKey.findProgramAddress(bufferArray, programId);
-
-  return mint[0];
-};
-
-export type DepositInstructionProps = {
+type DepositInstructionProps = {
   amount: Lamports;
   payerAddress: PublicKey;
   recipientStSolAddress: PublicKey;
-  solidoProgramId: PublicKey;
-  solidoInstanceId: PublicKey;
-  stSolMintAddress: PublicKey;
 };
 
-export type DepositInstructionStruct = {
-  instruction: number;
-  amount: BN;
-};
+export async function findProgramAddress(this: SolidoSDK, bufferFrom: 'reserve_account' | 'mint_authority') {
+  const { solidoInstanceId, solidoProgramId } = this.programAddresses;
+  const bufferArray = [solidoInstanceId.toBuffer(), Buffer.from(bufferFrom)];
 
-export const getDepositInstruction = async (props: DepositInstructionProps) => {
-  const { amount, payerAddress, recipientStSolAddress, solidoProgramId, stSolMintAddress, solidoInstanceId } =
-    props;
+  const programAddress = await PublicKey.findProgramAddress(bufferArray, solidoProgramId);
 
-  const dataLayout = struct<DepositInstructionStruct>([u8('instruction'), nu64('amount')]);
+  return programAddress[0];
+}
+
+export async function getDepositInstruction(this: SolidoSDK, props: DepositInstructionProps) {
+  const { amount, payerAddress, recipientStSolAddress } = props;
+  const { solidoProgramId, stSolMintAddress, solidoInstanceId } = this.programAddresses;
+
+  const dataLayout = struct<InstructionStruct>([u8('instruction'), nu64('amount')]);
   const data = Buffer.alloc(dataLayout.span);
 
   dataLayout.encode(
@@ -51,27 +36,15 @@ export const getDepositInstruction = async (props: DepositInstructionProps) => {
     data,
   );
 
-  const reserveAccount = await calculateReserveAccount(solidoInstanceId, solidoProgramId);
+  const reserveAccount = await this.findProgramAddress('reserve_account');
 
-  const mintAuthority = await calculateMintAuthority(solidoInstanceId, solidoProgramId);
+  const mintAuthority = await this.findProgramAddress('mint_authority');
 
   const keys = [
-    {
-      pubkey: solidoInstanceId,
-      isSigner: false,
-      isWritable: true,
-    },
+    { pubkey: solidoInstanceId, isSigner: false, isWritable: true, },
     { pubkey: payerAddress, isSigner: true, isWritable: true },
-    {
-      pubkey: recipientStSolAddress,
-      isSigner: false,
-      isWritable: true,
-    },
-    {
-      pubkey: stSolMintAddress,
-      isSigner: false,
-      isWritable: true,
-    },
+    { pubkey: recipientStSolAddress, isSigner: false, isWritable: true, },
+    { pubkey: stSolMintAddress, isSigner: false, isWritable: true, },
     { pubkey: reserveAccount, isSigner: false, isWritable: true },
     { pubkey: mintAuthority, isSigner: false, isWritable: false },
     { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },

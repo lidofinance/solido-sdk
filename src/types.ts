@@ -9,11 +9,13 @@ export class Lamports {
   }
 }
 
-/**
- * Program addresses for the program deployment
- */
 export interface ProgramAddresses {
   solidoProgramId: PublicKey;
   solidoInstanceId: PublicKey;
   stSolMintAddress: PublicKey;
 }
+
+export type InstructionStruct = {
+  instruction: number;
+  amount: BN;
+};
