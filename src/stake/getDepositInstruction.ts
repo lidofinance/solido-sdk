@@ -12,7 +12,7 @@ type DepositInstructionProps = {
   recipientStSolAddress: PublicKey;
 };
 
-export async function findProgramAddress(this: SolidoSDK, bufferFrom: 'reserve_account' | 'mint_authority') {
+export async function findProgramAddress(this: SolidoSDK, bufferFrom: 'reserve_account' | 'mint_authority' | 'stake_authority') {
   const { solidoInstanceId, solidoProgramId } = this.programAddresses;
   const bufferArray = [solidoInstanceId.toBuffer(), Buffer.from(bufferFrom)];
 
