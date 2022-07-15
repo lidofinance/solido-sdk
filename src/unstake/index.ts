@@ -1,45 +1,26 @@
-import { Keypair, PublicKey, StakeProgram, Transaction } from '@solana/web3.js';
-import { getAccountInfo } from './getAccountInfo';
-import { Lamports } from '@/types';
+import { Transaction } from '@solana/web3.js';
 import { SolidoSDK } from '@/index';
+import { SignerWalletAdapter } from '@solana/wallet-adapter-base';
 
 export * from './getWithdrawInstruction';
+export * from './getUnStakeTransaction';
+export * from './getAccountInfo';
 
 type UnStakeProps = {
-  amount: Lamports;
-  payerAddress: PublicKey;
-  senderStSolAccountAddress: PublicKey;
+  transaction: Transaction;
+  wallet: SignerWalletAdapter;
 };
 
 export async function unStake(this: SolidoSDK, props: UnStakeProps) {
-  const { solidoInstanceId } = this.programAddresses;
-  const { senderStSolAccountAddress, payerAddress, amount } = props;
+  const { transaction, wallet } = props;
 
-  const accountInfo = await getAccountInfo(this.connection, solidoInstanceId);
+  const signed = await wallet.signTransaction(transaction);
 
-  const newStakeAccount = Keypair.generate();
+  const transactionHash = await this.connection.sendRawTransaction(signed.serialize());
 
-  const transaction = new Transaction({ feePayer: payerAddress });
-  const { blockhash } = await this.connection.getLatestBlockhash();
-  transaction.recentBlockhash = blockhash;
+  const { value: status } = await this.connection.confirmTransaction(transactionHash);
 
-  const withdrawInstruction = await this.getWithdrawInstruction(
-    amount,
-    payerAddress,
-    senderStSolAccountAddress,
-    newStakeAccount,
-    accountInfo
-  );
-  transaction.add(withdrawInstruction);
-
-  const deactivateTransaction = StakeProgram.deactivate({
-    authorizedPubkey: payerAddress,
-    stakePubkey: newStakeAccount.publicKey,
-  });
-
-  transaction.add(...deactivateTransaction.instructions);
-
-  transaction.partialSign(newStakeAccount);
-
-  return { transaction, stakeAccountAddress: newStakeAccount.publicKey };
-};
+  if (status?.err) {
+    throw status.err;
+  }
+}

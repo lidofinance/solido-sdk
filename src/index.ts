@@ -8,7 +8,7 @@ import {
 } from '@/stake';
 import { ProgramAddresses } from '@/types';
 import { clusterProgramAddresses } from '@/constants';
-import { getWithdrawInstruction, unStake } from '@/unstake';
+import { getWithdrawInstruction, getUnStakeTransaction, getAccountInfo, unStake } from '@/unstake';
 
 export { default as LidoStakeBanner } from './banner';
 
@@ -31,5 +31,7 @@ export class SolidoSDK {
 
   // UnStaking functions
   public unStake = unStake.bind(this);
-  public getWithdrawInstruction = getWithdrawInstruction.bind(this);
+  public getUnStakeTransaction = getUnStakeTransaction.bind(this);
+  protected getWithdrawInstruction = getWithdrawInstruction.bind(this);
+  protected getAccountInfo = getAccountInfo.bind(this);
 }

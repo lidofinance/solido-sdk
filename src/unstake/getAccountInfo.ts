@@ -1,6 +1,8 @@
 import { deserializeUnchecked } from 'borsh';
 
-class Lido {
+import { SolidoSDK } from '@/index';
+
+export class Lido {
   constructor(data) {
     Object.assign(this, data);
   }
@@ -30,7 +32,7 @@ const LamportsHistogram = Lido;
 
 const WithdrawMetric = Lido;
 
-export const getAccountInfo = async (connection, lidoAddress) => {
+export async function getAccountInfo(this: SolidoSDK) {
   const schema = new Map([
     [
       ExchangeRate,
@@ -211,8 +213,11 @@ export const getAccountInfo = async (connection, lidoAddress) => {
     ],
   ]);
 
-  const accountInfo = await connection.getAccountInfo(lidoAddress);
+  const { solidoInstanceId } = this.programAddresses;
 
+  const accountInfo = await this.connection.getAccountInfo(solidoInstanceId);
+
+  // @ts-ignore TODO fix
   const deserializedAccountInfo = deserializeUnchecked(schema, Lido, accountInfo.data);
 
   return deserializedAccountInfo;
