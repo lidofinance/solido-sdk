@@ -221,4 +221,4 @@ export async function getAccountInfo(this: SolidoSDK) {
   const deserializedAccountInfo = deserializeUnchecked(schema, Lido, accountInfo.data);
 
   return deserializedAccountInfo;
-};
+}

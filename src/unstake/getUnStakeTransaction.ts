@@ -9,33 +9,31 @@ type UnStakeTransactionProps = {
 };
 
 export async function getUnStakeTransaction(this: SolidoSDK, props: UnStakeTransactionProps) {
-  const { senderStSolAccountAddress, payerAddress, amount } = props;
-
-  const accountInfo = await this.getAccountInfo();
+  const { payerAddress } = props;
 
   const newStakeAccount = Keypair.generate();
+  const newStakeAccountPubkey = newStakeAccount.publicKey;
 
   const transaction = new Transaction({ feePayer: payerAddress });
   const { blockhash } = await this.connection.getLatestBlockhash();
   transaction.recentBlockhash = blockhash;
 
   const withdrawInstruction = await this.getWithdrawInstruction(
-    amount,
-    payerAddress,
-    senderStSolAccountAddress,
-    newStakeAccount,
-    accountInfo
+    {
+      ...props,
+      stakeAccount: newStakeAccountPubkey,
+    }
   );
   transaction.add(withdrawInstruction);
 
   const deactivateTransaction = StakeProgram.deactivate({
     authorizedPubkey: payerAddress,
-    stakePubkey: newStakeAccount.publicKey,
+    stakePubkey: newStakeAccountPubkey,
   });
 
   transaction.add(...deactivateTransaction.instructions);
 
   transaction.partialSign(newStakeAccount);
 
-  return { transaction, stakeAccountAddress: newStakeAccount.publicKey };
+  return { transaction, stakeAccountAddress: newStakeAccountPubkey };
 };

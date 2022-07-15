@@ -7,12 +7,12 @@ import {
 } from '@solana/web3.js';
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { nu64, struct, u8 } from '@solana/buffer-layout';
-import BN from 'bn.js';
 
 import { INSTRUCTIONS } from '@/constants';
-import { InstructionStruct } from '@/types';
+import { InstructionStruct, Lamports } from "@/types";
 import { SolidoSDK } from '@/index';
 
+// TODO typings
 export const calculateStakeAccountAddress = async (solidoInstanceId, programId, validatorVoteAccount, seed) => {
   const bufferArray = [
     solidoInstanceId.toBuffer(),
@@ -26,6 +26,7 @@ export const calculateStakeAccountAddress = async (solidoInstanceId, programId, 
   return stakeAccountAddress;
 };
 
+// TODO typings for validatorEntries
 export const getHeaviestValidator = (validatorEntries) => {
   const sortedValidatorEntries = validatorEntries.sort(
     ({ entry: validatorA }, { entry: validatorB }) =>
@@ -35,14 +36,17 @@ export const getHeaviestValidator = (validatorEntries) => {
   return sortedValidatorEntries[0];
 };
 
-export async function getWithdrawInstruction(
-  this: SolidoSDK,
-  amount,
-  payer,
-  senderStSolAccountAddress,
-  stakeAccount,
-  accountInfo,
-) {
+type WithdrawInstructionProps = {
+  amount: Lamports;
+  payerAddress: PublicKey;
+  senderStSolAccountAddress: PublicKey;
+  stakeAccount: PublicKey;
+};
+
+export async function getWithdrawInstruction(this: SolidoSDK, props: WithdrawInstructionProps) {
+  const { senderStSolAccountAddress, payerAddress, amount, stakeAccount } = props;
+  const accountInfo = await this.getAccountInfo();
+
   const { solidoProgramId, stSolMintAddress, solidoInstanceId } = this.programAddresses;
   const dataLayout = struct<InstructionStruct>([u8('instruction'), nu64('amount')]);
 
@@ -50,12 +54,14 @@ export async function getWithdrawInstruction(
   dataLayout.encode(
     {
       instruction: INSTRUCTIONS.UNSTAKE,
-      amount: new BN(amount),
+      // TODO find out, what the lamports are
+      amount: amount.lamports,
     },
     data,
   );
 
   const stakeAuthority = await this.findProgramAddress('stake_authority');
+  // @ts-ignore TODO fix typings
   const validator = getHeaviestValidator(accountInfo.validators.entries);
 
   const validatorStakeAccount = await calculateStakeAccountAddress(
@@ -67,7 +73,7 @@ export async function getWithdrawInstruction(
 
   const keys = [
     { pubkey: solidoInstanceId, isSigner: false, isWritable: true, },
-    { pubkey: payer, isSigner: true, isWritable: false },
+    { pubkey: payerAddress, isSigner: true, isWritable: false },
     { pubkey: senderStSolAccountAddress, isSigner: false, isWritable: true, },
     { pubkey: stSolMintAddress, isSigner: false, isWritable: true, },
     { pubkey: new PublicKey(validator.pubkey.toArray('le')), isSigner: false, isWritable: false, },
