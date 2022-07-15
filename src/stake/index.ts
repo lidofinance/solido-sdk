@@ -1,36 +1,26 @@
-import { PublicKey, Transaction } from '@solana/web3.js';
-import { Lamports } from '@/types';
+import { Transaction } from '@solana/web3.js';
+import { SignerWalletAdapter } from '@solana/wallet-adapter-base';
 
-import { ensureTokenAccount } from './ensureTokenAccount';
 import { SolidoSDK } from '@/index';
 
 export * from './getDepositInstruction';
+export * from './getStakeTransaction';
 
 type StakeProps = {
-  amount: Lamports;
-  payerAddress: PublicKey;
-  recipientStSolAddress: PublicKey;
+  transaction: Transaction;
+  wallet: SignerWalletAdapter;
 };
 
 export async function stake(this: SolidoSDK, props: StakeProps) {
-  const { payerAddress, recipientStSolAddress } = props;
-  const { stSolMintAddress } = this.programAddresses;
+  const { transaction, wallet } = props;
 
-  const transaction = new Transaction({ feePayer: payerAddress });
-  const { blockhash } = await this.connection.getLatestBlockhash();
-  transaction.recentBlockhash = blockhash;
+  const signed = await wallet.signTransaction(transaction);
 
-  let recipient = recipientStSolAddress;
+  const transactionHash = await this.connection.sendRawTransaction(signed.serialize());
 
-  if (!recipient) {
-    recipient = await ensureTokenAccount(transaction, payerAddress, stSolMintAddress);
+  const { value: status } = await this.connection.confirmTransaction(transactionHash);
+
+  if (status?.err) {
+    throw status.err;
   }
-
-  const depositInstruction = await this.getDepositInstruction({
-    ...props,
-    recipientStSolAddress: recipient,
-  });
-  transaction.add(depositInstruction);
-
-  return transaction;
-};
+}
