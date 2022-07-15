@@ -6,6 +6,13 @@ export const INSTRUCTIONS = {
   UNSTAKE: 2,
 };
 
+export enum TX_STAGE {
+  AWAITING_SIGNING = 1,
+  AWAITING_BLOCK = 2,
+  SUCCESS = 3,
+  ERROR = 4,
+}
+
 export const MAINNET_PROGRAM_ADDRESSES: ProgramAddresses = {
   solidoProgramId: new PublicKey('CrX7kMhLC3cSsXJdT7JDgqrRVWGnUpX3gfEfxxU2NVLi'),
   solidoInstanceId: new PublicKey('49Yi1TKkNyYjPAFdR9LBvoHcUjuPX4Df5T5yv39w2XTn'),

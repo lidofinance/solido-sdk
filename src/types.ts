@@ -1,5 +1,8 @@
 import BN from 'bn.js';
-import { PublicKey } from '@solana/web3.js';
+import { PublicKey, Transaction } from '@solana/web3.js';
+import { SignerWalletAdapter } from '@solana/wallet-adapter-base';
+
+import { TX_STAGE } from '@/constants';
 
 export class Lamports {
   lamports: BN;
@@ -8,6 +11,12 @@ export class Lamports {
     this.lamports = new BN(lamports);
   }
 }
+
+export type SignAndConfirmTransactionProps = {
+  transaction: Transaction;
+  wallet: SignerWalletAdapter;
+  setTxStage?: (txStage: TX_STAGE) => void;
+};
 
 export interface ProgramAddresses {
   solidoProgramId: PublicKey;
