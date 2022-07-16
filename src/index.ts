@@ -1,6 +1,6 @@
 import { Cluster, Connection, TransactionSignature } from '@solana/web3.js';
 
-import { findProgramAddress, getDepositInstruction, getStakeTransaction } from '@/stake';
+import { findProgramAddress, getDepositInstruction, getStakeTransaction, calculateMaxStakeAmount } from '@/stake';
 import { ProgramAddresses, SignAndConfirmTransactionProps } from '@/types';
 import { clusterProgramAddresses, TX_STAGE } from '@/constants';
 import { getAccountInfo, getUnStakeTransaction, getWithdrawInstruction } from '@/unstake';
@@ -45,6 +45,7 @@ export class SolidoSDK {
   // Staking functions
   public stake = this.signAndConfirmTransaction;
   public getStakeTransaction = getStakeTransaction.bind(this);
+  public calculateMaxStakeAmount = calculateMaxStakeAmount.bind(this);
   protected findProgramAddress = findProgramAddress.bind(this);
   protected getDepositInstruction = getDepositInstruction.bind(this);
 
