@@ -1,6 +1,7 @@
 import { Keypair, PublicKey, StakeProgram, Transaction } from '@solana/web3.js';
 import { Lamports } from '@/types';
 import { SolidoSDK } from '@/index';
+import { solToLamports } from '@/utils/formatters';
 
 type UnStakeTransactionProps = {
   amount: Lamports;
@@ -9,7 +10,12 @@ type UnStakeTransactionProps = {
 };
 
 export async function getUnStakeTransaction(this: SolidoSDK, props: UnStakeTransactionProps) {
-  const { payerAddress } = props;
+  const { payerAddress, amount } = props;
+
+  const maxInLamports = await this.calculateMaxStakeAmount(payerAddress);
+  if (solToLamports(amount) > maxInLamports) {
+    throw new Error('Insufficient balance');
+  }
 
   const newStakeAccount = Keypair.generate();
   const newStakeAccountPubkey = newStakeAccount.publicKey;
