@@ -24,3 +24,5 @@ export const clusterProgramAddresses: Record<Cluster, ProgramAddresses> = {
   devnet: MAINNET_PROGRAM_ADDRESSES, // TODO change
   testnet: MAINNET_PROGRAM_ADDRESSES, // TODO change
 }
+
+export const MEMO_PROGRAM_ID = new PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr');

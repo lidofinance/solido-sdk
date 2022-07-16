@@ -10,10 +10,12 @@ export { default as LidoStakeBanner } from './banner';
 export class SolidoSDK {
   programAddresses: ProgramAddresses;
   connection: Connection;
+  referrerId?: string;
 
-  constructor(cluster: Cluster, connection: Connection) {
+  constructor(cluster: Cluster, connection: Connection, referrerId?: string) {
     this.programAddresses = clusterProgramAddresses[cluster];
     this.connection = connection;
+    this.referrerId = referrerId;
   }
 
   private async signAndConfirmTransaction(props: SignAndConfirmTransactionProps): Promise<TransactionSignature | undefined> {

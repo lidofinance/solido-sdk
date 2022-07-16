@@ -4,6 +4,7 @@ import { Lamports } from '@/types';
 import { ensureTokenAccount } from './ensureTokenAccount';
 import { SolidoSDK } from '@/index';
 import { solToLamports } from '@/utils/formatters';
+import { getMemoInstruction } from '@/utils/memo';
 
 type StakeTransactionProps = {
   amount: Lamports;
@@ -36,6 +37,12 @@ export async function getStakeTransaction(this: SolidoSDK, props: StakeTransacti
     recipientStSolAddress: recipient,
   });
   transaction.add(depositInstruction);
+
+  // Add the referrer (if available) to a memo instruction with the transaction
+  const memoData = this.referrerId;
+  if (memoData) {
+    transaction.add(getMemoInstruction({ referrer: memoData }, payerAddress));
+  }
 
   return transaction;
 }
