@@ -3,8 +3,8 @@ import { Lamports } from '@/types';
 
 import { ensureTokenAccount } from './ensureTokenAccount';
 import { SolidoSDK } from '@/index';
-import { solToLamports } from '@/utils/formatters';
 import { getMemoInstruction } from '@/utils/memo';
+import { checkMaxExceed } from '@/utils/checkMaxExceed';
 
 type StakeTransactionProps = {
   amount: Lamports;
@@ -17,10 +17,7 @@ export async function getStakeTransaction(this: SolidoSDK, props: StakeTransacti
   const { stSolMintAddress } = this.programAddresses;
 
   const maxInLamports = await this.calculateMaxStakeAmount(payerAddress);
-
-  if (solToLamports(amount) > maxInLamports) {
-    throw new Error('Insufficient balance');
-  }
+  checkMaxExceed(amount, maxInLamports);
 
   const transaction = new Transaction({ feePayer: payerAddress });
   const { blockhash } = await this.connection.getLatestBlockhash();
