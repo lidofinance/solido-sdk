@@ -1,5 +1,5 @@
 import { PublicKey } from '@solana/web3.js';
-import { SolidoSDK } from "@/index";
+import { SolidoSDK } from '@/index';
 
 export async function calculateMaxStakeAmount(this: SolidoSDK, address: PublicKey) {
   const { feeCalculator: { lamportsPerSignature: fee } } = await this.connection.getRecentBlockhash();

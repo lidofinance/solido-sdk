@@ -3,7 +3,7 @@ import { Cluster, Connection, TransactionSignature } from '@solana/web3.js';
 import { findProgramAddress, getDepositInstruction, getStakeTransaction, calculateMaxStakeAmount } from '@/stake';
 import { ProgramAddresses, SignAndConfirmTransactionProps } from '@/types';
 import { clusterProgramAddresses, TX_STAGE } from '@/constants';
-import { getAccountInfo, getUnStakeTransaction, getWithdrawInstruction } from '@/unstake';
+import { getAccountInfo, getUnStakeTransaction, getWithdrawInstruction, calculateMaxUnStakeAmount, calculateStakeAccountAddress } from '@/unstake';
 
 export { default as LidoStakeBanner } from './banner';
 
@@ -53,6 +53,8 @@ export class SolidoSDK {
   // UnStaking functions
   public unStake = this.signAndConfirmTransaction;
   public getUnStakeTransaction = getUnStakeTransaction.bind(this);
+  public calculateMaxUnStakeAmount = calculateMaxUnStakeAmount.bind(this);
   protected getWithdrawInstruction = getWithdrawInstruction.bind(this);
   protected getAccountInfo = getAccountInfo.bind(this);
+  protected calculateStakeAccountAddress = calculateStakeAccountAddress.bind(this);
 }
