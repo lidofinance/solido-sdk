@@ -28,3 +28,24 @@ export type InstructionStruct = {
   instruction: number;
   amount: BN;
 };
+
+type ApiError = {
+  code: string;
+  msg: string;
+};
+
+export type SolApiPriceResponse<K extends string> = SolApiResponse<K, {
+  symbol: string;
+  symbolNotFormatted: string;
+  priceUsd: number;
+}>
+
+export type SolApiResponse<K extends string, T extends Record<string, any>> = {
+  batchData: {
+    [key in K]: T;
+  };
+  batchError: Record<string, ApiError>;
+  error: ApiError & {
+    detail: string;
+  };
+}

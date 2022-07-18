@@ -1,12 +1,15 @@
 import { Cluster, Connection, TransactionSignature } from '@solana/web3.js';
 
-import { findProgramAddress, getDepositInstruction, getStakeTransaction, calculateMaxStakeAmount } from '@/stake';
 import { ProgramAddresses, SignAndConfirmTransactionProps } from '@/types';
 import { clusterProgramAddresses, TX_STAGE } from '@/constants';
+
+import { findProgramAddress, getDepositInstruction, getStakeTransaction, calculateMaxStakeAmount } from '@/stake';
 import { getAccountInfo, getUnStakeTransaction, getWithdrawInstruction, calculateMaxUnStakeAmount, calculateStakeAccountAddress } from '@/unstake';
+
 import { getExchangeRate } from '@/statistics/getExchangeRate';
 import { getTotalStaked } from '@/statistics/getTotalStaked';
 import { getStakersCount } from '@/statistics/getStakersCount';
+import { getTransactionCost } from '@/statistics/getTransactionCost';
 
 export { default as LidoStakeBanner } from './banner';
 
@@ -68,4 +71,5 @@ export class SolidoSDK {
   public getExchangeRate = getExchangeRate.bind(this);
   public getTotalStaked = getTotalStaked.bind(this);
   public getStakersCount = getStakersCount.bind(this);
+  public getTransactionCost = getTransactionCost.bind(this);
 }

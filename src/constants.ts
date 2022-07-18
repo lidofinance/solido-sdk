@@ -1,9 +1,9 @@
 import { PublicKey, Cluster } from '@solana/web3.js';
 import { ProgramAddresses } from '@/types';
 
-export const INSTRUCTIONS = {
-  STAKE: 1,
-  UNSTAKE: 2,
+export enum INSTRUCTIONS {
+  STAKE = 1,
+  UNSTAKE = 2,
 };
 
 export enum TX_STAGE {
@@ -26,3 +26,5 @@ export const clusterProgramAddresses: Record<Cluster, ProgramAddresses> = {
 }
 
 export const MEMO_PROGRAM_ID = new PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr');
+
+export const SOL_API_HOST = 'https://sol-api.infra-staging.org';
