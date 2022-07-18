@@ -15,5 +15,6 @@ export async function getExchangeRate(this: SolidoSDK, precision: number = 4) {
   return {
     SOLToStSOL: toPrecision(SOLToStSOL, precision),
     stSOLToSOL: toPrecision(stSOLToSOL, precision),
+    description: 'Updates at the end of an epoch. Rising exchange rate indicates an appreciation in stSOL value',
   };
 }
