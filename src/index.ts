@@ -5,6 +5,7 @@ import { ProgramAddresses, SignAndConfirmTransactionProps } from '@/types';
 import { clusterProgramAddresses, TX_STAGE } from '@/constants';
 import { getAccountInfo, getUnStakeTransaction, getWithdrawInstruction, calculateMaxUnStakeAmount, calculateStakeAccountAddress } from '@/unstake';
 import { getExchangeRate } from '@/statistics/getExchangeRate';
+import { getTotalStaked } from '@/statistics/getTotalStaked';
 
 export { default as LidoStakeBanner } from './banner';
 
@@ -64,4 +65,5 @@ export class SolidoSDK {
 
   // Statistics
   public getExchangeRate = getExchangeRate.bind(this);
+  public getTotalStaked = getTotalStaked.bind(this);
 }
