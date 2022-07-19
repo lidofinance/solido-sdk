@@ -7,13 +7,17 @@ import { findProgramAddress, getDepositInstruction, getStakeTransaction, calcula
 import { getAccountInfo, getUnStakeTransaction, getWithdrawInstruction, calculateMaxUnStakeAmount, calculateStakeAccountAddress } from '@/unstake';
 
 import { getExchangeRate } from '@/statistics/getExchangeRate';
-import { getTotalStaked } from '@/statistics/getTotalStaked';
-import { getStakersCount } from '@/statistics/getStakersCount';
 import { getTransactionCost } from '@/statistics/getTransactionCost';
 import { getStakingRewardsFee } from '@/statistics/getStakingRewardsFee';
 import { getTransactionInfo } from '@/statistics/transactionInfo';
 
+import { getTotalStaked } from '@/statistics/getTotalStaked';
+import { getStakersCount } from '@/statistics/getStakersCount';
+import { getMarketCap } from '@/statistics/getMarketCap';
+import { getLidoStatistics } from '@/statistics/lidoStatistics';
+
 export { default as LidoStakeBanner } from './banner';
+export { getStakeApy } from '@/api/stakeApy';
 
 export class SolidoSDK {
   programAddresses: ProgramAddresses;
@@ -76,6 +80,8 @@ export class SolidoSDK {
   public getStakingRewardsFee = getStakingRewardsFee.bind(this);
 
   // Statistics
+  public getLidoStatistics = getLidoStatistics.bind(this);
   public getTotalStaked = getTotalStaked.bind(this);
   public getStakersCount = getStakersCount.bind(this);
+  public getMarketCap = getMarketCap.bind(this);
 }

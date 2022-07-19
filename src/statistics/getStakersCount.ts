@@ -49,7 +49,7 @@ export async function getStakersCount(this: SolidoSDK) {
   const accountsEmpty = await countAccounts(this.connection, [filterSize, filterMint, filterEmpty]);
 
   return {
-    stakers: accountsTotal - accountsEmpty,
+    value: accountsTotal - accountsEmpty,
     description: `We do not and cannot indentify individuals; this number is the number of stSOL token accounts with a non-zero balance. ${
       accountsTotal && accountsEmpty
         ? `In total there are ${formatWithCommas(accountsTotal)} stSOL token accounts,
