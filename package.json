@@ -12,7 +12,7 @@
     "docz:dev": "docz dev",
     "docz:build": "docz build",
     "lint": "eslint --ext .js,.ts,.tsx,.jsx ./src",
-    "lint:fix": "npm run lint --fix"
+    "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
     "type": "git",
