@@ -16,6 +16,11 @@ export interface ProgramAddresses {
   stSolMintAddress: PublicKey;
 }
 
+export type TransactionProps = {
+  amount: number;
+  payerAddress: PublicKey;
+};
+
 export type InstructionStruct = {
   instruction: number;
   amount: BN;

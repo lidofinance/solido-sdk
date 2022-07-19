@@ -1,21 +1,13 @@
-import { PublicKey, Transaction } from '@solana/web3.js';
+import { Transaction } from '@solana/web3.js';
 
 import { SolidoSDK } from '@/index';
+import { TransactionProps } from '@/types';
 import { getMemoInstruction } from '@/utils/memo';
 import { checkMaxExceed } from '@/utils/checkMaxExceed';
 import { ensureTokenAccount } from './ensureTokenAccount';
 
-type StakeTransactionProps = {
-  amount: number;
-  payerAddress: PublicKey;
-  recipientStSolAddress: PublicKey;
-};
-
-export async function getStakeTransaction(
-  this: SolidoSDK,
-  props: StakeTransactionProps,
-): Promise<Transaction> {
-  const { payerAddress, recipientStSolAddress, amount } = props;
+export async function getStakeTransaction(this: SolidoSDK, props: TransactionProps): Promise<Transaction> {
+  const { payerAddress, amount } = props;
   const { stSolMintAddress } = this.programAddresses;
 
   const maxInLamports = await this.calculateMaxStakeAmount(payerAddress);
@@ -25,7 +17,8 @@ export async function getStakeTransaction(
   const { blockhash } = await this.connection.getLatestBlockhash();
   transaction.recentBlockhash = blockhash;
 
-  let recipient = recipientStSolAddress;
+  const [stSolAccount] = await this.getStSolAccountsForUser(payerAddress);
+  let recipient = stSolAccount.address;
 
   if (!recipient) {
     recipient = await ensureTokenAccount(transaction, payerAddress, stSolMintAddress);

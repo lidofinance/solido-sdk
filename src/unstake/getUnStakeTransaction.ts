@@ -1,15 +1,10 @@
-import { Keypair, PublicKey, StakeProgram, Transaction } from '@solana/web3.js';
+import { Keypair, StakeProgram, Transaction } from '@solana/web3.js';
 
 import { SolidoSDK } from '@/index';
+import { TransactionProps } from '@/types';
 import { checkMaxExceed } from '@/utils/checkMaxExceed';
 
-type UnStakeTransactionProps = {
-  amount: number;
-  payerAddress: PublicKey;
-  senderStSolAccountAddress: PublicKey;
-};
-
-export async function getUnStakeTransaction(this: SolidoSDK, props: UnStakeTransactionProps) {
+export async function getUnStakeTransaction(this: SolidoSDK, props: TransactionProps) {
   const { payerAddress, amount } = props;
 
   const maxInLamports = await this.calculateMaxStakeAmount(payerAddress);
@@ -22,8 +17,11 @@ export async function getUnStakeTransaction(this: SolidoSDK, props: UnStakeTrans
   const { blockhash } = await this.connection.getLatestBlockhash();
   transaction.recentBlockhash = blockhash;
 
+  const [stSolAccount] = await this.getStSolAccountsForUser(payerAddress);
+
   const withdrawInstruction = await this.getWithdrawInstruction({
     ...props,
+    senderStSolAccountAddress: stSolAccount.address,
     stakeAccount: newStakeAccountPubkey,
   });
   transaction.add(withdrawInstruction);
