@@ -49,8 +49,8 @@ const LidoStakeBanner: React.FC<Props> = (props) => {
   }, [direction]);
 
   useEffect(() => {
-    getStakeApy().then((apy) => {
-      setApy(apy);
+    getStakeApy().then((stakeApy) => {
+      setApy(stakeApy);
     });
   }, []);
 

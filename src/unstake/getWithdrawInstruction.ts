@@ -7,9 +7,10 @@ import {
 } from '@solana/web3.js';
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { nu64, struct, u8 } from '@solana/buffer-layout';
+import BN from 'bn.js';
 
 import { INSTRUCTION } from '@/constants';
-import { InstructionStruct, Lamports, AccountInfo, Validator } from '@/types';
+import { InstructionStruct, AccountInfo, Validator } from '@/types';
 import { SolidoSDK } from '@/index';
 
 export const getHeaviestValidator = (validatorEntries: AccountInfo['validators']['entries']) => {
@@ -37,17 +38,16 @@ export async function calculateStakeAccountAddress(this: SolidoSDK, heaviestVali
     solidoInstanceId.toBuffer(),
     validatorVoteAccount.toBuffer(),
     Buffer.from('validator_stake_account'),
-    seed.toArray('le', 8),
+    seed.toArray('le', 8) as any as Uint8Array,
   ];
 
-  // @ts-ignore TODO fix typings
   const [stakeAccountAddress] = await PublicKey.findProgramAddress(bufferArray, solidoProgramId);
 
   return stakeAccountAddress;
 }
 
 type WithdrawInstructionProps = {
-  amount: Lamports;
+  amount: number;
   payerAddress: PublicKey;
   senderStSolAccountAddress: PublicKey;
   stakeAccount: PublicKey;
@@ -63,8 +63,7 @@ export async function getWithdrawInstruction(this: SolidoSDK, props: WithdrawIns
   dataLayout.encode(
     {
       instruction: INSTRUCTION.UNSTAKE,
-      // TODO find out, what the lamports are
-      amount: amount.lamports,
+      amount: new BN(amount),
     },
     data,
   );

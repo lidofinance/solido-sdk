@@ -26,7 +26,9 @@
     "no-case-declarations": "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/no-explicit-any": ["warn"],
-    "react/jsx-filename-extension": [1, {"extensions": [".jsx", ".tsx"]}]
+    "@typescript-eslint/no-floating-promises": ["warn"],
+    "react/jsx-filename-extension": [1, {"extensions": [".jsx", ".tsx"]}],
+    "react/default-props-match-prop-types": "off"
   },
   "settings": {
     "import/resolver": {

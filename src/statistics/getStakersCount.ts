@@ -1,18 +1,21 @@
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
+import { Connection, GetProgramAccountsFilter } from '@solana/web3.js';
 
 import { SolidoSDK } from '@/index';
 import { formatWithCommas } from '@/utils/formatters';
 
-//TODO typings
-const countAccounts = async (connection, filters): Promise<number> => {
-  const accounts = await connection.getParsedProgramAccounts(TOKEN_PROGRAM_ID, {
+const countAccounts = async (
+  connection: Connection,
+  filters: GetProgramAccountsFilter[],
+): Promise<number> => {
+  const accounts = await connection.getProgramAccounts(TOKEN_PROGRAM_ID, {
     filters,
     // We are not interested in the account data, only in the number of matching
     // accounts, so request a zero-sized slice of the data, to reduce the amount
     // of data that needs to be sent.
     encoding: 'base64',
     dataSlice: {
-      offsset: 0,
+      offset: 0,
       length: 0,
     },
   });

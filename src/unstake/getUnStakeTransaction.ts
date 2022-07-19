@@ -1,11 +1,10 @@
 import { Keypair, PublicKey, StakeProgram, Transaction } from '@solana/web3.js';
 
-import { Lamports } from '@/types';
 import { SolidoSDK } from '@/index';
 import { checkMaxExceed } from '@/utils/checkMaxExceed';
 
 type UnStakeTransactionProps = {
-  amount: Lamports;
+  amount: number;
   payerAddress: PublicKey;
   senderStSolAccountAddress: PublicKey;
 };

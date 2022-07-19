@@ -1,5 +1,4 @@
 import { PublicKey, Transaction } from '@solana/web3.js';
-import { Lamports } from '@/types';
 
 import { SolidoSDK } from '@/index';
 import { getMemoInstruction } from '@/utils/memo';
@@ -7,7 +6,7 @@ import { checkMaxExceed } from '@/utils/checkMaxExceed';
 import { ensureTokenAccount } from './ensureTokenAccount';
 
 type StakeTransactionProps = {
-  amount: Lamports;
+  amount: number;
   payerAddress: PublicKey;
   recipientStSolAddress: PublicKey;
 };

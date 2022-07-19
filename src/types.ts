@@ -4,14 +4,6 @@ import { SignerWalletAdapter } from '@solana/wallet-adapter-base';
 
 import { TX_STAGE } from '@/constants';
 
-export class Lamports {
-  lamports: BN;
-
-  constructor(lamports: number | string | BN) {
-    this.lamports = new BN(lamports);
-  }
-}
-
 export type SignAndConfirmTransactionProps = {
   transaction: Transaction;
   wallet: SignerWalletAdapter;

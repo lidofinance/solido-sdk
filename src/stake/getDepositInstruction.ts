@@ -1,13 +1,14 @@
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { PublicKey, SystemProgram, TransactionInstruction } from '@solana/web3.js';
 import { struct, u8, nu64 } from '@solana/buffer-layout';
+import BN from 'bn.js';
 
-import { InstructionStruct, Lamports } from '@/types';
+import { InstructionStruct } from '@/types';
 import { INSTRUCTION } from '@/constants';
 import { SolidoSDK } from '@/index';
 
 type DepositInstructionProps = {
-  amount: Lamports;
+  amount: number;
   payerAddress: PublicKey;
   recipientStSolAddress: PublicKey;
 };
@@ -34,7 +35,7 @@ export async function getDepositInstruction(this: SolidoSDK, props: DepositInstr
   dataLayout.encode(
     {
       instruction: INSTRUCTION.STAKE,
-      amount: amount.lamports,
+      amount: new BN(amount),
     },
     data,
   );
