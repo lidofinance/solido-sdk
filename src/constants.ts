@@ -19,10 +19,22 @@ export const MAINNET_PROGRAM_ADDRESSES: ProgramAddresses = {
   stSolMintAddress: new PublicKey('7dHbWXmci3dT8UFYWYZweBLXgycu7Y3iL6trKn1Y7ARj'),
 };
 
+export const DEVNET_PROGRAM_ADDRESSES: ProgramAddresses = {
+  solidoProgramId: new PublicKey('CbxVmURN74QZGuFj6qKjM8VDM8b8KKZrbPFLM2CC2hC8'),
+  solidoInstanceId: new PublicKey('8sqs4Jzs8uq7CEtimhXf32gioVUN3n5Qk65YMkNU5E4F'),
+  stSolMintAddress: new PublicKey('5nnLCgZn1EQaLj1ub8vYbQgBhkWi97x4JC5ARVPhci4V'),
+};
+
+export const TESTNET_PROGRAM_ADDRESSES: ProgramAddresses = {
+  solidoProgramId: new PublicKey('7k3rzqoNQxgTLTooAvXriGBKYsd16bV3JMvatvXcBfNo'),
+  solidoInstanceId: new PublicKey('7yoacaUf7yu5wqxpcHaXtwCaMciR7kFqps8FwnX4cjeK'),
+  stSolMintAddress: new PublicKey('8ry9FhmvhifEBwLPJpg89fAu19rmUHskDVvEfKuDbQbT'),
+};
+
 export const clusterProgramAddresses: Record<Cluster, ProgramAddresses> = {
   'mainnet-beta': MAINNET_PROGRAM_ADDRESSES,
-  devnet: MAINNET_PROGRAM_ADDRESSES, // TODO change
-  testnet: MAINNET_PROGRAM_ADDRESSES, // TODO change
+  devnet: DEVNET_PROGRAM_ADDRESSES,
+  testnet: TESTNET_PROGRAM_ADDRESSES,
 };
 
 export const MEMO_PROGRAM_ID = new PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr');
