@@ -10,6 +10,7 @@ import { getExchangeRate } from '@/statistics/getExchangeRate';
 import { getTotalStaked } from '@/statistics/getTotalStaked';
 import { getStakersCount } from '@/statistics/getStakersCount';
 import { getTransactionCost } from '@/statistics/getTransactionCost';
+import { getStakingRewardsFee } from '@/statistics/getStakingRewardsFee';
 
 export { default as LidoStakeBanner } from './banner';
 
@@ -72,4 +73,5 @@ export class SolidoSDK {
   public getTotalStaked = getTotalStaked.bind(this);
   public getStakersCount = getStakersCount.bind(this);
   public getTransactionCost = getTransactionCost.bind(this);
+  public getStakingRewardsFee = getStakingRewardsFee.bind(this);
 }
