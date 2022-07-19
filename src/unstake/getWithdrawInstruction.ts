@@ -8,8 +8,8 @@ import {
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { nu64, struct, u8 } from '@solana/buffer-layout';
 
-import { INSTRUCTIONS } from '@/constants';
-import { InstructionStruct, Lamports } from "@/types";
+import { INSTRUCTION } from '@/constants';
+import { InstructionStruct, Lamports } from '@/types';
 import { SolidoSDK } from '@/index';
 
 // TODO typings for validatorEntries
@@ -30,7 +30,6 @@ export async function calculateStakeAccountAddress(this: SolidoSDK, heaviestVali
   let validator = heaviestValidator;
   if (!validator) {
     const solidoAccountInfo = await this.getAccountInfo();
-    // @ts-ignore TODO
     validator = getHeaviestValidator(solidoAccountInfo.validators.entries);
   }
 
@@ -65,7 +64,7 @@ export async function getWithdrawInstruction(this: SolidoSDK, props: WithdrawIns
   const data = Buffer.alloc(dataLayout.span);
   dataLayout.encode(
     {
-      instruction: INSTRUCTIONS.UNSTAKE,
+      instruction: INSTRUCTION.UNSTAKE,
       // TODO find out, what the lamports are
       amount: amount.lamports,
     },
@@ -75,7 +74,7 @@ export async function getWithdrawInstruction(this: SolidoSDK, props: WithdrawIns
   const stakeAuthority = await this.findProgramAddress('stake_authority');
 
   const accountInfo = await this.getAccountInfo();
-  // @ts-ignore TODO fix typings
+
   const validator = getHeaviestValidator(accountInfo.validators.entries);
 
   const validatorStakeAccount = await this.calculateStakeAccountAddress(validator);
@@ -97,8 +96,7 @@ export async function getWithdrawInstruction(this: SolidoSDK, props: WithdrawIns
 
   return new TransactionInstruction({
     keys,
-    // @ts-ignore TODO fix
-    solidoProgramId,
+    programId: solidoProgramId,
     data,
   });
 };

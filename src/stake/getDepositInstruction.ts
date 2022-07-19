@@ -3,7 +3,7 @@ import { PublicKey, SystemProgram, TransactionInstruction } from '@solana/web3.j
 import { struct, u8, nu64 } from '@solana/buffer-layout';
 
 import { InstructionStruct, Lamports } from '@/types';
-import { INSTRUCTIONS } from '@/constants';
+import { INSTRUCTION } from '@/constants';
 import { SolidoSDK } from '@/index';
 
 type DepositInstructionProps = {
@@ -30,7 +30,7 @@ export async function getDepositInstruction(this: SolidoSDK, props: DepositInstr
 
   dataLayout.encode(
     {
-      instruction: INSTRUCTIONS.STAKE,
+      instruction: INSTRUCTION.STAKE,
       amount: amount.lamports,
     },
     data,

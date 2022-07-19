@@ -6,7 +6,7 @@ export async function calculateMaxUnStakeAmount(this: SolidoSDK, address: Public
   if (accountInfo === null) {
     return 0;
   }
-  // @ts-ignore TODO
+
   const balanceInLamports = accountInfo.lamports;
 
   const sourceStakeAccount = await this.calculateStakeAccountAddress();

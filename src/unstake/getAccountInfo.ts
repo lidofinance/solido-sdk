@@ -1,6 +1,7 @@
 import { deserializeUnchecked } from 'borsh';
 
 import { SolidoSDK } from '@/index';
+import BN from 'bn.js';
 
 export class Lido {
   constructor(data) {
@@ -32,7 +33,17 @@ const LamportsHistogram = Lido;
 
 const WithdrawMetric = Lido;
 
-export async function getAccountInfo(this: SolidoSDK) {
+type AccountInfo = {
+  validators: {
+    entries: any;
+  };
+  exchange_rate: {
+    sol_balance: BN;
+    st_sol_supply: BN;
+  };
+}
+
+export async function getAccountInfo(this: SolidoSDK): Promise<AccountInfo> {
   const schema = new Map([
     [
       ExchangeRate,
@@ -217,8 +228,11 @@ export async function getAccountInfo(this: SolidoSDK) {
 
   const accountInfo = await this.connection.getAccountInfo(solidoInstanceId);
 
-  // @ts-ignore TODO fix
-  const deserializedAccountInfo = deserializeUnchecked(schema, Lido, accountInfo.data);
+  if (accountInfo === null) {
+    throw new Error('Could\'nt fetch getAccountInfo');
+  }
+
+  const deserializedAccountInfo = deserializeUnchecked(schema, Lido, accountInfo.data) as any as AccountInfo;
 
   return deserializedAccountInfo;
 }
