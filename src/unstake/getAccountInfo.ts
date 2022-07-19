@@ -1,7 +1,7 @@
 import { deserializeUnchecked } from 'borsh';
 
 import { SolidoSDK } from '@/index';
-import BN from 'bn.js';
+import { AccountInfo } from '@/types';
 
 export class Lido {
   constructor(data) {
@@ -32,16 +32,6 @@ const Metrics = Lido;
 const LamportsHistogram = Lido;
 
 const WithdrawMetric = Lido;
-
-type AccountInfo = {
-  validators: {
-    entries: any;
-  };
-  exchange_rate: {
-    sol_balance: BN;
-    st_sol_supply: BN;
-  };
-}
 
 export async function getAccountInfo(this: SolidoSDK): Promise<AccountInfo> {
   const schema = new Map([

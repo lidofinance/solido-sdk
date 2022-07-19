@@ -9,11 +9,10 @@ import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { nu64, struct, u8 } from '@solana/buffer-layout';
 
 import { INSTRUCTION } from '@/constants';
-import { InstructionStruct, Lamports } from '@/types';
+import { InstructionStruct, Lamports, AccountInfo } from '@/types';
 import { SolidoSDK } from '@/index';
 
-// TODO typings for validatorEntries
-export const getHeaviestValidator = (validatorEntries) => {
+export const getHeaviestValidator = (validatorEntries: AccountInfo['validators']['entries']) => {
   const sortedValidatorEntries = validatorEntries.sort(
     ({ entry: validatorA }, { entry: validatorB }) =>
       validatorB.stake_accounts_balance.toNumber() - validatorA.stake_accounts_balance.toNumber(),
@@ -22,8 +21,6 @@ export const getHeaviestValidator = (validatorEntries) => {
   return sortedValidatorEntries[0];
 };
 
-
-// TODO typings
 export async function calculateStakeAccountAddress(this: SolidoSDK, heaviestValidator?) {
   const { solidoInstanceId, solidoProgramId } = this.programAddresses;
 

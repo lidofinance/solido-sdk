@@ -17,7 +17,6 @@ export async function getTotalStaked(this: SolidoSDK, precision: number = 2) {
 
   const reserveAccountBalanceInLamports = reserveAccountInfo.lamports - reserveAccountRent;
 
-  // @ts-ignore
   const validatorsStakeAccountsBalanceInLamports = accountInfo.validators.entries
     .map((pubKeyAndEntry) => pubKeyAndEntry.entry)
     .map((validator) => validator.stake_accounts_balance.toNumber())

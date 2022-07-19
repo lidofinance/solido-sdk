@@ -49,3 +49,18 @@ export type SolApiResponse<K extends string, T extends Record<string, any>> = {
     detail: string;
   };
 }
+
+export type AccountInfo = {
+  validators: {
+    entries: [{
+      entry: {
+        stake_accounts_balance: BN;
+      },
+      pubkey: BN,
+    }];
+  };
+  exchange_rate: {
+    sol_balance: BN;
+    st_sol_supply: BN;
+  };
+}
