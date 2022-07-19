@@ -1,10 +1,10 @@
 import { PublicKey, Cluster } from '@solana/web3.js';
 import { ProgramAddresses } from '@/types';
 
-export enum INSTRUCTIONS {
+export enum INSTRUCTION {
   STAKE = 1,
   UNSTAKE = 2,
-};
+}
 
 export enum TX_STAGE {
   AWAITING_SIGNING = 1,

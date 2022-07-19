@@ -1,12 +1,17 @@
-type InfoValue = {
-  value: string;
-  description?: string;
-}
+import { SolidoSDK } from '@/index';
+import { INSTRUCTION } from '@/constants';
 
-type TransactionInfo = {
-  exchangeRate
-}
+export async function getTransactionInfo(this: SolidoSDK, instruction: INSTRUCTION) {
+  const exchangeRate = await this.getExchangeRate();
+  const transactionCost = await this.getTransactionCost(instruction);
+  const stakingRewardsFee = this.getStakingRewardsFee();
 
-export async function getTransactionInfo() {
-
+  return {
+    exchangeRate: {
+      value: instruction === INSTRUCTION.STAKE ? exchangeRate.SOLToStSOL : exchangeRate.stSOLToSOL,
+      description: exchangeRate.description,
+    },
+    transactionCost,
+    stakingRewardsFee,
+  }
 }
