@@ -24,7 +24,9 @@
     "no-nested-ternary": "off",
     "no-restricted-syntax": "off",
     "no-case-declarations": "off",
-    "@typescript-eslint/no-unsafe-assignment": "off"
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-explicit-any": ["warn"],
+    "react/jsx-filename-extension": [1, {"extensions": [".jsx", ".tsx"]}]
   },
   "settings": {
     "import/resolver": {

@@ -3,19 +3,18 @@ import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { SolidoSDK } from '@/index';
 import { formatWithCommas } from '@/utils/formatters';
 
-const countAccounts = async (connection, filters) => {
-  const accounts = await connection.getParsedProgramAccounts(
-    TOKEN_PROGRAM_ID,
-    {
-      filters,
-      // We are not interested in the account data, only in the number of matching
-      // accounts, so request a zero-sized slice of the data, to reduce the amount
-      // of data that needs to be sent.
-      encoding: 'base64',
-      dataSlice: {
-        offsset: 0,
-        length: 0,
-      },
+//TODO typings
+const countAccounts = async (connection, filters): Promise<number> => {
+  const accounts = await connection.getParsedProgramAccounts(TOKEN_PROGRAM_ID, {
+    filters,
+    // We are not interested in the account data, only in the number of matching
+    // accounts, so request a zero-sized slice of the data, to reduce the amount
+    // of data that needs to be sent.
+    encoding: 'base64',
+    dataSlice: {
+      offsset: 0,
+      length: 0,
+    },
   });
 
   return accounts.length;
@@ -55,6 +54,6 @@ export async function getStakersCount(this: SolidoSDK) {
         ? `In total there are ${formatWithCommas(accountsTotal)} stSOL token accounts,
           but ${formatWithCommas(accountsEmpty)} of those are empty.`
         : ''
-    }`
+    }`,
   };
 }

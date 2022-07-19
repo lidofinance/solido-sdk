@@ -3,8 +3,19 @@ import { Cluster, Connection, TransactionSignature } from '@solana/web3.js';
 import { ProgramAddresses, SignAndConfirmTransactionProps } from '@/types';
 import { clusterProgramAddresses, TX_STAGE } from '@/constants';
 
-import { findProgramAddress, getDepositInstruction, getStakeTransaction, calculateMaxStakeAmount } from '@/stake';
-import { getAccountInfo, getUnStakeTransaction, getWithdrawInstruction, calculateMaxUnStakeAmount, calculateStakeAccountAddress } from '@/unstake';
+import {
+  findProgramAddress,
+  getDepositInstruction,
+  getStakeTransaction,
+  calculateMaxStakeAmount,
+} from '@/stake';
+import {
+  getAccountInfo,
+  getUnStakeTransaction,
+  getWithdrawInstruction,
+  calculateMaxUnStakeAmount,
+  calculateStakeAccountAddress,
+} from '@/unstake';
 
 import { getExchangeRate } from '@/statistics/getExchangeRate';
 import { getTransactionCost } from '@/statistics/getTransactionCost';
@@ -21,7 +32,9 @@ export { getStakeApy } from '@/api/stakeApy';
 
 export class SolidoSDK {
   programAddresses: ProgramAddresses;
+
   connection: Connection;
+
   referrerId?: string;
 
   constructor(cluster: Cluster, connection: Connection, referrerId?: string) {
@@ -30,7 +43,9 @@ export class SolidoSDK {
     this.referrerId = referrerId;
   }
 
-  private async signAndConfirmTransaction(props: SignAndConfirmTransactionProps): Promise<TransactionSignature | undefined> {
+  private async signAndConfirmTransaction(
+    props: SignAndConfirmTransactionProps,
+  ): Promise<TransactionSignature | undefined> {
     const { transaction, wallet, setTxStage } = props;
 
     try {
@@ -57,31 +72,44 @@ export class SolidoSDK {
   }
 
   // Staking functions
-  public stake = this.signAndConfirmTransaction;
+  public stake = this.signAndConfirmTransaction.bind(this);
+
   public getStakeTransaction = getStakeTransaction.bind(this);
+
   public calculateMaxStakeAmount = calculateMaxStakeAmount.bind(this);
+
   protected findProgramAddress = findProgramAddress.bind(this);
+
   protected getDepositInstruction = getDepositInstruction.bind(this);
 
-
   // UnStaking functions
-  public unStake = this.signAndConfirmTransaction;
-  public getUnStakeTransaction = getUnStakeTransaction.bind(this);
-  public calculateMaxUnStakeAmount = calculateMaxUnStakeAmount.bind(this);
-  protected getWithdrawInstruction = getWithdrawInstruction.bind(this);
-  protected getAccountInfo = getAccountInfo.bind(this);
-  protected calculateStakeAccountAddress = calculateStakeAccountAddress.bind(this);
+  public unStake = this.signAndConfirmTransaction.bind(this);
 
+  public getUnStakeTransaction = getUnStakeTransaction.bind(this);
+
+  public calculateMaxUnStakeAmount = calculateMaxUnStakeAmount.bind(this);
+
+  protected getWithdrawInstruction = getWithdrawInstruction.bind(this);
+
+  protected getAccountInfo = getAccountInfo.bind(this);
+
+  protected calculateStakeAccountAddress = calculateStakeAccountAddress.bind(this);
 
   // Transaction Info
   public getTransactionInfo = getTransactionInfo.bind(this);
+
   public getExchangeRate = getExchangeRate.bind(this);
+
   public getTransactionCost = getTransactionCost.bind(this);
+
   public getStakingRewardsFee = getStakingRewardsFee.bind(this);
 
   // Statistics
   public getLidoStatistics = getLidoStatistics.bind(this);
+
   public getTotalStaked = getTotalStaked.bind(this);
+
   public getStakersCount = getStakersCount.bind(this);
+
   public getMarketCap = getMarketCap.bind(this);
 }

@@ -1,7 +1,7 @@
 import { SolidoSDK } from '@/index';
 import { lamportsToSol } from '@/utils/formatters';
 
-export async function getTotalStaked(this: SolidoSDK, precision: number = 2) {
+export async function getTotalStaked(this: SolidoSDK, precision = 2) {
   const accountInfo = await this.getAccountInfo();
 
   const reserveAccount = await this.findProgramAddress('reserve_account');

@@ -1,7 +1,7 @@
 import { SolidoSDK } from '@/index';
 import { toPrecision } from '@/utils/formatters';
 
-export async function getExchangeRate(this: SolidoSDK, precision: number = 4) {
+export async function getExchangeRate(this: SolidoSDK, precision = 4) {
   const accountInfo = await this.getAccountInfo();
 
   const totalSolInLamports = accountInfo.exchange_rate.sol_balance.toNumber();
@@ -13,6 +13,7 @@ export async function getExchangeRate(this: SolidoSDK, precision: number = 4) {
   return {
     SOLToStSOL: toPrecision(SOLToStSOL, precision),
     stSOLToSOL: toPrecision(stSOLToSOL, precision),
-    description: 'Updates at the end of an epoch. Rising exchange rate indicates an appreciation in stSOL value',
+    description:
+      'Updates at the end of an epoch. Rising exchange rate indicates an appreciation in stSOL value',
   };
 }

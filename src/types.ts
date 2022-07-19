@@ -34,12 +34,6 @@ type ApiError = {
   msg: string;
 };
 
-export type SolApiPriceResponse<K extends string> = SolApiResponse<K, {
-  symbol: string;
-  symbolNotFormatted: string;
-  priceUsd: number;
-}>
-
 export type SolApiResponse<K extends string, T extends Record<string, any>> = {
   batchData: {
     [key in K]: T;
@@ -48,19 +42,34 @@ export type SolApiResponse<K extends string, T extends Record<string, any>> = {
   error: ApiError & {
     detail: string;
   };
-}
+};
+
+export type SolApiPriceResponse<K extends string> = SolApiResponse<
+  K,
+  {
+    symbol: string;
+    symbolNotFormatted: string;
+    priceUsd: number;
+  }
+>;
+
+export type Validator = {
+  entry: {
+    stake_accounts_balance: BN;
+    stake_seeds: {
+      begin: BN;
+      end: BN;
+    };
+  };
+  pubkey: BN;
+};
 
 export type AccountInfo = {
   validators: {
-    entries: [{
-      entry: {
-        stake_accounts_balance: BN;
-      },
-      pubkey: BN,
-    }];
+    entries: Validator[];
   };
   exchange_rate: {
     sol_balance: BN;
     st_sol_supply: BN;
   };
-}
+};

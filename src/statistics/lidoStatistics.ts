@@ -3,7 +3,7 @@ import { getStakeApy } from '@/api/stakeApy';
 import { formatWithCommas } from '@/utils/formatters';
 
 export async function getLidoStatistics(this: SolidoSDK) {
-  const apy = getStakeApy();
+  const apy = await getStakeApy();
   const totalStaked = await this.getTotalStaked();
   const stakers = await this.getStakersCount();
   const marketCap = await this.getMarketCap(totalStaked);
@@ -19,5 +19,5 @@ export async function getLidoStatistics(this: SolidoSDK) {
       formatted: formatWithCommas(stakers.value),
     },
     marketCap,
-  }
+  };
 }

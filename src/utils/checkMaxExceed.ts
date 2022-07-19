@@ -1,7 +1,8 @@
 import { lamportsToSol, solToLamports } from '@/utils/formatters';
 
-export const checkMaxExceed = (amount, maxInLamports: number) => {
+// TODO change amount
+export const checkMaxExceed = (amount: any, maxInLamports: number) => {
   if (solToLamports(amount) > maxInLamports) {
     throw new Error(`Amount must not exceed MAX(${lamportsToSol(maxInLamports)})`);
   }
-}
+};

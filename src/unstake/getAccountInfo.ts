@@ -219,7 +219,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<AccountInfo> {
   const accountInfo = await this.connection.getAccountInfo(solidoInstanceId);
 
   if (accountInfo === null) {
-    throw new Error('Could\'nt fetch getAccountInfo');
+    throw new Error("Could'nt fetch getAccountInfo");
   }
 
   const deserializedAccountInfo = deserializeUnchecked(schema, Lido, accountInfo.data) as any as AccountInfo;

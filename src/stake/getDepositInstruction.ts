@@ -12,7 +12,10 @@ type DepositInstructionProps = {
   recipientStSolAddress: PublicKey;
 };
 
-export async function findProgramAddress(this: SolidoSDK, bufferFrom: 'reserve_account' | 'mint_authority' | 'stake_authority') {
+export async function findProgramAddress(
+  this: SolidoSDK,
+  bufferFrom: 'reserve_account' | 'mint_authority' | 'stake_authority',
+) {
   const { solidoInstanceId, solidoProgramId } = this.programAddresses;
   const bufferArray = [solidoInstanceId.toBuffer(), Buffer.from(bufferFrom)];
 
@@ -41,10 +44,10 @@ export async function getDepositInstruction(this: SolidoSDK, props: DepositInstr
   const mintAuthority = await this.findProgramAddress('mint_authority');
 
   const keys = [
-    { pubkey: solidoInstanceId, isSigner: false, isWritable: true, },
+    { pubkey: solidoInstanceId, isSigner: false, isWritable: true },
     { pubkey: payerAddress, isSigner: true, isWritable: true },
-    { pubkey: recipientStSolAddress, isSigner: false, isWritable: true, },
-    { pubkey: stSolMintAddress, isSigner: false, isWritable: true, },
+    { pubkey: recipientStSolAddress, isSigner: false, isWritable: true },
+    { pubkey: stSolMintAddress, isSigner: false, isWritable: true },
     { pubkey: reserveAccount, isSigner: false, isWritable: true },
     { pubkey: mintAuthority, isSigner: false, isWritable: false },
     { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },
@@ -56,4 +59,4 @@ export async function getDepositInstruction(this: SolidoSDK, props: DepositInstr
     programId: solidoProgramId,
     data,
   });
-};
+}

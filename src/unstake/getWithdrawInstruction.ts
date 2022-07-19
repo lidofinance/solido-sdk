@@ -9,7 +9,7 @@ import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { nu64, struct, u8 } from '@solana/buffer-layout';
 
 import { INSTRUCTION } from '@/constants';
-import { InstructionStruct, Lamports, AccountInfo } from '@/types';
+import { InstructionStruct, Lamports, AccountInfo, Validator } from '@/types';
 import { SolidoSDK } from '@/index';
 
 export const getHeaviestValidator = (validatorEntries: AccountInfo['validators']['entries']) => {
@@ -21,7 +21,7 @@ export const getHeaviestValidator = (validatorEntries: AccountInfo['validators']
   return sortedValidatorEntries[0];
 };
 
-export async function calculateStakeAccountAddress(this: SolidoSDK, heaviestValidator?) {
+export async function calculateStakeAccountAddress(this: SolidoSDK, heaviestValidator?: Validator) {
   const { solidoInstanceId, solidoProgramId } = this.programAddresses;
 
   let validator = heaviestValidator;
@@ -40,6 +40,7 @@ export async function calculateStakeAccountAddress(this: SolidoSDK, heaviestVali
     seed.toArray('le', 8),
   ];
 
+  // @ts-ignore TODO fix typings
   const [stakeAccountAddress] = await PublicKey.findProgramAddress(bufferArray, solidoProgramId);
 
   return stakeAccountAddress;
@@ -77,13 +78,13 @@ export async function getWithdrawInstruction(this: SolidoSDK, props: WithdrawIns
   const validatorStakeAccount = await this.calculateStakeAccountAddress(validator);
 
   const keys = [
-    { pubkey: solidoInstanceId, isSigner: false, isWritable: true, },
+    { pubkey: solidoInstanceId, isSigner: false, isWritable: true },
     { pubkey: payerAddress, isSigner: true, isWritable: false },
-    { pubkey: senderStSolAccountAddress, isSigner: false, isWritable: true, },
-    { pubkey: stSolMintAddress, isSigner: false, isWritable: true, },
-    { pubkey: new PublicKey(validator.pubkey.toArray('le')), isSigner: false, isWritable: false, },
+    { pubkey: senderStSolAccountAddress, isSigner: false, isWritable: true },
+    { pubkey: stSolMintAddress, isSigner: false, isWritable: true },
+    { pubkey: new PublicKey(validator.pubkey.toArray('le')), isSigner: false, isWritable: false },
     { pubkey: validatorStakeAccount, isSigner: false, isWritable: true },
-    { pubkey: stakeAccount, isSigner: true, isWritable: true, },
+    { pubkey: stakeAccount, isSigner: true, isWritable: true },
     { pubkey: stakeAuthority, isSigner: false, isWritable: false },
     { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },
     { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
@@ -96,4 +97,4 @@ export async function getWithdrawInstruction(this: SolidoSDK, props: WithdrawIns
     programId: solidoProgramId,
     data,
   });
-};
+}

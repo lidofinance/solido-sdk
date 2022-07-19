@@ -9,9 +9,12 @@ type TransactionCost = {
   costInUsd: number;
   costInSol: number;
   costInLamports: number;
-}
+};
 
-export async function getTransactionCost(this: SolidoSDK, instruction: INSTRUCTION): Promise<TransactionCost> {
+export async function getTransactionCost(
+  this: SolidoSDK,
+  instruction: INSTRUCTION,
+): Promise<TransactionCost> {
   const {
     feeCalculator: { lamportsPerSignature },
   } = await this.connection.getRecentBlockhash();
@@ -22,5 +25,5 @@ export async function getTransactionCost(this: SolidoSDK, instruction: INSTRUCTI
   const costInSol = lamportsToSol(costInLamports, 6);
   const costInUsd = toPrecision(costInSol * solPriceInUsd, 5);
 
-  return { costInUsd, costInSol, costInLamports, };
+  return { costInUsd, costInSol, costInLamports };
 }

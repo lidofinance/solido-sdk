@@ -1,10 +1,10 @@
 import { PublicKey, Transaction } from '@solana/web3.js';
 import { Lamports } from '@/types';
 
-import { ensureTokenAccount } from './ensureTokenAccount';
 import { SolidoSDK } from '@/index';
 import { getMemoInstruction } from '@/utils/memo';
 import { checkMaxExceed } from '@/utils/checkMaxExceed';
+import { ensureTokenAccount } from './ensureTokenAccount';
 
 type StakeTransactionProps = {
   amount: Lamports;
@@ -12,7 +12,10 @@ type StakeTransactionProps = {
   recipientStSolAddress: PublicKey;
 };
 
-export async function getStakeTransaction(this: SolidoSDK, props: StakeTransactionProps): Promise<Transaction> {
+export async function getStakeTransaction(
+  this: SolidoSDK,
+  props: StakeTransactionProps,
+): Promise<Transaction> {
   const { payerAddress, recipientStSolAddress, amount } = props;
   const { stSolMintAddress } = this.programAddresses;
 

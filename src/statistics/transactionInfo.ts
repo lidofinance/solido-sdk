@@ -13,5 +13,5 @@ export async function getTransactionInfo(this: SolidoSDK, instruction: INSTRUCTI
     },
     transactionCost,
     stakingRewardsFee,
-  }
+  };
 }
