@@ -12,8 +12,9 @@ Lido on Solana gives you:
 ### About sdk
 
 This sdk helps you integrate with us, using two ways:
-- Simplest way is using React banner.
-- Support staking widget in your project. We provide js functions for staking, unstaking, showing DeFI pools, etc.
+1. Simplest way is using React banner.
+2. Support UI widget in your project. We provide js functions for staking, unstaking, statistics and transaction info.
+3. Use staking widget with UI
 
 ## Contents:
 - [Installation](#installation)
@@ -42,29 +43,25 @@ _Note: also available vertical mode. [Read more](https://lidofinance.github.io/s
 
 ## Using SDK
 
-1. Prepare stake transaction
+Staking:
 
 ```ts
+import { SolidoSDK } from '@lidofinance/solido-sdk';
 // solana/web3.js Connection
 const solidoSDK = new SolidoSDK('mainnet-beta', connection, 'your_solana_referral_address');
 
-const stakeTransaction = await solidoSDK.getStakeTransaction({
-  amount: 20,
-  payerAddress: new PublicKey(wallet.publicKey),
-});
+try {
+  const transactionHash = await solidoSDK.stake({
+    amount: 20, // The amount of SOL-s which need to stake
+    wallet: wallet, // Wallet instance
+    setTxStage: setTxStageCallback, // Optional callback for getting information about transaction stage (see TX_STAGE)
+  });
+} catch (e) {
+  // Handle Errors
+}
 ```
 
-2. Sign and confirm transaction
-
-```ts
-await solidoSDK.stake({
-  transaction: stakeTransaction,
-  wallet: WalletInstance, // used for singing TX
-  setTxStage: setTxStageCallback, // used for setting TX stage
-});
-```
-
-_[Read more for full examples & details](https://lidofinance.github.io/solido-sdk/staking)_
+_[Read more for full examples & details](https://docs.solana.lido.fi/frontend-integration/stake)_
 
 ## Using staking widget
 

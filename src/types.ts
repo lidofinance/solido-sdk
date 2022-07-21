@@ -27,11 +27,11 @@ export interface ProgramAddresses {
 
 export type TransactionProps = {
   /**
-   * SOL(stSOL) amount to (un)stake transaction
+   * The amount of (st)SOL which need to (un)stake
    */
   amount: number;
   /**
-   * address of user who is trying to make transaction
+   * address of user who is trying to make the transaction (`wallet.publicKey`)
    */
   payerAddress: PublicKey;
 };
