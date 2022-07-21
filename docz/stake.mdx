@@ -1,6 +1,7 @@
 ---
-name: Stake
+name: Stake & UnStake
 route: /staking
+menu: SDK
 ---
 
 import { Props } from 'docz';
@@ -69,7 +70,7 @@ try {
 
   const transactionHash = await connection.sendRawTransaction(signed.serialize());
 
-  // So something before confirming transaction
+  // Do something before confirming transaction
   const { value: status } = await connection.confirmTransaction(transactionHash);
 
   if (status?.err) {

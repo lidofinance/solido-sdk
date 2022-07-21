@@ -10,11 +10,11 @@ export type SignAndConfirmTransactionProps = {
    */
   transaction: Transaction;
   /**
-   * Wallet instance
+   * Wallet instance from @solana/wallet-adapter-base
    */
   wallet: SignerWalletAdapter;
   /**
-   * Optional Callback for getting information about transaction Stage
+   * Optional callback for getting information about transaction stage
    */
   setTxStage?: (txStage: TX_STAGE) => void;
 };
