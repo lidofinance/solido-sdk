@@ -39,4 +39,4 @@ export const clusterProgramAddresses: Record<Cluster, ProgramAddresses> = {
 
 export const MEMO_PROGRAM_ID = new PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr');
 
-export const SOL_API_HOST = 'https://sol-api.infra-staging.org';
+export const SOL_API_HOST = 'https://sol-api.lido.fi';
