@@ -30,7 +30,7 @@ const solidoSDK = new SolidoSDK('mainnet-beta', connection, 'your_solana_referra
 try {
   const stakeTransaction = await solidoSDK.getStakeTransaction({
     amount: 20,
-    payerAddress: new PublicKey('user_address'),
+    payerAddress: new PublicKey(wallet.publicKey),
   });
 } catch (e) {
   // Handle Errors
@@ -41,12 +41,12 @@ try {
 
 You may get exception if amount exceed maximum available SOL-s in balance. In order to prevent this exception, you can call
 ```ts
-const maxStakeAmount = await solidoSDK.calculateMaxStakeAmount(new PublicKey('user_address'));
+const maxStakeAmount = await solidoSDK.calculateMaxStakeAmount(new PublicKey(wallet.publicKey));
 ```
 
 ### 3. Sign and confirm transaction
 
-Here you can call ready function from SDK:
+Here you can call function from SDK:
 
 ```ts
 try {
@@ -61,7 +61,7 @@ try {
 }
 ```
 
-Or, call sign & confirm methods yourself for total control in transaction stages:
+Or call sign & confirm methods by yourself for total control transaction stages
 
 ```ts
 try {

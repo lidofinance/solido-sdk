@@ -50,7 +50,7 @@ const solidoSDK = new SolidoSDK('mainnet-beta', connection, 'your_solana_referra
 
 const stakeTransaction = await solidoSDK.getStakeTransaction({
   amount: 20,
-  payerAddress: new PublicKey('user_address'),
+  payerAddress: new PublicKey(wallet.publicKey),
 });
 ```
 
