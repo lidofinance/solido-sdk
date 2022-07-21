@@ -32,11 +32,11 @@ export { default as LidoStakeBanner } from './banner';
 export { getStakeApy } from '@/api/stakeApy';
 
 export class SolidoSDK {
-  programAddresses: ProgramAddresses;
+  protected programAddresses: ProgramAddresses;
 
-  connection: Connection;
+  protected connection: Connection;
 
-  referrerId?: string;
+  protected referrerId?: string;
 
   constructor(cluster: Cluster, connection: Connection, referrerId?: string) {
     this.programAddresses = clusterProgramAddresses[cluster];

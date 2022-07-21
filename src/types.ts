@@ -2,11 +2,20 @@ import BN from 'bn.js';
 import { PublicKey, Transaction } from '@solana/web3.js';
 import { SignerWalletAdapter } from '@solana/wallet-adapter-base';
 
-import { TX_STAGE } from '@/constants';
+import { INSTRUCTION, TX_STAGE } from '@/constants';
 
 export type SignAndConfirmTransactionProps = {
+  /**
+   * Ready @solana/web3.js Transaction, got from get(Un)StakeTransaction
+   */
   transaction: Transaction;
+  /**
+   * Wallet instance
+   */
   wallet: SignerWalletAdapter;
+  /**
+   * Optional Callback for getting information about transaction Stage
+   */
   setTxStage?: (txStage: TX_STAGE) => void;
 };
 
@@ -17,12 +26,24 @@ export interface ProgramAddresses {
 }
 
 export type TransactionProps = {
+  /**
+   * SOL(stSOL) amount to (un)stake transaction
+   */
   amount: number;
+  /**
+   * address of user who is trying to make transaction
+   */
   payerAddress: PublicKey;
 };
 
 export type InstructionStruct = {
-  instruction: number;
+  /**
+   * instruction code (see INSTRUCTION enum)
+   */
+  instruction: INSTRUCTION;
+  /**
+   * amount of tokens for above instruction
+   */
   amount: BN;
 };
 
