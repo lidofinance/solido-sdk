@@ -1,5 +1,3 @@
 module.exports = {
-  plugins: [
-    'gatsby-plugin-svgr'
-  ]
+  plugins: ['gatsby-plugin-svgr'],
 };

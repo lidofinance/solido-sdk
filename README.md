@@ -18,6 +18,7 @@ This sdk helps you integrate with us, using two ways:
 ## Contents:
 - [Installation](#installation)
 - [Using banner](#using-banner)
+- [Using SDK](#using-sdk)
 - [Using staking widget](#using-staking-widget)
 - [Learn more](#learn-more)
 
@@ -38,6 +39,32 @@ import { LidoStakeBanner } from '@lidofinance/solido-sdk';
 ```
 
 _Note: also available vertical mode. [Read more](https://lidofinance.github.io/solido-sdk/banner)_
+
+## Using SDK
+
+1. Prepare stake transaction
+
+```ts
+// solana/web3.js Connection
+const solidoSDK = new SolidoSDK('mainnet-beta', connection, 'your_solana_referral_address');
+
+const stakeTransaction = await solidoSDK.getStakeTransaction({
+  amount: 20,
+  payerAddress: new PublicKey('user_address'),
+});
+```
+
+2. Sign and confirm transaction
+
+```ts
+await solidoSDK.stake({
+  transaction: stakeTransaction,
+  wallet: WalletInstance, // used for singing TX
+  setTxStage: setTxStageCallback, // used for setting TX stage
+});
+```
+
+_[Read more for full examples & details](https://lidofinance.github.io/solido-sdk/staking)_
 
 ## Using staking widget
 
