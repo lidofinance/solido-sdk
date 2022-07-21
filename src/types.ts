@@ -36,6 +36,8 @@ export type TransactionProps = {
   payerAddress: PublicKey;
 };
 
+export type StakeProps = Omit<SignAndConfirmTransactionProps, 'transaction'> & Pick<TransactionProps, 'amount'>;
+
 export type InstructionStruct = {
   /**
    * instruction code (see INSTRUCTION enum)
