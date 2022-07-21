@@ -1,5 +1,6 @@
 .idea
 node_modules
 dist
+.docusaurus
 .docz
 .DS_Store
