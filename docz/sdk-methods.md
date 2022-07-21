@@ -35,7 +35,7 @@ _Signs and confirms stake transaction. Returns transaction hash._
 
 <br />
 
-## UnStaking:
+## UnStaking
 
 ---
 
