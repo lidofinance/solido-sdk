@@ -3,6 +3,7 @@ import del from 'rollup-plugin-delete';
 import svgr from '@svgr/rollup'
 import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
 import url from '@rollup/plugin-url';
 
 import { nodeResolve } from '@rollup/plugin-node-resolve';
@@ -31,7 +32,7 @@ export default {
         { find: '@/', replacement: './src/' },
       ]
     }),
-    nodeResolve({ extensions }),
+    nodeResolve({ extensions, preferBuiltins: false }),
     commonjs({
       include: /node_modules/,
     }),
@@ -43,7 +44,17 @@ export default {
       limit: 30720,
     }),
     svgr(),
+    json(),
   ],
 
-  external: ['react', 'react-dom', 'react/jsx-runtime', 'styled-components']
+  external: [
+    'react',
+    'react-dom',
+    'react/jsx-runtime',
+    'styled-components',
+    '@solana/web3.js',
+    '@solana/buffer-layout',
+    '@solana/spl-token',
+    'bn.js',
+  ]
 };
