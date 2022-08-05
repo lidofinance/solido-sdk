@@ -12,6 +12,7 @@ import BN from 'bn.js';
 import { INSTRUCTION } from '@/constants';
 import { InstructionStruct, AccountInfo, Validator } from '@/types';
 import { SolidoSDK } from '@/index';
+import { solToLamports } from '@/utils/formatters';
 
 export const getHeaviestValidator = (validatorEntries: AccountInfo['validators']['entries']) => {
   const sortedValidatorEntries = validatorEntries.sort(
@@ -47,7 +48,7 @@ export async function calculateStakeAccountAddress(this: SolidoSDK, heaviestVali
 }
 
 type WithdrawInstructionProps = {
-  amount: number;
+  amount: number; // in stSOL
   payerAddress: PublicKey;
   senderStSolAccountAddress: PublicKey;
   stakeAccount: PublicKey;
@@ -63,7 +64,7 @@ export async function getWithdrawInstruction(this: SolidoSDK, props: WithdrawIns
   dataLayout.encode(
     {
       instruction: INSTRUCTION.UNSTAKE,
-      amount: new BN(amount),
+      amount: new BN(solToLamports(amount)),
     },
     data,
   );

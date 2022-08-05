@@ -6,9 +6,10 @@ import BN from 'bn.js';
 import { InstructionStruct } from '@/types';
 import { INSTRUCTION } from '@/constants';
 import { SolidoSDK } from '@/index';
+import { solToLamports } from '@/utils/formatters';
 
 type DepositInstructionProps = {
-  amount: number;
+  amount: number; // in SOL
   payerAddress: PublicKey;
   recipientStSolAddress: PublicKey;
 };
@@ -35,7 +36,7 @@ export async function getDepositInstruction(this: SolidoSDK, props: DepositInstr
   dataLayout.encode(
     {
       instruction: INSTRUCTION.STAKE,
-      amount: new BN(amount),
+      amount: new BN(solToLamports(amount)),
     },
     data,
   );

@@ -9,29 +9,77 @@ export class Lido {
   }
 }
 
-const SeedRange = Lido;
+class SeedRange {
+  constructor(data) {
+    Object.assign(this, data);
+  }
+}
 
-const Validator = Lido;
+class Validator {
+  constructor(data) {
+    Object.assign(this, data);
+  }
+}
 
-const PubKeyAndEntry = Lido;
+class PubKeyAndEntry {
+  constructor(data) {
+    Object.assign(this, data);
+  }
+}
 
-const PubKeyAndEntryMaintainer = Lido;
+class PubKeyAndEntryMaintainer {
+  constructor(data) {
+    Object.assign(this, data);
+  }
+}
 
-const RewardDistribution = Lido;
+class RewardDistribution {
+  constructor(data) {
+    Object.assign(this, data);
+  }
+}
 
-const FeeRecipients = Lido;
+class FeeRecipients {
+  constructor(data) {
+    Object.assign(this, data);
+  }
+}
 
-const Validators = Lido;
+class Validators {
+  constructor(data) {
+    Object.assign(this, data);
+  }
+}
 
-const Maintainers = Lido;
+class Maintainers {
+  constructor(data) {
+    Object.assign(this, data);
+  }
+}
 
-const ExchangeRate = Lido;
+class ExchangeRate {
+  constructor(data) {
+    Object.assign(this, data);
+  }
+}
 
-const Metrics = Lido;
+class Metrics {
+  constructor(data) {
+    Object.assign(this, data);
+  }
+}
 
-const LamportsHistogram = Lido;
+class LamportsHistogram {
+  constructor(data) {
+    Object.assign(this, data);
+  }
+}
 
-const WithdrawMetric = Lido;
+class WithdrawMetric {
+  constructor(data) {
+    Object.assign(this, data);
+  }
+}
 
 export async function getAccountInfo(this: SolidoSDK): Promise<AccountInfo> {
   const schema = new Map([

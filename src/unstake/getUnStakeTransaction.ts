@@ -35,5 +35,5 @@ export async function getUnStakeTransaction(this: SolidoSDK, props: TransactionP
 
   transaction.partialSign(newStakeAccount);
 
-  return { transaction, stakeAccountAddress: newStakeAccountPubkey };
+  return { transaction, deactivatingSolAccountAddress: newStakeAccountPubkey };
 }
