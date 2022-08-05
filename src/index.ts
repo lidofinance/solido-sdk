@@ -51,23 +51,22 @@ export class SolidoSDK {
     const { transaction, wallet, setTxStage } = props;
 
     try {
-      setTxStage?.(TX_STAGE.AWAITING_SIGNING);
       const signed = await wallet.signTransaction(transaction);
 
       const transactionHash = await this.connection.sendRawTransaction(signed.serialize());
 
-      setTxStage?.(TX_STAGE.AWAITING_BLOCK);
+      setTxStage?.({ txStage: TX_STAGE.AWAITING_BLOCK, transactionHash });
       const { value: status } = await this.connection.confirmTransaction(transactionHash);
 
       if (status?.err) {
         throw status.err;
       }
 
-      setTxStage?.(TX_STAGE.SUCCESS);
+      setTxStage?.({ txStage: TX_STAGE.SUCCESS });
       return transactionHash;
     } catch (error) {
       console.error(error);
-      setTxStage?.(TX_STAGE.ERROR);
+      setTxStage?.({ txStage: TX_STAGE.ERROR });
 
       throw error;
     }
@@ -83,16 +82,20 @@ export class SolidoSDK {
       throw new Error('SolidoSDK: publicKey is null in wallet');
     }
 
-    const stakeTransaction = await this.getStakeTransaction({
+    const { transaction, stSolAccountAddress } = await this.getStakeTransaction({
       amount: +amount,
       payerAddress: new PublicKey(wallet.publicKey),
     });
 
-    return this.signAndConfirmTransaction({
-      transaction: stakeTransaction,
+    setTxStage?.({ txStage: TX_STAGE.AWAITING_SIGNING, stSolAccountAddress });
+
+    const transactionHash = await this.signAndConfirmTransaction({
+      transaction,
       wallet,
       setTxStage,
     });
+
+    return { transactionHash, stSolAccountAddress };
   }
 
   public getStakeTransaction = getStakeTransaction.bind(this);
@@ -111,16 +114,23 @@ export class SolidoSDK {
       throw new Error('SolidoSDK: publicKey is null in wallet');
     }
 
-    const { transaction } = await this.getUnStakeTransaction({
+    const { transaction, deactivatingSolAccountAddress } = await this.getUnStakeTransaction({
       amount: +amount,
       payerAddress: new PublicKey(wallet.publicKey),
     });
 
-    return this.signAndConfirmTransaction({
+    setTxStage?.({ txStage: TX_STAGE.AWAITING_SIGNING, deactivatingSolAccountAddress });
+
+    const transactionHash = await this.signAndConfirmTransaction({
       transaction,
       wallet,
       setTxStage,
     });
+
+    return {
+      transactionHash,
+      deactivatingSolAccountAddress,
+    };
   }
 
   public getUnStakeTransaction = getUnStakeTransaction.bind(this);

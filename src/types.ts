@@ -1,8 +1,15 @@
 import BN from 'bn.js';
-import { PublicKey, Transaction } from '@solana/web3.js';
+import { PublicKey, Transaction, TransactionSignature } from '@solana/web3.js';
 import { SignerWalletAdapter } from '@solana/wallet-adapter-base';
 
 import { INSTRUCTION, TX_STAGE } from '@/constants';
+
+type SetTxStageProps = {
+  txStage: TX_STAGE;
+  transactionHash?: TransactionSignature;
+  deactivatingSolAccountAddress?: PublicKey;
+  stSolAccountAddress?: PublicKey;
+};
 
 export type SignAndConfirmTransactionProps = {
   /**
@@ -16,7 +23,12 @@ export type SignAndConfirmTransactionProps = {
   /**
    * Optional callback for getting information about transaction stage
    */
-  setTxStage?: (txStage: TX_STAGE) => void;
+  setTxStage?: ({
+    txStage,
+    transactionHash,
+    deactivatingSolAccountAddress,
+    stSolAccountAddress,
+  }: SetTxStageProps) => void;
 };
 
 export interface ProgramAddresses {

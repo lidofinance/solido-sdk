@@ -6,7 +6,7 @@ import { getMemoInstruction } from '@/utils/memo';
 import { checkMaxExceed } from '@/utils/checkMaxExceed';
 import { ensureTokenAccount } from './ensureTokenAccount';
 
-export async function getStakeTransaction(this: SolidoSDK, props: TransactionProps): Promise<Transaction> {
+export async function getStakeTransaction(this: SolidoSDK, props: TransactionProps) {
   const { payerAddress, amount } = props;
   const { stSolMintAddress } = this.programAddresses;
 
@@ -18,15 +18,15 @@ export async function getStakeTransaction(this: SolidoSDK, props: TransactionPro
   transaction.recentBlockhash = blockhash;
 
   const [stSolAccount] = await this.getStSolAccountsForUser(payerAddress);
-  let recipient = stSolAccount.address;
+  let stSolAccountAddress = stSolAccount.address;
 
-  if (!recipient) {
-    recipient = await ensureTokenAccount(transaction, payerAddress, stSolMintAddress);
+  if (!stSolAccountAddress) {
+    stSolAccountAddress = await ensureTokenAccount(transaction, payerAddress, stSolMintAddress);
   }
 
   const depositInstruction = await this.getDepositInstruction({
     ...props,
-    recipientStSolAddress: recipient,
+    recipientStSolAddress: stSolAccountAddress,
   });
   transaction.add(depositInstruction);
 
@@ -36,5 +36,5 @@ export async function getStakeTransaction(this: SolidoSDK, props: TransactionPro
     transaction.add(getMemoInstruction({ referrer: memoData }, payerAddress));
   }
 
-  return transaction;
+  return { transaction, stSolAccountAddress };
 }
