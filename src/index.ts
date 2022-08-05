@@ -7,14 +7,14 @@ import {
   calculateMaxStakeAmount,
   findProgramAddress,
   getDepositInstruction,
-  getStakeTransaction
+  getStakeTransaction,
 } from '@/stake';
 import {
   calculateMaxUnStakeAmount,
   calculateStakeAccountAddress,
   getAccountInfo,
   getUnStakeTransaction,
-  getWithdrawInstruction
+  getWithdrawInstruction,
 } from '@/unstake';
 
 import { getExchangeRate } from '@/statistics/getExchangeRate';
@@ -84,16 +84,16 @@ export class SolidoSDK {
     }
 
     const stakeTransaction = await this.getStakeTransaction({
-      amount,
+      amount: +amount,
       payerAddress: new PublicKey(wallet.publicKey),
     });
 
-    return await this.signAndConfirmTransaction({
+    return this.signAndConfirmTransaction({
       transaction: stakeTransaction,
       wallet,
       setTxStage,
     });
-  };
+  }
 
   public getStakeTransaction = getStakeTransaction.bind(this);
 
@@ -112,11 +112,11 @@ export class SolidoSDK {
     }
 
     const { transaction } = await this.getUnStakeTransaction({
-      amount,
+      amount: +amount,
       payerAddress: new PublicKey(wallet.publicKey),
     });
 
-    return await this.signAndConfirmTransaction({
+    return this.signAndConfirmTransaction({
       transaction,
       wallet,
       setTxStage,

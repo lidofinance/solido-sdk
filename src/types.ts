@@ -36,7 +36,8 @@ export type TransactionProps = {
   payerAddress: PublicKey;
 };
 
-export type StakeProps = Omit<SignAndConfirmTransactionProps, 'transaction'> & Pick<TransactionProps, 'amount'>;
+export type StakeProps = Omit<SignAndConfirmTransactionProps, 'transaction'> &
+  Pick<TransactionProps, 'amount'>;
 
 export type InstructionStruct = {
   /**
@@ -49,16 +50,18 @@ export type InstructionStruct = {
   amount: BN;
 };
 
-type ApiError = {
+export type ApiError = {
   code: string;
   msg: string;
 };
+
+export type BatchError = Record<string, ApiError>;
 
 export type SolApiResponse<K extends string, T extends Record<string, any>> = {
   batchData: {
     [key in K]: T;
   };
-  batchError: Record<string, ApiError>;
+  batchError: BatchError;
   error: ApiError & {
     detail: string;
   };
