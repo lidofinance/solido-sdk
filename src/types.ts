@@ -23,12 +23,7 @@ export type SignAndConfirmTransactionProps = {
   /**
    * Optional callback for getting information about transaction stage
    */
-  setTxStage?: ({
-    txStage,
-    transactionHash,
-    deactivatingSolAccountAddress,
-    stSolAccountAddress,
-  }: SetTxStageProps) => void;
+  setTxStage?: (props: SetTxStageProps) => void;
 };
 
 export interface ProgramAddresses {
