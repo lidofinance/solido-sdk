@@ -14,7 +14,7 @@ Lido on Solana gives you:
 This sdk helps you integrate with us, using two ways:
 1. Simplest way is using React banner.
 2. Support UI widget in your project. We provide js functions for staking, unstaking, statistics and transaction info.
-3. Use staking widget with UI
+3. Use staking widget with UI (coming soon)
 
 ## Contents:
 - [Installation](#installation)
