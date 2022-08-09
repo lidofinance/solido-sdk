@@ -61,7 +61,7 @@ try {
 }
 ```
 
-_[Read more for full examples & details](https://docs.solana.lido.fi/frontend-integration/stake)_
+_[Read more for full examples & details](https://docs.solana.lido.fi/frontend-integration/sdk)_
 
 ## Using staking widget
 
