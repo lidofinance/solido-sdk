@@ -51,7 +51,7 @@ import { SolidoSDK } from '@lidofinance/solido-sdk';
 const solidoSDK = new SolidoSDK('mainnet-beta', connection, 'your_solana_referral_address');
 
 try {
-  const transactionHash = await solidoSDK.stake({
+  const { transactionHash, stSolAccountAddress } = await solidoSDK.stake({
     amount: 20, // The amount of SOL-s which need to stake
     wallet: wallet, // Wallet instance
     setTxStage: setTxStageCallback, // Optional callback for getting information about transaction stage (see TX_STAGE)
