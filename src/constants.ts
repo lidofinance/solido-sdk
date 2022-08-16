@@ -6,6 +6,11 @@ export enum INSTRUCTION {
   UNSTAKE = 2,
 }
 
+export enum INSTRUCTION_V2 {
+  STAKE = 1,
+  UNSTAKE = 23,
+}
+
 export enum TX_STAGE {
   AWAITING_SIGNING = 1,
   AWAITING_BLOCK = 2,
