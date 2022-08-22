@@ -2,18 +2,13 @@ import BN from 'bn.js';
 import { PublicKey, Transaction, TransactionSignature } from '@solana/web3.js';
 import { SignerWalletAdapter } from '@solana/wallet-adapter-base';
 
-import { INSTRUCTION, TX_STAGE } from '@/constants';
+import { INSTRUCTION, TX_STAGE, LidoVersion } from '@/constants';
 
 enum AccountType {
   Uninitialized,
   Lido,
   Validator,
   Maintainer,
-}
-
-enum LidoVersion {
-  First,
-  Second
 }
 
 type SetTxStageProps = {
@@ -69,6 +64,10 @@ export type InstructionStruct = {
   amount: BN;
 };
 
+export type WithdrawInstructionStruct = InstructionStruct & {
+  validator_index: number;
+};
+
 export type ApiError = {
   code: string;
   msg: string;
@@ -95,34 +94,16 @@ export type SolApiPriceResponse<K extends string> = SolApiResponse<
   }
 >;
 
-export type Validator = {
-  entry: {
-    stake_accounts_balance: BN;
-    stake_seeds: SeedRange;
-  };
-  pubkey: BN;
-};
-
-export type AccountInfo = {
-  validators: {
-    entries: Validator[];
-  };
-  exchange_rate: {
-    sol_balance: BN;
-    st_sol_supply: BN;
-  };
-};
-
 type ListHeader = {
   max_entries: BN;
   lido_version: LidoVersion;
   account_type: AccountType;
-}
+};
 
 type SeedRange = {
   begin: BN;
   end: BN;
-}
+};
 
 type ExchangeRate = {
   // The epoch in which when was last called `UpdateExchangeRate`
@@ -133,7 +114,7 @@ type ExchangeRate = {
   // bookkeeping, so excluding the validation rewards paid at the start of
   // epoch `computed_in_epoch`.
   st_sol_supply: BN;
-}
+};
 
 type LamportsHistogram = {
   counts1: BN;
@@ -149,19 +130,19 @@ type LamportsHistogram = {
   counts11: BN;
   counts12: BN;
   total: BN;
-}
+};
 
 type WithdrawMetric = {
   total_st_sol_amount: BN;
   total_sol_amount: BN;
   count: BN;
-}
+};
 
 type RewardDistribution = {
   treasury_fee: number;
   developer_fee: number;
   st_sol_appreciation: number;
-}
+};
 
 type Metrics = {
   // Fees paid to the treasury, in total since we started tracking, before conversion to stSOL
@@ -182,12 +163,12 @@ type Metrics = {
   deposit_amount: LamportsHistogram;
   // Total amount withdrawn since the beginning
   withdraw_amount: WithdrawMetric;
-}
+};
 
 type FeeRecipients = {
   treasury_account: PublicKey;
   developer_account: PublicKey;
-}
+};
 
 export type ValidatorV2 = {
   // Validator vote account address
@@ -205,13 +186,31 @@ export type ValidatorV2 = {
   effective_stake_balance: BN;
   // Controls if a validator is allowed to have new stake deposits
   active: boolean;
-}
+};
+
+export type Validator = ValidatorV2;
+
+export type ValidatorV1 = {
+  entry: Omit<ValidatorV2, 'vote_account_address'>;
+  pubkey: PublicKey;
+};
+
+export type AccountInfoV1 = {
+  lido_version: LidoVersion;
+  validators: {
+    entries: ValidatorV1[];
+  };
+  exchange_rate: {
+    sol_balance: BN;
+    st_sol_supply: BN;
+  };
+};
 
 export type ValidatorsList = {
   header: ListHeader;
   entries: ValidatorV2[];
   account_type: AccountType;
-}
+};
 
 export type AccountInfoV2 = {
   // Solido version

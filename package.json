@@ -1,6 +1,6 @@
 {
   "name": "@lidofinance/solido-sdk",
-  "version": "0.2.0",
+  "version": "0.3.0-local.2",
   "description": "Lido on Solana frontend sdk",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

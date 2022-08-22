@@ -18,6 +18,11 @@ export enum TX_STAGE {
   ERROR = 4,
 }
 
+export enum LidoVersion {
+  First,
+  Second,
+}
+
 export const MAINNET_PROGRAM_ADDRESSES: ProgramAddresses = {
   solidoProgramId: new PublicKey('CrX7kMhLC3cSsXJdT7JDgqrRVWGnUpX3gfEfxxU2NVLi'),
   solidoInstanceId: new PublicKey('49Yi1TKkNyYjPAFdR9LBvoHcUjuPX4Df5T5yv39w2XTn'),
@@ -31,9 +36,9 @@ export const DEVNET_PROGRAM_ADDRESSES: ProgramAddresses = {
 };
 
 export const TESTNET_PROGRAM_ADDRESSES: ProgramAddresses = {
-  solidoProgramId: new PublicKey('7k3rzqoNQxgTLTooAvXriGBKYsd16bV3JMvatvXcBfNo'),
-  solidoInstanceId: new PublicKey('7yoacaUf7yu5wqxpcHaXtwCaMciR7kFqps8FwnX4cjeK'),
-  stSolMintAddress: new PublicKey('8ry9FhmvhifEBwLPJpg89fAu19rmUHskDVvEfKuDbQbT'),
+  solidoProgramId: new PublicKey('CGB9MASv7Qrgi3cXZ9YgNp5XFcE6zuhkt5pZ1g473CbC'),
+  solidoInstanceId: new PublicKey('33GsSURekhMQmVHeyFkGtW4ihDb5638exWD9Q8xV65RW'),
+  stSolMintAddress: new PublicKey('2N1FMx6xqTqBYh4iqGifERV2BKH8gSk1PtHQ6Nt717DR'),
 };
 
 export const clusterProgramAddresses: Record<Cluster, ProgramAddresses> = {

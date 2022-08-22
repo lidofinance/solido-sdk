@@ -13,6 +13,7 @@ import {
   calculateMaxUnStakeAmount,
   calculateStakeAccountAddress,
   getAccountInfo,
+  getAccountInfoResponse,
   getUnStakeTransaction,
   getWithdrawInstruction,
 } from '@/unstake';
@@ -39,10 +40,14 @@ export class SolidoSDK {
 
   protected referrerId?: string;
 
+  protected solidoAccountInfo?: getAccountInfoResponse;
+
   constructor(cluster: Cluster, connection: Connection, referrerId?: string) {
     this.programAddresses = clusterProgramAddresses[cluster];
     this.connection = connection;
     this.referrerId = referrerId;
+
+    void this.getAccountInfo();
   }
 
   public async signAndConfirmTransaction(
