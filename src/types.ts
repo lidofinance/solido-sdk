@@ -2,7 +2,7 @@ import BN from 'bn.js';
 import { PublicKey, Transaction, TransactionSignature } from '@solana/web3.js';
 import { SignerWalletAdapter } from '@solana/wallet-adapter-base';
 
-import { INSTRUCTION, TX_STAGE, LidoVersion } from '@/constants';
+import { INSTRUCTION, TX_STAGE, LidoVersion, INSTRUCTION_V2 } from '@/constants';
 
 enum AccountType {
   Uninitialized,
@@ -64,7 +64,8 @@ export type InstructionStruct = {
   amount: BN;
 };
 
-export type WithdrawInstructionStruct = InstructionStruct & {
+export type WithdrawInstructionStruct = Pick<InstructionStruct, 'amount'> & {
+  instruction: INSTRUCTION_V2;
   validator_index: number;
 };
 

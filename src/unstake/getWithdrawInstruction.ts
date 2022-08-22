@@ -9,7 +9,7 @@ import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { nu64, struct, u32, u8 } from '@solana/buffer-layout';
 import BN from 'bn.js';
 
-import { INSTRUCTION, LidoVersion } from '@/constants';
+import { INSTRUCTION, INSTRUCTION_V2, LidoVersion } from '@/constants';
 import { InstructionStruct, Validator, WithdrawInstructionStruct } from '@/types';
 import { SolidoSDK } from '@/index';
 import { solToLamports } from '@/utils/formatters';
@@ -91,7 +91,7 @@ export async function getWithdrawInstruction(this: SolidoSDK, props: WithdrawIns
     data = Buffer.alloc(dataLayout.span);
     dataLayout.encode(
       {
-        instruction: INSTRUCTION.UNSTAKE,
+        instruction: INSTRUCTION_V2.UNSTAKE,
         amount: new BN(solToLamports(amount)),
         validator_index: getValidatorIndex(validators, validator),
       },
