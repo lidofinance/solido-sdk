@@ -82,7 +82,8 @@ class WithdrawMetric {
 }
 
 export async function getAccountInfo(this: SolidoSDK): Promise<AccountInfo> {
-  if (this.solidoAccountInfo) {
+  // save answer only for clients
+  if (this.solidoAccountInfo && typeof window !== 'undefined') {
     return this.solidoAccountInfo;
   }
 
