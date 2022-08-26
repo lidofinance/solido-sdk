@@ -442,17 +442,16 @@ const validatorsSchema = new Map([
   ],
 ]);
 
-export type getAccountInfoResponse =
-  | {
-      lidoVersion: LidoVersion.First;
-      accountInfo: AccountInfoV1;
-      validators: Validator[];
-    }
-  | {
-      lidoVersion: LidoVersion.Second;
-      accountInfo: AccountInfoV2;
-      validators: Validator[];
-    };
+type AccountInfoMap = {
+  [LidoVersion.v1]: AccountInfoV1;
+  [LidoVersion.v2]: AccountInfoV2;
+};
+
+type AccountInfo<T extends keyof AccountInfoMap> = keyof AccountInfoMap extends T ? never : AccountInfoMap[T];
+
+export type getAccountInfoResponse = {
+  [K in keyof AccountInfoMap]: { lidoVersion: K; accountInfo: AccountInfo<K> } & { validators: Validator[] };
+}[keyof AccountInfoMap];
 
 export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoResponse> {
   if (this.solidoAccountInfo) {
@@ -480,7 +479,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoRes
     }));
 
     this.solidoAccountInfo = {
-      lidoVersion: LidoVersion.First,
+      lidoVersion: LidoVersion.v1,
       accountInfo: deserializedAccountInfo,
       validators,
     };
@@ -505,7 +504,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoRes
     ) as any as ValidatorsList;
 
     this.solidoAccountInfo = {
-      lidoVersion: LidoVersion.Second,
+      lidoVersion: LidoVersion.v2,
       accountInfo: deserializedAccountInfo,
       validators: deserializedValidators.entries,
     };

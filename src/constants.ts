@@ -19,8 +19,8 @@ export enum TX_STAGE {
 }
 
 export enum LidoVersion {
-  First,
-  Second,
+  v1,
+  v2,
 }
 
 export const MAINNET_PROGRAM_ADDRESSES: ProgramAddresses = {
