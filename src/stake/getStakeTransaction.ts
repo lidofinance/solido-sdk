@@ -18,7 +18,7 @@ export async function getStakeTransaction(this: SolidoSDK, props: TransactionPro
   transaction.recentBlockhash = blockhash;
 
   const [stSolAccount] = await this.getStSolAccountsForUser(payerAddress);
-  let stSolAccountAddress = stSolAccount.address;
+  let stSolAccountAddress = stSolAccount?.address;
 
   if (!stSolAccountAddress) {
     stSolAccountAddress = await ensureTokenAccount(transaction, payerAddress, stSolMintAddress);
