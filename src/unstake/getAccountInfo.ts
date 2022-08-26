@@ -454,7 +454,8 @@ export type getAccountInfoResponse = {
 }[keyof AccountInfoMap];
 
 export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoResponse> {
-  if (this.solidoAccountInfo) {
+  // save answer only for clients
+  if (this.solidoAccountInfo && typeof window !== 'undefined') {
     return this.solidoAccountInfo;
   }
 
