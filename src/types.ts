@@ -145,21 +145,21 @@ type RewardDistribution = {
   st_sol_appreciation: number;
 };
 
-type Metrics = {
+export type AccountInfoMetrics = {
   // Fees paid to the treasury, in total since we started tracking, before conversion to stSOL
-  fee_treasury_sol_total: number;
+  fee_treasury_sol_total: BN;
   // Fees paid to validators, in total since we started tracking, before conversion to stSOL
-  fee_validation_sol_total: number;
+  fee_validation_sol_total: BN;
   // Fees paid to the developer, in total since we started tracking, before conversion to stSOL
-  fee_developer_sol_total: number;
+  fee_developer_sol_total: BN;
   // Total rewards that benefited stSOL holders, in total, since we started tracking
-  st_sol_appreciation_sol_total: number;
+  st_sol_appreciation_sol_total: BN;
   // Fees paid to the treasury, in total since we started tracking
-  fee_treasury_st_sol_total: number;
+  fee_treasury_st_sol_total: BN;
   // Fees paid to validators, in total since we started tracking
-  fee_validation_st_sol_total: number;
+  fee_validation_st_sol_total: BN;
   // Fees paid to the developer, in total since we started tracking
-  fee_developer_st_sol_total: number;
+  fee_developer_st_sol_total: BN;
   // Histogram of deposits, including the total amount deposited since we started tracking
   deposit_amount: LamportsHistogram;
   // Total amount withdrawn since the beginning
@@ -205,6 +205,7 @@ export type AccountInfoV1 = {
     sol_balance: BN;
     st_sol_supply: BN;
   };
+  metrics: AccountInfoMetrics;
 };
 
 export type ValidatorsList = {
@@ -241,7 +242,7 @@ export type AccountInfoV2 = {
   fee_recipients: FeeRecipients;
 
   // Metrics for informational purposes
-  metrics: Metrics;
+  metrics: AccountInfoMetrics;
 
   // Validator list account
   validators_list: PublicKey;

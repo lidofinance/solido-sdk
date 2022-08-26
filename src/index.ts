@@ -27,6 +27,7 @@ import { getTotalStaked } from '@/statistics/getTotalStaked';
 import { getStakersCount } from '@/statistics/getStakersCount';
 import { getMarketCap } from '@/statistics/getMarketCap';
 import { getLidoStatistics } from '@/statistics/lidoStatistics';
+import { getSolidoMetrics } from '@/statistics/getSolidoMetrics';
 import { getStSolAccountsForUser } from '@/stake/getStSolAccountsForUser';
 
 export { default as LidoStakeBanner } from './banner';
@@ -165,4 +166,6 @@ export class SolidoSDK {
   public getStakersCount = getStakersCount.bind(this);
 
   public getMarketCap = getMarketCap.bind(this);
+
+  public getSolidoMetrics = getSolidoMetrics.bind(this);
 }
