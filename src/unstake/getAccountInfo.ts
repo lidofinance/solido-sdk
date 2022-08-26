@@ -82,6 +82,10 @@ class WithdrawMetric {
 }
 
 export async function getAccountInfo(this: SolidoSDK): Promise<AccountInfo> {
+  if (this.solidoAccountInfo) {
+    return this.solidoAccountInfo;
+  }
+
   const schema = new Map([
     [
       ExchangeRate,
@@ -270,7 +274,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<AccountInfo> {
     throw new Error("Could'nt fetch getAccountInfo");
   }
 
-  const deserializedAccountInfo = deserializeUnchecked(schema, Lido, accountInfo.data) as any as AccountInfo;
+  this.solidoAccountInfo = deserializeUnchecked(schema, Lido, accountInfo.data) as any as AccountInfo;
 
-  return deserializedAccountInfo;
+  return this.solidoAccountInfo;
 }

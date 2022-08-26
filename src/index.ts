@@ -1,6 +1,6 @@
 import { Cluster, Connection, PublicKey, TransactionSignature } from '@solana/web3.js';
 
-import { ProgramAddresses, SignAndConfirmTransactionProps, StakeProps } from '@/types';
+import { AccountInfo, ProgramAddresses, SignAndConfirmTransactionProps, StakeProps } from '@/types';
 import { clusterProgramAddresses, TX_STAGE } from '@/constants';
 
 import {
@@ -39,6 +39,8 @@ export class SolidoSDK {
   protected connection: Connection;
 
   protected referrerId?: string;
+
+  protected solidoAccountInfo?: AccountInfo;
 
   constructor(cluster: Cluster, connection: Connection, referrerId?: string) {
     this.programAddresses = clusterProgramAddresses[cluster];
