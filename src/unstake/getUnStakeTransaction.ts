@@ -7,7 +7,7 @@ import { checkMaxExceed } from '@/utils/checkMaxExceed';
 export async function getUnStakeTransaction(this: SolidoSDK, props: TransactionProps) {
   const { payerAddress, amount } = props;
 
-  const maxInLamports = await this.calculateMaxStakeAmount(payerAddress);
+  const maxInLamports = await this.calculateMaxUnStakeAmount(payerAddress);
   checkMaxExceed(amount, maxInLamports);
 
   const newStakeAccount = Keypair.generate();
