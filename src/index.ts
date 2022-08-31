@@ -1,6 +1,12 @@
-import { Cluster, Connection, PublicKey, TransactionSignature } from '@solana/web3.js';
+import { Connection, PublicKey, TransactionSignature } from '@solana/web3.js';
 
-import { AccountInfo, ProgramAddresses, SignAndConfirmTransactionProps, StakeProps } from '@/types';
+import {
+  StakeProps,
+  AccountInfo,
+  ProgramAddresses,
+  SupportedClusters,
+  SignAndConfirmTransactionProps,
+} from '@/types';
 import { clusterProgramAddresses, TX_STAGE } from '@/constants';
 
 import {
@@ -42,7 +48,12 @@ export class SolidoSDK {
 
   protected solidoAccountInfo?: AccountInfo;
 
-  constructor(cluster: Cluster, connection: Connection, referrerId?: string) {
+  constructor(cluster: SupportedClusters, connection: Connection, referrerId?: string) {
+    // @ts-expect-error for js users
+    if (cluster === 'devnet') {
+      throw Error("SolidoSDK doesn't support devnet, please specify mainnet-beta or testnet");
+    }
+
     this.programAddresses = clusterProgramAddresses[cluster];
     this.connection = connection;
     this.referrerId = referrerId;

@@ -1,8 +1,10 @@
 import BN from 'bn.js';
-import { PublicKey, Transaction, TransactionSignature } from '@solana/web3.js';
+import { PublicKey, Transaction, TransactionSignature, Cluster } from '@solana/web3.js';
 import { SignerWalletAdapter } from '@solana/wallet-adapter-base';
 
 import { INSTRUCTION, TX_STAGE } from '@/constants';
+
+export type SupportedClusters = Exclude<Cluster, 'devnet'>;
 
 type SetTxStageProps = {
   txStage: TX_STAGE;
