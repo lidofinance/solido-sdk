@@ -277,5 +277,10 @@ export async function getAccountInfo(this: SolidoSDK): Promise<AccountInfo> {
 
   this.solidoAccountInfo = deserializeUnchecked(schema, Lido, accountInfo.data) as any as AccountInfo;
 
+  setTimeout(() => {
+    // clear cache after 7 seconds, in order to avoid outdated data
+    this.solidoAccountInfo = undefined;
+  }, 7 * 1000);
+
   return this.solidoAccountInfo;
 }
