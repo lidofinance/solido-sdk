@@ -36,9 +36,9 @@ export const DEVNET_PROGRAM_ADDRESSES: ProgramAddresses = {
 };
 
 export const TESTNET_PROGRAM_ADDRESSES: ProgramAddresses = {
-  solidoProgramId: new PublicKey('CGB9MASv7Qrgi3cXZ9YgNp5XFcE6zuhkt5pZ1g473CbC'),
-  solidoInstanceId: new PublicKey('33GsSURekhMQmVHeyFkGtW4ihDb5638exWD9Q8xV65RW'),
-  stSolMintAddress: new PublicKey('2N1FMx6xqTqBYh4iqGifERV2BKH8gSk1PtHQ6Nt717DR'),
+  solidoProgramId: new PublicKey('2KPfx9WzP19akuo5i718es7HXaAasuEsgFJsCfX28UZN'),
+  solidoInstanceId: new PublicKey('AA88TiQ7yUVPSuVFoMpc26xhy26iathp7yxkF2XeSrxd'),
+  stSolMintAddress: new PublicKey('5DvRcd8xV2oBnirPVUPWTS3SkpsF6mXjDJ1whgtadM1E'),
 };
 
 export const clusterProgramAddresses: Record<Cluster, ProgramAddresses> = {

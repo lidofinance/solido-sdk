@@ -362,9 +362,9 @@ const accountInfoV2Scheme = new Map([
     {
       kind: 'struct',
       fields: [
-        ['lido_version', 'u8'],
-
         ['account_type', 'u8'],
+
+        ['lido_version', 'u8'],
 
         ['manager', [32]],
 
@@ -398,9 +398,9 @@ const validatorsSchema = new Map([
     {
       kind: 'struct',
       fields: [
-        ['max_entries', 'u32'],
-        ['lido_version', 'u8'],
         ['account_type', 'u8'],
+        ['lido_version', 'u8'],
+        ['max_entries', 'u32'],
       ],
     },
   ],
@@ -436,7 +436,6 @@ const validatorsSchema = new Map([
       fields: [
         ['header', ListHeader],
         ['entries', [ValidatorClass]],
-        ['account_type', 'u8'],
       ],
     },
   ],
