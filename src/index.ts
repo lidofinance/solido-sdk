@@ -1,6 +1,12 @@
-import { Cluster, Connection, PublicKey, TransactionSignature } from '@solana/web3.js';
+import { Connection, PublicKey, TransactionSignature } from '@solana/web3.js';
 
-import { ProgramAddresses, SignAndConfirmTransactionProps, StakeProps } from '@/types';
+import {
+  StakeProps,
+  AccountInfo,
+  ProgramAddresses,
+  SupportedClusters,
+  SignAndConfirmTransactionProps,
+} from '@/types';
 import { clusterProgramAddresses, TX_STAGE } from '@/constants';
 
 import {
@@ -26,6 +32,7 @@ import { getTotalStaked } from '@/statistics/getTotalStaked';
 import { getStakersCount } from '@/statistics/getStakersCount';
 import { getMarketCap } from '@/statistics/getMarketCap';
 import { getLidoStatistics } from '@/statistics/lidoStatistics';
+import { getTotalRewards } from '@/statistics/getTotalRewards';
 import { getStSolAccountsForUser } from '@/stake/getStSolAccountsForUser';
 
 export { default as LidoStakeBanner } from './banner';
@@ -39,7 +46,14 @@ export class SolidoSDK {
 
   protected referrerId?: string;
 
-  constructor(cluster: Cluster, connection: Connection, referrerId?: string) {
+  protected solidoAccountInfo?: AccountInfo;
+
+  constructor(cluster: SupportedClusters, connection: Connection, referrerId?: string) {
+    // @ts-expect-error for js users
+    if (cluster === 'devnet') {
+      throw Error("SolidoSDK doesn't support devnet, please specify mainnet-beta or testnet");
+    }
+
     this.programAddresses = clusterProgramAddresses[cluster];
     this.connection = connection;
     this.referrerId = referrerId;
@@ -160,4 +174,6 @@ export class SolidoSDK {
   public getStakersCount = getStakersCount.bind(this);
 
   public getMarketCap = getMarketCap.bind(this);
+
+  public getTotalRewards = getTotalRewards.bind(this);
 }
