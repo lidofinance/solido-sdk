@@ -1,8 +1,10 @@
 import BN from 'bn.js';
-import { PublicKey, Transaction, TransactionSignature } from '@solana/web3.js';
+import { PublicKey, Transaction, TransactionSignature, Cluster } from '@solana/web3.js';
 import { SignerWalletAdapter } from '@solana/wallet-adapter-base';
 
 import { INSTRUCTION, TX_STAGE } from '@/constants';
+
+export type SupportedClusters = Exclude<Cluster, 'devnet'>;
 
 type SetTxStageProps = {
   txStage: TX_STAGE;
@@ -94,6 +96,49 @@ export type Validator = {
   pubkey: BN;
 };
 
+type LamportsHistogram = {
+  counts1: BN;
+  counts2: BN;
+  counts3: BN;
+  counts4: BN;
+  counts5: BN;
+  counts6: BN;
+  counts7: BN;
+  counts8: BN;
+  counts9: BN;
+  counts10: BN;
+  counts11: BN;
+  counts12: BN;
+  total: BN;
+};
+
+type WithdrawMetric = {
+  total_st_sol_amount: BN;
+  total_sol_amount: BN;
+  count: BN;
+};
+
+export type AccountInfoMetrics = {
+  // Fees paid to the treasury, in total since we started tracking, before conversion to stSOL
+  fee_treasury_sol_total: BN;
+  // Fees paid to validators, in total since we started tracking, before conversion to stSOL
+  fee_validation_sol_total: BN;
+  // Fees paid to the developer, in total since we started tracking, before conversion to stSOL
+  fee_developer_sol_total: BN;
+  // Total rewards that benefited stSOL holders, in total, since we started tracking
+  st_sol_appreciation_sol_total: BN;
+  // Fees paid to the treasury, in total since we started tracking
+  fee_treasury_st_sol_total: BN;
+  // Fees paid to validators, in total since we started tracking
+  fee_validation_st_sol_total: BN;
+  // Fees paid to the developer, in total since we started tracking
+  fee_developer_st_sol_total: BN;
+  // Histogram of deposits, including the total amount deposited since we started tracking
+  deposit_amount: LamportsHistogram;
+  // Total amount withdrawn since the beginning
+  withdraw_amount: WithdrawMetric;
+};
+
 export type AccountInfo = {
   validators: {
     entries: Validator[];
@@ -102,4 +147,5 @@ export type AccountInfo = {
     sol_balance: BN;
     st_sol_supply: BN;
   };
+  metrics: AccountInfoMetrics;
 };

@@ -1,6 +1,6 @@
 {
   "name": "@lidofinance/solido-sdk",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Lido on Solana frontend sdk",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -29,11 +29,11 @@
   "dependencies": {
     "@lidofinance/lido-ui": "^2.7.0",
     "@solana/buffer-layout": "^4.0.0",
-    "bn.js": "^5.2.1",
-    "borsh": "^0.7.0",
     "@solana/spl-token": "^0.2.0",
     "@solana/wallet-adapter-base": "^0.9.9",
     "@solana/web3.js": "^1.47.3",
+    "bn.js": "^5.2.1",
+    "borsh": "^0.7.0",
     "rollup": "^2.75.7",
     "tslib": "^2.4.0"
   },
@@ -72,7 +72,9 @@
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-typescript2": "^0.32.1",
     "styled-components": "^5.3.5",
-    "typescript": "^4.7.4"
+    "ttypescript": "^1.5.13",
+    "typescript": "^4.7.4",
+    "typescript-transform-paths": "^3.3.1"
   },
   "peerDependencies": {
     "react": "16 || 17",

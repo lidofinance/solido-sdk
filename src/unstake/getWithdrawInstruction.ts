@@ -15,9 +15,8 @@ import { SolidoSDK } from '@/index';
 import { solToLamports } from '@/utils/formatters';
 
 export const getHeaviestValidator = (validatorEntries: AccountInfo['validators']['entries']) => {
-  const sortedValidatorEntries = validatorEntries.sort(
-    ({ entry: validatorA }, { entry: validatorB }) =>
-      validatorB.stake_accounts_balance.toNumber() - validatorA.stake_accounts_balance.toNumber(),
+  const sortedValidatorEntries = validatorEntries.sort(({ entry: validatorA }, { entry: validatorB }) =>
+    validatorB.stake_accounts_balance.cmp(validatorA.stake_accounts_balance),
   );
 
   return sortedValidatorEntries[0];

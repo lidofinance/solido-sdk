@@ -58,5 +58,8 @@ export async function getStakersCount(this: SolidoSDK) {
           but ${formatWithCommas(accountsEmpty)} of those are empty.`
         : ''
     }`,
+    // Additional fields
+    accountsTotal,
+    accountsEmpty,
   };
 }
