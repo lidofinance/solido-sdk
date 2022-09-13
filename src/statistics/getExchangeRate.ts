@@ -7,8 +7,8 @@ export async function getExchangeRate(this: SolidoSDK, precision = 4) {
   const totalSolInLamports = accountInfo.exchange_rate.sol_balance.toNumber();
   const stSolSupplyInLamports = accountInfo.exchange_rate.st_sol_supply.toNumber();
 
-  const SOLToStSOL = totalSolInLamports / stSolSupplyInLamports;
-  const stSOLToSOL = stSolSupplyInLamports / totalSolInLamports;
+  const stSOLToSOL = totalSolInLamports / stSolSupplyInLamports;
+  const SOLToStSOL = stSolSupplyInLamports / totalSolInLamports;
 
   return {
     SOLToStSOL: toPrecision(SOLToStSOL, precision),
