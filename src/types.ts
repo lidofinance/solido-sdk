@@ -88,6 +88,7 @@ export type SolApiPriceResponse<K extends string> = SolApiResponse<
 export type Validator = {
   entry: {
     stake_accounts_balance: BN;
+    unstake_accounts_balance: BN;
     stake_seeds: {
       begin: BN;
       end: BN;
