@@ -1,5 +1,5 @@
-import { PublicKey, Cluster } from '@solana/web3.js';
-import { ProgramAddresses } from '@/types';
+import { PublicKey } from '@solana/web3.js';
+import { ProgramAddresses, SupportedClusters } from '@/types';
 
 export enum INSTRUCTION {
   STAKE = 1,
@@ -29,21 +29,14 @@ export const MAINNET_PROGRAM_ADDRESSES: ProgramAddresses = {
   stSolMintAddress: new PublicKey('7dHbWXmci3dT8UFYWYZweBLXgycu7Y3iL6trKn1Y7ARj'),
 };
 
-export const DEVNET_PROGRAM_ADDRESSES: ProgramAddresses = {
-  solidoProgramId: new PublicKey('CbxVmURN74QZGuFj6qKjM8VDM8b8KKZrbPFLM2CC2hC8'),
-  solidoInstanceId: new PublicKey('8sqs4Jzs8uq7CEtimhXf32gioVUN3n5Qk65YMkNU5E4F'),
-  stSolMintAddress: new PublicKey('5nnLCgZn1EQaLj1ub8vYbQgBhkWi97x4JC5ARVPhci4V'),
-};
-
 export const TESTNET_PROGRAM_ADDRESSES: ProgramAddresses = {
-  solidoProgramId: new PublicKey('2KPfx9WzP19akuo5i718es7HXaAasuEsgFJsCfX28UZN'),
-  solidoInstanceId: new PublicKey('AA88TiQ7yUVPSuVFoMpc26xhy26iathp7yxkF2XeSrxd'),
-  stSolMintAddress: new PublicKey('5DvRcd8xV2oBnirPVUPWTS3SkpsF6mXjDJ1whgtadM1E'),
+  solidoProgramId: new PublicKey('79FkHD3z4c4dJBtA3r9F1z5qoU2Mq1aW7MVgTe9TWp7i'),
+  solidoInstanceId: new PublicKey('7djThAZ462gRyj8SPYXDfdiJcfsCotaBDw1LBCtBA2KR'),
+  stSolMintAddress: new PublicKey('GohGUeqp5BenhzipjwXu1G46hQYPUVF1hqWxbQkfJ5Nm'),
 };
 
-export const clusterProgramAddresses: Record<Cluster, ProgramAddresses> = {
+export const clusterProgramAddresses: Record<SupportedClusters, ProgramAddresses> = {
   'mainnet-beta': MAINNET_PROGRAM_ADDRESSES,
-  devnet: DEVNET_PROGRAM_ADDRESSES,
   testnet: TESTNET_PROGRAM_ADDRESSES,
 };
 

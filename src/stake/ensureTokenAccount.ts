@@ -1,9 +1,4 @@
-import {
-  ASSOCIATED_TOKEN_PROGRAM_ID,
-  createAssociatedTokenAccountInstruction,
-  getAssociatedTokenAddress,
-  TOKEN_PROGRAM_ID,
-} from '@solana/spl-token';
+import { createAssociatedTokenAccountInstruction, getAssociatedTokenAddress } from '@solana/spl-token';
 import { PublicKey, Transaction } from '@solana/web3.js';
 
 export const ensureTokenAccount = async (
@@ -12,24 +7,9 @@ export const ensureTokenAccount = async (
   stSolMint: PublicKey,
 ) => {
   // Creating the associated token account if not already exist
-  const associatedStSolAccount = await getAssociatedTokenAddress(
-    ASSOCIATED_TOKEN_PROGRAM_ID,
-    TOKEN_PROGRAM_ID,
-    false,
-    stSolMint,
-    payer,
-  );
+  const associatedStSolAccount = await getAssociatedTokenAddress(stSolMint, payer);
 
-  transaction.add(
-    createAssociatedTokenAccountInstruction(
-      ASSOCIATED_TOKEN_PROGRAM_ID,
-      TOKEN_PROGRAM_ID,
-      stSolMint,
-      associatedStSolAccount,
-      payer,
-      payer,
-    ),
-  );
+  transaction.add(createAssociatedTokenAccountInstruction(payer, associatedStSolAccount, payer, stSolMint));
 
   return associatedStSolAccount;
 };

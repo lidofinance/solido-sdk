@@ -72,4 +72,4 @@ In progress, will be available soon.
 - [Docs](https://docs.solana.lido.fi/)
 - [Lido Referral Program for Solana](https://help.lido.fi/en/articles/5847184-lido-referral-program-for-solana-integration-guide)
 - [Join on Discord](https://discord.gg/vgdPfhZ)
-- [Join on Telegram](https://t.me/lidofinance)
+- [Discord Support Channel](https://discord.com/channels/761182643269795850/1008674036508790784)

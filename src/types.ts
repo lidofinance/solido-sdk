@@ -1,5 +1,5 @@
 import BN from 'bn.js';
-import { PublicKey, Transaction, TransactionSignature } from '@solana/web3.js';
+import { PublicKey, Transaction, TransactionSignature, Cluster } from '@solana/web3.js';
 import { SignerWalletAdapter } from '@solana/wallet-adapter-base';
 
 import { INSTRUCTION, TX_STAGE, LidoVersion, INSTRUCTION_V2 } from '@/constants';
@@ -10,6 +10,8 @@ enum AccountType {
   Validator,
   Maintainer,
 }
+
+export type SupportedClusters = Exclude<Cluster, 'devnet'>;
 
 type SetTxStageProps = {
   txStage: TX_STAGE;

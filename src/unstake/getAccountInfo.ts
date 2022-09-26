@@ -510,5 +510,10 @@ export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoRes
     };
   }
 
+  setTimeout(() => {
+    // clear cache after 7 seconds, in order to avoid outdated data
+    this.solidoAccountInfo = undefined;
+  }, 7 * 1000);
+
   return this.solidoAccountInfo;
 }

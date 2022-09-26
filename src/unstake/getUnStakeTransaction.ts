@@ -1,4 +1,4 @@
-import { Keypair, StakeProgram, Transaction } from '@solana/web3.js';
+import { Keypair, StakeProgram, Transaction, TransactionInstruction } from '@solana/web3.js';
 
 import { SolidoSDK } from '@/index';
 import { TransactionProps } from '@/types';
@@ -7,7 +7,7 @@ import { checkMaxExceed } from '@/utils/checkMaxExceed';
 export async function getUnStakeTransaction(this: SolidoSDK, props: TransactionProps) {
   const { payerAddress, amount } = props;
 
-  const maxInLamports = await this.calculateMaxStakeAmount(payerAddress);
+  const maxInLamports = await this.calculateMaxUnStakeAmount(payerAddress);
   checkMaxExceed(amount, maxInLamports);
 
   const newStakeAccount = Keypair.generate();
@@ -31,7 +31,10 @@ export async function getUnStakeTransaction(this: SolidoSDK, props: TransactionP
     stakePubkey: newStakeAccountPubkey,
   });
 
-  transaction.add(...deactivateTransaction.instructions);
+  deactivateTransaction.instructions.forEach((instruction) => {
+    const txInstruction = new TransactionInstruction(instruction);
+    transaction.add(txInstruction);
+  });
 
   transaction.partialSign(newStakeAccount);
 
