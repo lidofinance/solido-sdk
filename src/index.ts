@@ -16,6 +16,7 @@ import {
   getAccountInfoResponse,
   getUnStakeTransaction,
   getWithdrawInstruction,
+  isUnStakeAvailable,
 } from '@/unstake';
 
 import { getExchangeRate } from '@/statistics/getExchangeRate';
@@ -145,6 +146,8 @@ export class SolidoSDK {
   public getUnStakeTransaction = getUnStakeTransaction.bind(this);
 
   public calculateMaxUnStakeAmount = calculateMaxUnStakeAmount.bind(this);
+
+  public isUnStakeAvailable = isUnStakeAvailable.bind(this);
 
   protected getWithdrawInstruction = getWithdrawInstruction.bind(this);
 

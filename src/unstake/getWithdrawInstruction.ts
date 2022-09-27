@@ -15,14 +15,12 @@ import { SolidoSDK } from '@/index';
 import { solToLamports } from '@/utils/formatters';
 
 export const getHeaviestValidator = (validatorEntries: Validator[]): Validator => {
-  const sortedValidators = validatorEntries.sort((validatorA, validatorB) => {
-    const effectiveStakeBalanceValidatorA =
-      validatorA.stake_accounts_balance.toNumber() - validatorA.unstake_accounts_balance.toNumber();
-    const effectiveStakeBalanceValidatorB =
-      validatorB.stake_accounts_balance.toNumber() - validatorB.unstake_accounts_balance.toNumber();
-
-    return effectiveStakeBalanceValidatorB - effectiveStakeBalanceValidatorA;
-  });
+  const sortedValidators = validatorEntries.sort(
+    (
+      { effective_stake_balance: effectiveStakeBalanceValidatorA },
+      { effective_stake_balance: effectiveStakeBalanceValidatorB },
+    ) => effectiveStakeBalanceValidatorB.cmp(effectiveStakeBalanceValidatorA),
+  );
 
   return sortedValidators[0];
 };

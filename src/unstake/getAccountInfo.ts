@@ -476,6 +476,9 @@ export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoRes
     const validators = deserializedAccountInfo.validators.entries.map(({ entry, pubkey }) => ({
       vote_account_address: pubkey,
       ...entry,
+      // effective_stake_balance doesn't exist in first version of protocol as a property
+      // https://github.com/lidofinance/solido/blob/4a5fe34b2ecf937344a9dfcd389ffe120e587cfd/program/src/state.rs#L705-L708
+      effective_stake_balance: entry.stake_accounts_balance.sub(entry.unstake_accounts_balance),
     }));
 
     this.solidoAccountInfo = {
