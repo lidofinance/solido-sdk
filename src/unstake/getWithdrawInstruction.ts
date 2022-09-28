@@ -15,14 +15,12 @@ import { SolidoSDK } from '@/index';
 import { solToLamports } from '@/utils/formatters';
 
 export const getHeaviestValidator = (validatorEntries: Validator[]): Validator => {
-  const sortedValidators = validatorEntries.sort(
-    (
-      { effective_stake_balance: effectiveStakeBalanceValidatorA },
-      { effective_stake_balance: effectiveStakeBalanceValidatorB },
-    ) => effectiveStakeBalanceValidatorB.cmp(effectiveStakeBalanceValidatorA),
-  );
+  return validatorEntries.reduce((validatorB, validatorA) => {
+    const { effective_stake_balance: effectiveStakeBalanceValidatorA } = validatorA;
+    const { effective_stake_balance: effectiveStakeBalanceValidatorB } = validatorB;
 
-  return sortedValidators[0];
+    return effectiveStakeBalanceValidatorB.gt(effectiveStakeBalanceValidatorA) ? validatorB : validatorA;
+  });
 };
 
 const getValidatorIndex = (validatorEntries: Validator[], validator: Validator) =>
@@ -70,9 +68,6 @@ export async function getWithdrawInstruction(this: SolidoSDK, props: WithdrawIns
   const { validators, accountInfo, lidoVersion } = await this.getAccountInfo();
 
   const validator = getHeaviestValidator(validators);
-
-  console.log({ validator });
-  console.log({ lidoVersion });
 
   let data: Buffer;
   if (lidoVersion === LidoVersion.v1) {

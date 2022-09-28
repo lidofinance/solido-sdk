@@ -136,8 +136,6 @@ export class SolidoSDK {
       payerAddress: new PublicKey(wallet.publicKey),
     });
 
-    console.log({ transaction });
-
     setTxStage?.({ txStage: TX_STAGE.AWAITING_SIGNING, deactivatingSolAccountAddress });
 
     const transactionHash = await this.signAndConfirmTransaction({
