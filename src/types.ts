@@ -247,7 +247,7 @@ export type AccountInfoV2 = {
   metrics: AccountInfoMetrics;
 
   // Validator list account
-  validators_list: PublicKey;
+  validator_list: PublicKey;
   // Maintainer list account
   maintainer_list: PublicKey;
 

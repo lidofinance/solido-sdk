@@ -71,6 +71,9 @@ export async function getWithdrawInstruction(this: SolidoSDK, props: WithdrawIns
 
   const validator = getHeaviestValidator(validators);
 
+  console.log({ validator });
+  console.log({ lidoVersion });
+
   let data: Buffer;
   if (lidoVersion === LidoVersion.v1) {
     const dataLayout = struct<InstructionStruct>([u8('instruction'), nu64('amount')]);
@@ -121,9 +124,9 @@ export async function getWithdrawInstruction(this: SolidoSDK, props: WithdrawIns
   ];
 
   if (lidoVersion === LidoVersion.v2) {
-    // for v2 we will add also validators_list after stakeAuthority
+    // for v2 we will add also validator_list after stakeAuthority
     keys.splice(8, 0, {
-      pubkey: new PublicKey(accountInfo.validators_list),
+      pubkey: new PublicKey(accountInfo.validator_list),
       isSigner: false,
       isWritable: true,
     });

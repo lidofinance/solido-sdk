@@ -30,9 +30,9 @@ export const MAINNET_PROGRAM_ADDRESSES: ProgramAddresses = {
 };
 
 export const TESTNET_PROGRAM_ADDRESSES: ProgramAddresses = {
-  solidoProgramId: new PublicKey('79FkHD3z4c4dJBtA3r9F1z5qoU2Mq1aW7MVgTe9TWp7i'),
-  solidoInstanceId: new PublicKey('7djThAZ462gRyj8SPYXDfdiJcfsCotaBDw1LBCtBA2KR'),
-  stSolMintAddress: new PublicKey('GohGUeqp5BenhzipjwXu1G46hQYPUVF1hqWxbQkfJ5Nm'),
+  solidoProgramId: new PublicKey('CGB9MASv7Qrgi3cXZ9YgNp5XFcE6zuhkt5pZ1g473CbC'),
+  solidoInstanceId: new PublicKey('33GsSURekhMQmVHeyFkGtW4ihDb5638exWD9Q8xV65RW'),
+  stSolMintAddress: new PublicKey('2N1FMx6xqTqBYh4iqGifERV2BKH8gSk1PtHQ6Nt717DR'),
 };
 
 export const clusterProgramAddresses: Record<SupportedClusters, ProgramAddresses> = {

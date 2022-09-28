@@ -493,7 +493,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoRes
       accountInfo.data,
     ) as any as AccountInfoV2;
 
-    const validatorsList = new PublicKey(deserializedAccountInfo.validators_list);
+    const validatorsList = new PublicKey(deserializedAccountInfo.validator_list);
     const validators = await this.connection.getAccountInfo(validatorsList);
 
     if (validators === null) {

@@ -66,7 +66,14 @@ export class SolidoSDK {
       const transactionHash = await this.connection.sendRawTransaction(signed.serialize());
 
       setTxStage?.({ txStage: TX_STAGE.AWAITING_BLOCK, transactionHash });
-      const { value: status } = await this.connection.confirmTransaction(transactionHash);
+
+      const { blockhash, lastValidBlockHeight } = await this.connection.getLatestBlockhash();
+
+      const { value: status } = await this.connection.confirmTransaction({
+        blockhash,
+        lastValidBlockHeight,
+        signature: transactionHash,
+      });
 
       if (status?.err) {
         throw status.err;
@@ -128,6 +135,8 @@ export class SolidoSDK {
       amount: +amount,
       payerAddress: new PublicKey(wallet.publicKey),
     });
+
+    console.log({ transaction });
 
     setTxStage?.({ txStage: TX_STAGE.AWAITING_SIGNING, deactivatingSolAccountAddress });
 
