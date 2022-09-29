@@ -7,6 +7,7 @@ export enum INSTRUCTION {
 }
 
 export enum TX_STAGE {
+  IDLE = 0,
   AWAITING_SIGNING = 1,
   AWAITING_BLOCK = 2,
   SUCCESS = 3,
