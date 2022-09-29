@@ -38,15 +38,16 @@ import { getStSolAccountsForUser } from '@/stake/getStSolAccountsForUser';
 export { default as LidoStakeBanner } from './banner';
 export { getStakeApy } from '@/api/stakeApy';
 export { INSTRUCTION, TX_STAGE } from '@/constants';
+export * from '@/utils/formatters';
 
 export class SolidoSDK {
-  protected programAddresses: ProgramAddresses;
-
   protected connection: Connection;
 
   protected referrerId?: string;
 
   protected solidoAccountInfo?: AccountInfo;
+
+  public programAddresses: ProgramAddresses;
 
   constructor(cluster: SupportedClusters, connection: Connection, referrerId?: string) {
     // @ts-expect-error for js users
