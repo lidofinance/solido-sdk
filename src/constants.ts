@@ -23,17 +23,17 @@ export enum LidoVersion {
   v2,
 }
 
-export const MAINNET_PROGRAM_ADDRESSES: ProgramAddresses = {
+export const MAINNET_PROGRAM_ADDRESSES: ProgramAddresses = Object.freeze({
   solidoProgramId: new PublicKey('CrX7kMhLC3cSsXJdT7JDgqrRVWGnUpX3gfEfxxU2NVLi'),
   solidoInstanceId: new PublicKey('49Yi1TKkNyYjPAFdR9LBvoHcUjuPX4Df5T5yv39w2XTn'),
   stSolMintAddress: new PublicKey('7dHbWXmci3dT8UFYWYZweBLXgycu7Y3iL6trKn1Y7ARj'),
-};
+});
 
-export const TESTNET_PROGRAM_ADDRESSES: ProgramAddresses = {
+export const TESTNET_PROGRAM_ADDRESSES: ProgramAddresses = Object.freeze({
   solidoProgramId: new PublicKey('CGB9MASv7Qrgi3cXZ9YgNp5XFcE6zuhkt5pZ1g473CbC'),
   solidoInstanceId: new PublicKey('33GsSURekhMQmVHeyFkGtW4ihDb5638exWD9Q8xV65RW'),
   stSolMintAddress: new PublicKey('2N1FMx6xqTqBYh4iqGifERV2BKH8gSk1PtHQ6Nt717DR'),
-};
+});
 
 export const clusterProgramAddresses: Record<SupportedClusters, ProgramAddresses> = {
   'mainnet-beta': MAINNET_PROGRAM_ADDRESSES,
