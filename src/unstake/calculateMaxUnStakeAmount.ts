@@ -3,7 +3,10 @@ import { SolidoSDK } from '@/index';
 
 export async function calculateMaxUnStakeAmount(this: SolidoSDK, address: PublicKey) {
   const [stSolAccount] = await this.getStSolAccountsForUser(address);
-  if (!stSolAccount) {
+
+  const isUnStakeAvailable = await this.isUnStakeAvailable();
+
+  if (!stSolAccount || !isUnStakeAvailable) {
     return 0;
   }
 
