@@ -31,9 +31,9 @@ export const MAINNET_PROGRAM_ADDRESSES: ProgramAddresses = Object.freeze({
 });
 
 export const TESTNET_PROGRAM_ADDRESSES: ProgramAddresses = Object.freeze({
-  solidoProgramId: new PublicKey('CGB9MASv7Qrgi3cXZ9YgNp5XFcE6zuhkt5pZ1g473CbC'),
-  solidoInstanceId: new PublicKey('33GsSURekhMQmVHeyFkGtW4ihDb5638exWD9Q8xV65RW'),
-  stSolMintAddress: new PublicKey('2N1FMx6xqTqBYh4iqGifERV2BKH8gSk1PtHQ6Nt717DR'),
+  solidoProgramId: new PublicKey('6RRggYnFe2EcD543QXrE3Wxp1Kgcq8qctwRrNnvjoYsL'),
+  solidoInstanceId: new PublicKey('Hcqw2G2FkBhBiDZz3PXFBUKuMQiKMJmXvcfqRaXkyNXF'),
+  stSolMintAddress: new PublicKey('Bz2UPiXJmCQYT8XQHaPPXG3fywNp2TENav5dcJdX9q21'),
 });
 
 export const clusterProgramAddresses: Record<SupportedClusters, ProgramAddresses> = {
