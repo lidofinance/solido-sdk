@@ -33,7 +33,13 @@ import { getStSolAccountsForUser } from '@/stake/getStSolAccountsForUser';
 
 export { default as LidoStakeBanner } from './banner';
 export { getStakeApy } from '@/api/stakeApy';
-export { INSTRUCTION, TX_STAGE, MAINNET_PROGRAM_ADDRESSES, TESTNET_PROGRAM_ADDRESSES } from '@/constants';
+export {
+  MAINNET_PROGRAM_ADDRESSES,
+  TESTNET_PROGRAM_ADDRESSES,
+  INSTRUCTION,
+  TX_STAGE,
+  LidoVersion,
+} from '@/constants';
 export * from '@/utils/formatters';
 
 export class SolidoSDK {
