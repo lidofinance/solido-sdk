@@ -1,7 +1,7 @@
 import { Connection, PublicKey, TransactionSignature } from '@solana/web3.js';
 
 import { ProgramAddresses, SignAndConfirmTransactionProps, StakeProps, SupportedClusters } from '@/types';
-import { clusterProgramAddresses, TX_STAGE } from '@/constants';
+import { clusterProgramAddresses, LidoVersion, TX_STAGE } from '@/constants';
 
 import {
   calculateMaxStakeAmount,
@@ -42,6 +42,8 @@ export class SolidoSDK {
   protected referrerId?: string;
 
   protected solidoAccountInfo?: getAccountInfoResponse;
+
+  public lidoVersion: LidoVersion = LidoVersion.v1;
 
   public programAddresses: ProgramAddresses;
 

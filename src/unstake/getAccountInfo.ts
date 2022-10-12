@@ -481,6 +481,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoRes
       effective_stake_balance: entry.stake_accounts_balance.sub(entry.unstake_accounts_balance),
     }));
 
+    this.lidoVersion = LidoVersion.v1;
     this.solidoAccountInfo = {
       lidoVersion: LidoVersion.v1,
       accountInfo: deserializedAccountInfo,
@@ -506,6 +507,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoRes
       validators.data,
     ) as any as ValidatorsList;
 
+    this.lidoVersion = LidoVersion.v2;
     this.solidoAccountInfo = {
       lidoVersion: LidoVersion.v2,
       accountInfo: deserializedAccountInfo,
