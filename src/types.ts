@@ -2,7 +2,14 @@ import BN from 'bn.js';
 import { PublicKey, Transaction, TransactionSignature, Cluster } from '@solana/web3.js';
 import { SignerWalletAdapter } from '@solana/wallet-adapter-base';
 
-import { INSTRUCTION, TX_STAGE } from '@/constants';
+import { INSTRUCTION, TX_STAGE, LidoVersion, INSTRUCTION_V2 } from '@/constants';
+
+enum AccountType {
+  Uninitialized,
+  Lido,
+  Validator,
+  Maintainer,
+}
 
 export type SupportedClusters = Exclude<Cluster, 'devnet'>;
 
@@ -59,6 +66,11 @@ export type InstructionStruct = {
   amount: BN;
 };
 
+export type WithdrawInstructionStruct = Pick<InstructionStruct, 'amount'> & {
+  instruction: INSTRUCTION_V2;
+  validator_index: number;
+};
+
 export type ApiError = {
   code: string;
   msg: string;
@@ -85,16 +97,26 @@ export type SolApiPriceResponse<K extends string> = SolApiResponse<
   }
 >;
 
-export type Validator = {
-  entry: {
-    stake_accounts_balance: BN;
-    unstake_accounts_balance: BN;
-    stake_seeds: {
-      begin: BN;
-      end: BN;
-    };
-  };
-  pubkey: BN;
+type ListHeader = {
+  max_entries: BN;
+  lido_version: LidoVersion;
+  account_type: AccountType;
+};
+
+type SeedRange = {
+  begin: BN;
+  end: BN;
+};
+
+type ExchangeRate = {
+  // The epoch in which when was last called `UpdateExchangeRate`
+  computed_in_epoch: BN;
+  // The amount of stSOL that existed at that time
+  sol_balance: BN;
+  // The amount of SOL we managed at that time, according to our internal
+  // bookkeeping, so excluding the validation rewards paid at the start of
+  // epoch `computed_in_epoch`.
+  st_sol_supply: BN;
 };
 
 type LamportsHistogram = {
@@ -119,6 +141,12 @@ type WithdrawMetric = {
   count: BN;
 };
 
+type RewardDistribution = {
+  treasury_fee: number;
+  developer_fee: number;
+  st_sol_appreciation: number;
+};
+
 export type AccountInfoMetrics = {
   // Fees paid to the treasury, in total since we started tracking, before conversion to stSOL
   fee_treasury_sol_total: BN;
@@ -140,13 +168,89 @@ export type AccountInfoMetrics = {
   withdraw_amount: WithdrawMetric;
 };
 
-export type AccountInfo = {
+type FeeRecipients = {
+  treasury_account: PublicKey;
+  developer_account: PublicKey;
+};
+
+export type ValidatorV2 = {
+  // Validator vote account address
+  vote_account_address: PublicKey;
+  // Seeds for active stake accounts
+  stake_seeds: SeedRange;
+  // Seeds for inactive stake accounts
+  unstake_seeds: SeedRange;
+  // Sum of the balances of the stake accounts and unstake accounts
+  stake_accounts_balance: BN;
+  // Sum of the balances of the unstake accounts
+  unstake_accounts_balance: BN;
+  // Effective stake balance is stake_accounts_balance - unstake_accounts_balance.
+  // The result is stored on-chain to optimize compute budget
+  effective_stake_balance: BN;
+  // Controls if a validator is allowed to have new stake deposits
+  active: boolean;
+};
+
+export type Validator = ValidatorV2;
+
+export type ValidatorV1 = {
+  entry: Omit<ValidatorV2, 'vote_account_address'>;
+  pubkey: PublicKey;
+};
+
+export type AccountInfoV1 = {
+  lido_version: LidoVersion;
   validators: {
-    entries: Validator[];
+    entries: ValidatorV1[];
   };
   exchange_rate: {
     sol_balance: BN;
     st_sol_supply: BN;
   };
   metrics: AccountInfoMetrics;
+};
+
+export type ValidatorsList = {
+  header: ListHeader;
+  entries: ValidatorV2[];
+  account_type: AccountType;
+};
+
+export type AccountInfoV2 = {
+  // Solido version
+  lido_version: LidoVersion;
+
+  // Account type, must be Lido
+  account_type: AccountType;
+
+  // Manager of the Lido program, able to execute administrative functions
+  manager: PublicKey;
+
+  // The SPL Token mint address for stSOL
+  st_sol_mint: PublicKey;
+
+  // Exchange rate to use when depositing.
+  exchange_rate: ExchangeRate;
+
+  // Bump seeds for signing messages on behalf of the authority
+  sol_reserve_account_bump_seed: number;
+  stake_authority_bump_seed: number;
+  mint_authority_bump_seed: number;
+
+  // How rewards are distributed.
+  reward_distribution: RewardDistribution;
+
+  // Accounts of the fee recipients
+  fee_recipients: FeeRecipients;
+
+  // Metrics for informational purposes
+  metrics: AccountInfoMetrics;
+
+  // Validator list account
+  validator_list: PublicKey;
+  // Maintainer list account
+  maintainer_list: PublicKey;
+
+  // Maximum validation commission percentage in [0, 100]
+  max_commission_percentage: number;
 };

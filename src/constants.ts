@@ -6,12 +6,22 @@ export enum INSTRUCTION {
   UNSTAKE = 2,
 }
 
+export enum INSTRUCTION_V2 {
+  STAKE = 1,
+  UNSTAKE = 23,
+}
+
 export enum TX_STAGE {
   IDLE = 0,
   AWAITING_SIGNING = 1,
   AWAITING_BLOCK = 2,
   SUCCESS = 3,
   ERROR = 4,
+}
+
+export enum LidoVersion {
+  v1,
+  v2,
 }
 
 export const MAINNET_PROGRAM_ADDRESSES: ProgramAddresses = Object.freeze({
@@ -21,9 +31,9 @@ export const MAINNET_PROGRAM_ADDRESSES: ProgramAddresses = Object.freeze({
 });
 
 export const TESTNET_PROGRAM_ADDRESSES: ProgramAddresses = Object.freeze({
-  solidoProgramId: new PublicKey('79FkHD3z4c4dJBtA3r9F1z5qoU2Mq1aW7MVgTe9TWp7i'),
-  solidoInstanceId: new PublicKey('7djThAZ462gRyj8SPYXDfdiJcfsCotaBDw1LBCtBA2KR'),
-  stSolMintAddress: new PublicKey('GohGUeqp5BenhzipjwXu1G46hQYPUVF1hqWxbQkfJ5Nm'),
+  solidoProgramId: new PublicKey('6RRggYnFe2EcD543QXrE3Wxp1Kgcq8qctwRrNnvjoYsL'),
+  solidoInstanceId: new PublicKey('Hcqw2G2FkBhBiDZz3PXFBUKuMQiKMJmXvcfqRaXkyNXF'),
+  stSolMintAddress: new PublicKey('Bz2UPiXJmCQYT8XQHaPPXG3fywNp2TENav5dcJdX9q21'),
 });
 
 export const clusterProgramAddresses: Record<SupportedClusters, ProgramAddresses> = {

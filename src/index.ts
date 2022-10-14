@@ -1,13 +1,7 @@
 import { Connection, PublicKey, TransactionSignature } from '@solana/web3.js';
 
-import {
-  StakeProps,
-  AccountInfo,
-  ProgramAddresses,
-  SupportedClusters,
-  SignAndConfirmTransactionProps,
-} from '@/types';
-import { clusterProgramAddresses, TX_STAGE } from '@/constants';
+import { ProgramAddresses, SignAndConfirmTransactionProps, StakeProps, SupportedClusters } from '@/types';
+import { clusterProgramAddresses, LidoVersion, TX_STAGE } from '@/constants';
 
 import {
   calculateMaxStakeAmount,
@@ -19,8 +13,10 @@ import {
   calculateMaxUnStakeAmount,
   calculateStakeAccountAddress,
   getAccountInfo,
+  getAccountInfoResponse,
   getUnStakeTransaction,
   getWithdrawInstruction,
+  isUnStakeAvailable,
 } from '@/unstake';
 
 import { getExchangeRate } from '@/statistics/getExchangeRate';
@@ -37,7 +33,13 @@ import { getStSolAccountsForUser } from '@/stake/getStSolAccountsForUser';
 
 export { default as LidoStakeBanner } from './banner';
 export { getStakeApy } from '@/api/stakeApy';
-export { INSTRUCTION, TX_STAGE, MAINNET_PROGRAM_ADDRESSES, TESTNET_PROGRAM_ADDRESSES } from '@/constants';
+export {
+  MAINNET_PROGRAM_ADDRESSES,
+  TESTNET_PROGRAM_ADDRESSES,
+  INSTRUCTION,
+  TX_STAGE,
+  LidoVersion,
+} from '@/constants';
 export * from '@/utils/formatters';
 
 export class SolidoSDK {
@@ -45,14 +47,16 @@ export class SolidoSDK {
 
   protected referrerId?: string;
 
-  protected solidoAccountInfo?: AccountInfo;
+  protected solidoAccountInfo?: getAccountInfoResponse;
+
+  public lidoVersion: LidoVersion = LidoVersion.v1;
 
   public programAddresses: ProgramAddresses;
 
   constructor(cluster: SupportedClusters, connection: Connection, referrerId?: string) {
     // @ts-expect-error for js users
     if (cluster === 'devnet') {
-      throw Error("SolidoSDK doesn't support devnet, please specify mainnet-beta or testnet");
+      throw new Error("SolidoSDK doesn't support devnet, please specify mainnet-beta or testnet");
     }
 
     this.programAddresses = clusterProgramAddresses[cluster];
@@ -71,7 +75,14 @@ export class SolidoSDK {
       const transactionHash = await this.connection.sendRawTransaction(signed.serialize());
 
       setTxStage?.({ txStage: TX_STAGE.AWAITING_BLOCK, transactionHash });
-      const { value: status } = await this.connection.confirmTransaction(transactionHash);
+
+      const { blockhash, lastValidBlockHeight } = await this.connection.getLatestBlockhash();
+
+      const { value: status } = await this.connection.confirmTransaction({
+        blockhash,
+        lastValidBlockHeight,
+        signature: transactionHash,
+      });
 
       if (status?.err) {
         throw status.err;
@@ -151,6 +162,8 @@ export class SolidoSDK {
   public getUnStakeTransaction = getUnStakeTransaction.bind(this);
 
   public calculateMaxUnStakeAmount = calculateMaxUnStakeAmount.bind(this);
+
+  public isUnStakeAvailable = isUnStakeAvailable.bind(this);
 
   protected getWithdrawInstruction = getWithdrawInstruction.bind(this);
 

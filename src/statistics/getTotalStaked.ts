@@ -2,7 +2,7 @@ import { SolidoSDK } from '@/index';
 import { lamportsToSol } from '@/utils/formatters';
 
 export async function getTotalStaked(this: SolidoSDK, precision = 2) {
-  const accountInfo = await this.getAccountInfo();
+  const { validators } = await this.getAccountInfo();
 
   const reserveAccount = await this.findProgramAddress('reserve_account');
 
@@ -17,8 +17,7 @@ export async function getTotalStaked(this: SolidoSDK, precision = 2) {
 
   const reserveAccountBalanceInLamports = reserveAccountInfo.lamports - reserveAccountRent;
 
-  const validatorsStakeAccountsBalanceInLamports = accountInfo.validators.entries
-    .map((pubKeyAndEntry) => pubKeyAndEntry.entry)
+  const validatorsStakeAccountsBalanceInLamports = validators
     .map((validator) => validator.stake_accounts_balance.toString())
     .reduce((acc, current) => acc + +current, 0);
 
