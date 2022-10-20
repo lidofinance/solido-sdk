@@ -464,7 +464,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoRes
   const accountInfo = await this.connection.getAccountInfo(solidoInstanceId);
 
   if (accountInfo === null) {
-    throw new ErrorWrapper(ERROR_CODES.NO_ACCOUNT_INFO,`Could'nt fetch getAccountInfo`);
+    throw new ErrorWrapper(ERROR_CODES.NO_ACCOUNT_INFO);
   }
 
   try {
@@ -499,7 +499,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoRes
     const validators = await this.connection.getAccountInfo(validatorsList);
 
     if (validators === null) {
-      throw new ErrorWrapper(ERROR_CODES.NO_VALIDATORS, `Could'nt fetch validators list`);
+      throw new ErrorWrapper(ERROR_CODES.NO_VALIDATORS);
     }
 
     const deserializedValidators = deserializeUnchecked(

@@ -45,13 +45,35 @@ export const MEMO_PROGRAM_ID = new PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqX
 
 export const SOL_API_HOST = 'https://sol-api-pub.lido.fi';
 
+// 1xx - blockchain error
+// 2xx - protocol errors
+// 3xx - sdk errors
+// 4xx - user's errors
 export enum ERROR_CODES {
-  NO_PUBLIC_KEY = 'no_public_key',
-  NO_ACCOUNT_INFO = 'no_account_info',
-  NO_VALIDATORS = 'no_validators_found',
-  UNSTAKE_UNAVAILABLE = 'unstake_unavailable',
-  UNSUPPORTED_CLUSTER = 'unsupported_cluster',
-  EXCEED_MAX = 'exceed_max',
-  CANNOT_CONFIRM_TRANSACTION = 'cant_confirm_transaction',
+  CANNOT_CONFIRM_TRANSACTION = 100,
+  NO_VALIDATORS = 200,
+  UNSUPPORTED_CLUSTER = 300,
+  UNSTAKE_UNAVAILABLE = 301,
+  NO_PUBLIC_KEY = 302,
+  NO_ACCOUNT_INFO = 303,
+  EXCEED_MAX = 400,
+}
+
+export const ERROR_CODES_DESC = {
+  [ERROR_CODES.CANNOT_CONFIRM_TRANSACTION]: 'CANNOT_CONFIRM_TRANSACTION',
+  [ERROR_CODES.NO_VALIDATORS]: 'NO_VALIDATORS',
+  [ERROR_CODES.UNSUPPORTED_CLUSTER]: 'UNSUPPORTED_CLUSTER',
+  [ERROR_CODES.UNSTAKE_UNAVAILABLE]: 'UNSTAKE_UNAVAILABLE',
+  [ERROR_CODES.NO_PUBLIC_KEY]: 'NO_PUBLIC_KEY',
+  [ERROR_CODES.NO_ACCOUNT_INFO]: 'NO_ACCOUNT_INFO',
+  [ERROR_CODES.EXCEED_MAX]: 'EXCEED_MAX',
+}
+
+export const ERROR_MESSAGE = {
+  [ERROR_CODES.NO_VALIDATORS]: `Couldn't fetch validators list`,
+  [ERROR_CODES.UNSUPPORTED_CLUSTER]: `SolidoSDK doesn't support devnet, please specify mainnet-beta or testnet`,
+  [ERROR_CODES.UNSTAKE_UNAVAILABLE]: 'Sorry, unStake is not available right now. Please contact lido developers for details.',
+  [ERROR_CODES.NO_PUBLIC_KEY]: 'SolidoSDK: publicKey is null in wallet',
+  [ERROR_CODES.NO_ACCOUNT_INFO]: `Couldn't fetch getAccountInfo`,
 }
 
