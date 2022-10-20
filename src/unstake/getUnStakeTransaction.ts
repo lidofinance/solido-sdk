@@ -10,7 +10,7 @@ export async function getUnStakeTransaction(this: SolidoSDK, props: TransactionP
   const isUnStakeAvailable = await this.isUnStakeAvailable();
 
   if (!isUnStakeAvailable) {
-    throw new ErrorWrapper(ERROR_CODES.UNSTAKE_UNAVAILABLE, 'Sorry, unStake is not available right now. Please contact lido developers for details.');
+    throw new ErrorWrapper(ERROR_CODES.UNSTAKE_UNAVAILABLE);
   }
 
   const { payerAddress, amount } = props;

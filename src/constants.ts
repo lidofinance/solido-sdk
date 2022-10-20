@@ -1,5 +1,6 @@
 import { PublicKey } from '@solana/web3.js';
 import { ProgramAddresses, SupportedClusters } from '@/types';
+import {lamportsToSol} from '@/utils/formatters';
 
 export enum INSTRUCTION {
   STAKE = 1,
@@ -46,12 +47,30 @@ export const MEMO_PROGRAM_ID = new PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqX
 export const SOL_API_HOST = 'https://sol-api-pub.lido.fi';
 
 export enum ERROR_CODES {
-  NO_PUBLIC_KEY = 'no_public_key',
-  NO_ACCOUNT_INFO = 'no_account_info',
-  NO_VALIDATORS = 'no_validators_found',
-  UNSTAKE_UNAVAILABLE = 'unstake_unavailable',
-  UNSUPPORTED_CLUSTER = 'unsupported_cluster',
-  EXCEED_MAX = 'exceed_max',
-  CANNOT_CONFIRM_TRANSACTION = 'cant_confirm_transaction',
+  NO_PUBLIC_KEY = 100,
+  NO_ACCOUNT_INFO = 101,
+  NO_VALIDATORS = 200,
+  UNSTAKE_UNAVAILABLE = 201,
+  UNSUPPORTED_CLUSTER = 300,
+  EXCEED_MAX = 301,
+  CANNOT_CONFIRM_TRANSACTION = 400,
+}
+
+export const ERROR_CODES_DESC = {
+  [ERROR_CODES.NO_PUBLIC_KEY]: 'no_public_key',
+  [ERROR_CODES.NO_ACCOUNT_INFO]: 'no_account_info',
+  [ERROR_CODES.NO_VALIDATORS]: 'no_validators_found',
+  [ERROR_CODES.UNSTAKE_UNAVAILABLE]: 'unstake_unavailable',
+  [ERROR_CODES.UNSUPPORTED_CLUSTER]: 'unsupported_cluster',
+  [ERROR_CODES.EXCEED_MAX]: 'exceed_max',
+  [ERROR_CODES.CANNOT_CONFIRM_TRANSACTION]: 'cant_confirm_transaction',
+}
+
+export const ERROR_MESSAGE = {
+  [ERROR_CODES.NO_PUBLIC_KEY]: 'SolidoSDK: publicKey is null in wallet',
+  [ERROR_CODES.NO_ACCOUNT_INFO]: `Couldn't fetch getAccountInfo`,
+  [ERROR_CODES.NO_VALIDATORS]: `Couldn't fetch validators list`,
+  [ERROR_CODES.UNSTAKE_UNAVAILABLE]: 'Sorry, unStake is not available right now. Please contact lido developers for details.',
+  [ERROR_CODES.UNSUPPORTED_CLUSTER]: `SolidoSDK doesn't support devnet, please specify mainnet-beta or testnet`,
 }
 
