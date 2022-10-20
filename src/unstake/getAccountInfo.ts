@@ -3,7 +3,8 @@ import { PublicKey } from '@solana/web3.js';
 
 import { SolidoSDK } from '@/index';
 import { AccountInfoV1, AccountInfoV2, ValidatorsList, Validator } from '@/types';
-import { LidoVersion } from '@/constants';
+import { ERROR_CODES, LidoVersion } from '@/constants';
+import { ErrorWrapper } from '@/utils/errorWrapper';
 
 export class Lido {
   constructor(data) {
@@ -463,7 +464,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoRes
   const accountInfo = await this.connection.getAccountInfo(solidoInstanceId);
 
   if (accountInfo === null) {
-    throw new Error("Could'nt fetch getAccountInfo");
+    throw new ErrorWrapper(ERROR_CODES.NO_ACCOUNT_INFO,`Could'nt fetch getAccountInfo`);
   }
 
   try {
@@ -498,7 +499,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoRes
     const validators = await this.connection.getAccountInfo(validatorsList);
 
     if (validators === null) {
-      throw new Error("Could'nt fetch validators list");
+      throw new ErrorWrapper(ERROR_CODES.NO_VALIDATORS, `Could'nt fetch validators list`);
     }
 
     const deserializedValidators = deserializeUnchecked(

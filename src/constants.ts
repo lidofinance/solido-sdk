@@ -44,3 +44,14 @@ export const clusterProgramAddresses: Record<SupportedClusters, ProgramAddresses
 export const MEMO_PROGRAM_ID = new PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr');
 
 export const SOL_API_HOST = 'https://sol-api-pub.lido.fi';
+
+export enum ERROR_CODES {
+  NO_PUBLIC_KEY = 'no_public_key',
+  NO_ACCOUNT_INFO = 'no_account_info',
+  NO_VALIDATORS = 'no_validators_found',
+  UNSTAKE_UNAVAILABLE = 'unstake_unavailable',
+  UNSUPPORTED_CLUSTER = 'unsupported_cluster',
+  EXCEED_MAX = 'exceed_max',
+  CANNOT_CONFIRM_TRANSACTION = 'cant_confirm_transaction',
+}
+

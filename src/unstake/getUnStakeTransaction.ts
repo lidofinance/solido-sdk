@@ -3,12 +3,14 @@ import { Keypair, StakeProgram, Transaction, TransactionInstruction } from '@sol
 import { SolidoSDK } from '@/index';
 import { TransactionProps } from '@/types';
 import { checkMaxExceed } from '@/utils/checkMaxExceed';
+import { ErrorWrapper } from '@/utils/errorWrapper';
+import { ERROR_CODES } from '@/constants';
 
 export async function getUnStakeTransaction(this: SolidoSDK, props: TransactionProps) {
   const isUnStakeAvailable = await this.isUnStakeAvailable();
 
   if (!isUnStakeAvailable) {
-    throw new Error('Sorry, unStake is not available right now. Please contact lido developers for details.');
+    throw new ErrorWrapper(ERROR_CODES.UNSTAKE_UNAVAILABLE, 'Sorry, unStake is not available right now. Please contact lido developers for details.');
   }
 
   const { payerAddress, amount } = props;
