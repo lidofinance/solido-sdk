@@ -1,14 +1,19 @@
-import {ERROR_CODES, ERROR_CODES_DESC, ERROR_MESSAGE} from '@/constants';
+import { ERROR_CODES_DESC, ERROR_MESSAGE } from '@/constants';
+
+interface IErrorWrapper {
+  code: number,
+  error?: unknown,
+  message?: string
+}
 
 export class ErrorWrapper extends Error {
   public codeDesc: string | undefined;
+  public code: number | undefined;
 
-  constructor(public code: ERROR_CODES, message: string = ERROR_MESSAGE[code]) {
+  constructor({code, error = {}, message = ERROR_MESSAGE[code]}: IErrorWrapper) {
     super(message);
+    Object.assign(this, error);
     this.codeDesc = ERROR_CODES_DESC[code];
-  }
-
-  static addCode(error, code) {
-    return Object.assign(error, { code, codeDesc: ERROR_CODES_DESC[code] })
+    this.code = code;
   }
 }
