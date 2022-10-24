@@ -1,4 +1,4 @@
-import { ERROR_CODES_DESC, ERROR_MESSAGE } from '@/constants';
+import { ERROR_CODE_DESC, ERROR_MESSAGE } from '@/constants';
 
 interface IErrorWrapper {
   code: number,
@@ -13,7 +13,7 @@ export class ErrorWrapper extends Error {
   constructor({code, error = {}, message = ERROR_MESSAGE[code]}: IErrorWrapper) {
     super(message);
     Object.assign(this, error);
-    this.codeDesc = ERROR_CODES_DESC[code];
+    this.codeDesc = ERROR_CODE_DESC[code];
     this.code = code;
   }
 }

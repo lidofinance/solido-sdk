@@ -3,7 +3,7 @@ import { PublicKey } from '@solana/web3.js';
 
 import { SolidoSDK } from '@/index';
 import { AccountInfoV1, AccountInfoV2, ValidatorsList, Validator } from '@/types';
-import { ERROR_CODES, LidoVersion } from '@/constants';
+import { ERROR_CODE, LidoVersion } from '@/constants';
 import { ErrorWrapper } from '@/utils/errorWrapper';
 
 export class Lido {
@@ -464,7 +464,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoRes
   const accountInfo = await this.connection.getAccountInfo(solidoInstanceId);
 
   if (accountInfo === null) {
-    throw new ErrorWrapper({code: ERROR_CODES.NO_ACCOUNT_INFO});
+    throw new ErrorWrapper({code: ERROR_CODE.NO_ACCOUNT_INFO});
   }
 
   try {
@@ -499,7 +499,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoRes
     const validators = await this.connection.getAccountInfo(validatorsList);
 
     if (validators === null) {
-      throw new ErrorWrapper({code: ERROR_CODES.NO_VALIDATORS});
+      throw new ErrorWrapper({code: ERROR_CODE.NO_VALIDATORS});
     }
 
     const deserializedValidators = deserializeUnchecked(

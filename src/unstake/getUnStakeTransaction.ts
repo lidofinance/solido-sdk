@@ -4,13 +4,13 @@ import { SolidoSDK } from '@/index';
 import { TransactionProps } from '@/types';
 import { checkMaxExceed } from '@/utils/checkMaxExceed';
 import { ErrorWrapper } from '@/utils/errorWrapper';
-import { ERROR_CODES } from '@/constants';
+import { ERROR_CODE } from '@/constants';
 
 export async function getUnStakeTransaction(this: SolidoSDK, props: TransactionProps) {
   const isUnStakeAvailable = await this.isUnStakeAvailable();
 
   if (!isUnStakeAvailable) {
-    throw new ErrorWrapper({code: ERROR_CODES.UNSTAKE_UNAVAILABLE});
+    throw new ErrorWrapper({code: ERROR_CODE.UNSTAKE_UNAVAILABLE});
   }
 
   const { payerAddress, amount } = props;
