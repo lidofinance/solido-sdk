@@ -26,11 +26,12 @@ export async function findProgramAddress(
   return programAddress[0];
 }
 
+export const dataLayout = struct<InstructionStruct>([u8('instruction'), nu64('amount')]);
+
 export async function getDepositInstruction(this: SolidoSDK, props: DepositInstructionProps) {
   const { amount, payerAddress, recipientStSolAddress } = props;
   const { solidoProgramId, stSolMintAddress, solidoInstanceId } = this.programAddresses;
 
-  const dataLayout = struct<InstructionStruct>([u8('instruction'), nu64('amount')]);
   const data = Buffer.alloc(dataLayout.span);
 
   dataLayout.encode(
