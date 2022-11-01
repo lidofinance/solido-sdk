@@ -37,7 +37,7 @@ describe('getDepositInstruction', () => {
   test('depositInstruction keys validity', () => {
     const { keys } = depositInstruction;
 
-    expect(keys.length).toBe(8);
+    expect(keys).toHaveLength(8);
 
     // first key should be solido instance ID
     expect(keys[0].pubkey).toStrictEqual(solidoInstanceId);
