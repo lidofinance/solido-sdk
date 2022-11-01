@@ -14,7 +14,7 @@ describe('ensureTokenAccount', () => {
     tokenAccount = await ensureTokenAccount(transaction, payerAddress, stSolMintAddress);
   });
 
-  test('associatedStSolAccount has correct type', async () => {
+  test('associatedStSolAccount has correct type', () => {
     expect(tokenAccount).toBeInstanceOf(PublicKey);
   });
 
