@@ -23,7 +23,7 @@ export const getHeaviestValidator = (validatorEntries: Validator[]): Validator =
   });
 };
 
-const getValidatorIndex = (validatorEntries: Validator[], validator: Validator) =>
+export const getValidatorIndex = (validatorEntries: Validator[], validator: Validator) =>
   validatorEntries.findIndex(
     ({ vote_account_address: voteAccountAddress }) =>
       voteAccountAddress.toString() === validator.vote_account_address.toString(),
@@ -60,6 +60,15 @@ type WithdrawInstructionProps = {
   stakeAccount: PublicKey;
 };
 
+export const withdrawDataLayout = {
+  [LidoVersion.v1]: struct<InstructionStruct>([u8('instruction'), nu64('amount')]),
+  [LidoVersion.v2]: struct<WithdrawInstructionStruct>([
+    u8('instruction'),
+    nu64('amount'),
+    u32('validator_index'),
+  ]),
+};
+
 export async function getWithdrawInstruction(this: SolidoSDK, props: WithdrawInstructionProps) {
   const { senderStSolAccountAddress, payerAddress, amount, stakeAccount } = props;
 
@@ -69,12 +78,9 @@ export async function getWithdrawInstruction(this: SolidoSDK, props: WithdrawIns
 
   const validator = getHeaviestValidator(validators);
 
-  let data: Buffer;
+  const data: Buffer = Buffer.alloc(withdrawDataLayout[lidoVersion].span);
   if (lidoVersion === LidoVersion.v1) {
-    const dataLayout = struct<InstructionStruct>([u8('instruction'), nu64('amount')]);
-
-    data = Buffer.alloc(dataLayout.span);
-    dataLayout.encode(
+    withdrawDataLayout[lidoVersion].encode(
       {
         instruction: INSTRUCTION.UNSTAKE,
         amount: new BN(solToLamports(amount)),
@@ -82,14 +88,7 @@ export async function getWithdrawInstruction(this: SolidoSDK, props: WithdrawIns
       data,
     );
   } else {
-    const dataLayout = struct<WithdrawInstructionStruct>([
-      u8('instruction'),
-      nu64('amount'),
-      u32('validator_index'),
-    ]);
-
-    data = Buffer.alloc(dataLayout.span);
-    dataLayout.encode(
+    withdrawDataLayout[lidoVersion].encode(
       {
         instruction: INSTRUCTION_V2.UNSTAKE,
         amount: new BN(solToLamports(amount)),

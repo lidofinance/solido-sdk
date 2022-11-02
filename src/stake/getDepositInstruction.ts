@@ -16,25 +16,25 @@ type DepositInstructionProps = {
 
 export async function findProgramAddress(
   this: SolidoSDK,
-  bufferFrom: 'reserve_account' | 'mint_authority' | 'stake_authority',
+  bufferFrom: 'reserve_account' | 'mint_authority' | 'stake_authority' | 'validator_list',
 ) {
   const { solidoInstanceId, solidoProgramId } = this.programAddresses;
   const bufferArray = [solidoInstanceId.toBuffer(), Buffer.from(bufferFrom)];
 
-  const programAddress = await PublicKey.findProgramAddress(bufferArray, solidoProgramId);
+  const [programAddress] = await PublicKey.findProgramAddress(bufferArray, solidoProgramId);
 
-  return programAddress[0];
+  return programAddress;
 }
 
-export const dataLayout = struct<InstructionStruct>([u8('instruction'), nu64('amount')]);
+export const depositDataLayout = struct<InstructionStruct>([u8('instruction'), nu64('amount')]);
 
 export async function getDepositInstruction(this: SolidoSDK, props: DepositInstructionProps) {
   const { amount, payerAddress, recipientStSolAddress } = props;
   const { solidoProgramId, stSolMintAddress, solidoInstanceId } = this.programAddresses;
 
-  const data = Buffer.alloc(dataLayout.span);
+  const data = Buffer.alloc(depositDataLayout.span);
 
-  dataLayout.encode(
+  depositDataLayout.encode(
     {
       instruction: INSTRUCTION.STAKE,
       amount: new BN(solToLamports(amount)),

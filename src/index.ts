@@ -32,7 +32,7 @@ import { getTotalRewards } from '@/statistics/getTotalRewards';
 import { getStSolAccountsForUser } from '@/stake/getStSolAccountsForUser';
 import { ErrorWrapper } from '@/utils/errorWrapper';
 
-export { default as LidoStakeBanner } from './banner';
+// export { default as LidoStakeBanner } from './banner';
 export { getStakeApy } from '@/api/stakeApy';
 export {
   MAINNET_PROGRAM_ADDRESSES,
@@ -57,7 +57,7 @@ export class SolidoSDK {
   constructor(cluster: SupportedClusters, connection: Connection, referrerId?: string) {
     // @ts-expect-error for js users
     if (cluster === 'devnet') {
-      throw new ErrorWrapper({code: ERROR_CODE.UNSUPPORTED_CLUSTER});
+      throw new ErrorWrapper({ code: ERROR_CODE.UNSUPPORTED_CLUSTER });
     }
 
     this.programAddresses = clusterProgramAddresses[cluster];
@@ -95,7 +95,7 @@ export class SolidoSDK {
       console.error(error);
       setTxStage?.({ txStage: TX_STAGE.ERROR });
 
-      throw new ErrorWrapper({error, code: ERROR_CODE.CANNOT_CONFIRM_TRANSACTION});
+      throw new ErrorWrapper({ error, code: ERROR_CODE.CANNOT_CONFIRM_TRANSACTION });
     }
   }
 
@@ -106,7 +106,7 @@ export class SolidoSDK {
     const { amount, wallet, setTxStage } = props;
 
     if (wallet.publicKey === null) {
-      throw new ErrorWrapper({code: ERROR_CODE.NO_PUBLIC_KEY});
+      throw new ErrorWrapper({ code: ERROR_CODE.NO_PUBLIC_KEY });
     }
 
     const { transaction, stSolAccountAddress } = await this.getStakeTransaction({
@@ -138,7 +138,7 @@ export class SolidoSDK {
     const { amount, wallet, setTxStage } = props;
 
     if (wallet.publicKey === null) {
-      throw new ErrorWrapper({code: ERROR_CODE.NO_PUBLIC_KEY});
+      throw new ErrorWrapper({ code: ERROR_CODE.NO_PUBLIC_KEY });
     }
 
     const { transaction, deactivatingSolAccountAddress } = await this.getUnStakeTransaction({

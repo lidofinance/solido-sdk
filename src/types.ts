@@ -188,7 +188,7 @@ export type ValidatorV2 = {
   // The result is stored on-chain to optimize compute budget
   effective_stake_balance: BN;
   // Controls if a validator is allowed to have new stake deposits
-  active: boolean;
+  active: boolean | 0 | 1;
 };
 
 export type Validator = ValidatorV2;

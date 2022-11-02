@@ -4,3 +4,8 @@ declare module '*.svg' {
   export const ReactComponent: React.JSX;
   export default content;
 }
+
+declare module '*.json' {
+  const content: JSON;
+  export default content;
+}
