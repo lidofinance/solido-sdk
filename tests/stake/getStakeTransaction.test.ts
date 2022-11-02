@@ -1,6 +1,6 @@
 import { Connection, Keypair, PublicKey, Transaction } from '@solana/web3.js';
 import { SolidoSDK } from '@/index';
-import { getStakeTransaction } from './getStakeTransaction';
+import { getStakeTransaction } from '@/stake/getStakeTransaction';
 import { ERROR_CODE, MEMO_PROGRAM_ID } from '@/constants';
 import { ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token';
 
@@ -19,10 +19,12 @@ describe('getStakeTransaction', () => {
   });
 
   it('should throw Error "Max exceed"', async () => {
-    await getStakeTransaction.call(sdk, { payerAddress: Keypair.generate().publicKey, amount: 100000 }).catch((error) => {
-      expect(error.message).toContain('Amount must not exceed MAX');
-      expect(error.code).toEqual(ERROR_CODE.EXCEED_MAX);
-    });
+    await getStakeTransaction
+      .call(sdk, { payerAddress: Keypair.generate().publicKey, amount: 100000 })
+      .catch((error) => {
+        expect(error.message).toContain('Amount must not exceed MAX');
+        expect(error.code).toEqual(ERROR_CODE.EXCEED_MAX);
+      });
   });
 
   test('transaction structure correctness, recentBlockhash, feePayer, stSolAccountAddress', async () => {

@@ -1,6 +1,6 @@
 import { Connection, Keypair, PublicKey, TransactionInstruction } from '@solana/web3.js';
 import { INSTRUCTION, SolidoSDK, solToLamports } from '@/index';
-import { dataLayout, getDepositInstruction } from './getDepositInstruction';
+import { dataLayout, getDepositInstruction } from '@/stake/getDepositInstruction';
 import { clusterProgramAddresses } from '@/constants';
 
 describe('getDepositInstruction', () => {

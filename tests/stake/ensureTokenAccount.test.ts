@@ -1,5 +1,5 @@
 import { Keypair, PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js';
-import { ensureTokenAccount } from './ensureTokenAccount';
+import { ensureTokenAccount } from '@/stake/ensureTokenAccount';
 import { clusterProgramAddresses } from '@/constants';
 
 describe('ensureTokenAccount', () => {
