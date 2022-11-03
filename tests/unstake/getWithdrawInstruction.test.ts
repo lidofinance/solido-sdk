@@ -10,9 +10,7 @@ import {
 } from '@/unstake';
 
 import { heaviestValidator, stakeAuthority, validatorList, validators } from '../data/snapshot';
-import validatorListDump from '../data/validator_list.json';
-
-import { when } from 'jest-when';
+import { mockValidatorList } from '../helpers/validators';
 
 describe('getHeaviestValidator', () => {
   test('heaviest validator from validators list', () => {
@@ -49,12 +47,7 @@ describe('getWithdrawInstruction', () => {
     );
     sdk = new SolidoSDK(cluster, connection);
 
-    // Mock Validator List response
-    const spiedGetAccountInfo = jest.spyOn(connection, 'getAccountInfo');
-    when(spiedGetAccountInfo)
-      .calledWith(validatorList)
-      // @ts-ignore
-      .mockReturnValue({ data: Buffer.from(validatorListDump.data) });
+    mockValidatorList(connection);
 
     withdrawInstruction = await getWithdrawInstruction.call(sdk, {
       amount,

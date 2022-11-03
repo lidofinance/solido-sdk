@@ -19,12 +19,12 @@ describe('getStakeTransaction', () => {
   });
 
   it('should throw Error "Max exceed"', async () => {
-    await getStakeTransaction
-      .call(sdk, { payerAddress: Keypair.generate().publicKey, amount: 100000 })
-      .catch((error) => {
-        expect(error.message).toContain('Amount must not exceed MAX');
-        expect(error.code).toEqual(ERROR_CODE.EXCEED_MAX);
-      });
+    try {
+      await getStakeTransaction.call(sdk, { payerAddress: Keypair.generate().publicKey, amount: 100000 });
+    } catch (error) {
+      expect(error.message).toContain('Amount must not exceed MAX');
+      expect(error.code).toEqual(ERROR_CODE.EXCEED_MAX);
+    }
   });
 
   test('transaction structure correctness, recentBlockhash, feePayer, stSolAccountAddress', async () => {

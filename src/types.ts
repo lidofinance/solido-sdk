@@ -4,7 +4,7 @@ import { SignerWalletAdapter } from '@solana/wallet-adapter-base';
 
 import { INSTRUCTION, TX_STAGE, LidoVersion, INSTRUCTION_V2 } from '@/constants';
 
-enum AccountType {
+export enum AccountType {
   Uninitialized,
   Lido,
   Validator,

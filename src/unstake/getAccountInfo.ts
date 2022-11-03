@@ -12,13 +12,13 @@ export class Lido {
   }
 }
 
-class SeedRange {
+export class SeedRange {
   constructor(data) {
     Object.assign(this, data);
   }
 }
 
-class ValidatorClass {
+export class ValidatorClass {
   constructor(data) {
     Object.assign(this, data);
   }
@@ -36,13 +36,13 @@ class PubKeyAndEntryMaintainer {
   }
 }
 
-class RewardDistribution {
+export class RewardDistribution {
   constructor(data) {
     Object.assign(this, data);
   }
 }
 
-class FeeRecipients {
+export class FeeRecipients {
   constructor(data) {
     Object.assign(this, data);
   }
@@ -60,13 +60,13 @@ class Maintainers {
   }
 }
 
-class ExchangeRate {
+export class ExchangeRate {
   constructor(data) {
     Object.assign(this, data);
   }
 }
 
-class Metrics {
+export class Metrics {
   constructor(data) {
     Object.assign(this, data);
   }
@@ -373,7 +373,7 @@ const accountInfoV2Scheme = new Map([
 
         ['exchange_rate', ExchangeRate],
 
-        ['sol_reserve_authority_bump_seed', 'u8'],
+        ['sol_reserve_account_bump_seed', 'u8'],
         ['stake_authority_bump_seed', 'u8'],
         ['mint_authority_bump_seed', 'u8'],
 
@@ -464,7 +464,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoRes
   const accountInfo = await this.connection.getAccountInfo(solidoInstanceId);
 
   if (accountInfo === null) {
-    throw new ErrorWrapper({code: ERROR_CODE.NO_ACCOUNT_INFO});
+    throw new ErrorWrapper({ code: ERROR_CODE.NO_ACCOUNT_INFO });
   }
 
   try {
@@ -499,7 +499,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoRes
     const validators = await this.connection.getAccountInfo(validatorsList);
 
     if (validators === null) {
-      throw new ErrorWrapper({code: ERROR_CODE.NO_VALIDATORS});
+      throw new ErrorWrapper({ code: ERROR_CODE.NO_VALIDATORS });
     }
 
     const deserializedValidators = deserializeUnchecked(
