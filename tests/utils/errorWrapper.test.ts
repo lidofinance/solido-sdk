@@ -2,7 +2,7 @@ import { ErrorWrapper } from '@/utils/errorWrapper';
 import { ERROR_CODE, ERROR_CODE_DESC, ERROR_MESSAGE } from '@/constants';
 
 describe('ErrorWrapper', () => {
-  test('fields correctness', () => {
+  test('properties correctness', () => {
     const error = new ErrorWrapper({ code: ERROR_CODE.NO_ACCOUNT_INFO, error: new Error('Something wrong') });
 
     expect(error.code).toBe(ERROR_CODE.NO_ACCOUNT_INFO);
