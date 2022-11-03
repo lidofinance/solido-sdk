@@ -3,7 +3,7 @@ import { when } from 'jest-when';
 import BN from 'bn.js';
 
 import { LidoVersion, SolidoSDK } from '@/index';
-import { clusterProgramAddresses, ERROR_CODE } from '@/constants';
+import { clusterProgramAddresses, ERROR_CODE, ERROR_MESSAGE } from '@/constants';
 import {
   ExchangeRate,
   getAccountInfo,
@@ -39,7 +39,7 @@ describe('getAccountInfo', () => {
     try {
       await getAccountInfo.call(sdk);
     } catch (error) {
-      expect(error.message).toEqual(`Couldn't fetch getAccountInfo`);
+      expect(error.message).toEqual(ERROR_MESSAGE[ERROR_CODE.NO_ACCOUNT_INFO]);
       expect(error.code).toEqual(ERROR_CODE.NO_ACCOUNT_INFO);
     }
   });
