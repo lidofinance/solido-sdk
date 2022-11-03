@@ -84,7 +84,7 @@ class WithdrawMetric {
   }
 }
 
-class AccountList {
+export class AccountList {
   constructor(data) {
     Object.assign(this, data);
   }
@@ -393,7 +393,7 @@ const accountInfoV2Scheme = new Map([
   ],
 ]);
 
-const validatorsSchema = new Map([
+export const validatorsSchema = new Map([
   [
     ListHeader,
     {
