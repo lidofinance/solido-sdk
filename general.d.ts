@@ -6,6 +6,6 @@ declare module '*.svg' {
 }
 
 declare module '*.json' {
-  const content: JSON;
+  const content: Record<string, any>;
   export default content;
 }

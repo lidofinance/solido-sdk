@@ -12,7 +12,7 @@ describe('getTotalRewards', () => {
     sdk = new SolidoSDK(cluster, connection);
   });
 
-  test('total rewards returned valued', async () => {
+  test('total rewards returned value', async () => {
     jest.spyOn(sdk, 'getAccountInfo').mockReturnValueOnce({
       accountInfo: { metrics: { st_sol_appreciation_sol_total: new BN('2701000960') } },
     });
