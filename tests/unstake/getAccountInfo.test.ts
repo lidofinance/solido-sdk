@@ -16,7 +16,7 @@ import {
 import { AccountInfoV2, AccountType } from '@/types';
 
 import { validatorList } from '../data/snapshot';
-import { mockValidatorList } from '../helpers/validators';
+import { mockValidatorList } from '../mocks/validators';
 
 describe('getAccountInfo', () => {
   const cluster = 'testnet';

@@ -4,8 +4,8 @@ import { lamportsToSol, SolidoSDK } from '@/index';
 
 import reserveAccountInfo from '../data/reserve_account_info.json';
 import { validators } from '../data/snapshot';
-import { mockValidatorList } from '../helpers/validators';
-import { mockReserveAccountInfo } from '../helpers/accountInfo';
+import { mockValidatorList } from '../mocks/validators';
+import { mockReserveAccountInfo } from '../mocks/accountInfo';
 
 describe('getTotalStaked', () => {
   const cluster = 'testnet';

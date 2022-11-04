@@ -1,7 +1,7 @@
 import { Connection } from '@solana/web3.js';
 import { SolidoSDK } from '@/index';
 import { getExchangeRate } from '@/statistics/getExchangeRate';
-import { mockValidatorList } from '../helpers/validators';
+import { mockValidatorList } from '../mocks/validators';
 
 describe('getExchangeRate', () => {
   const cluster = 'testnet';

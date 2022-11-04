@@ -2,7 +2,7 @@ import { Connection, Keypair, PublicKey, Transaction, TransactionInstruction } f
 import { SolidoSDK } from '@/index';
 import { ERROR_CODE, ERROR_MESSAGE } from '@/constants';
 import { getUnStakeTransaction } from '@/unstake';
-import { mockValidatorList } from '../helpers/validators';
+import { mockValidatorList } from '../mocks/validators';
 
 describe('getUnStakeTransaction', () => {
   const walletWithStSolTokenAccount = new PublicKey('2Vn1xSUTo292A3knejUeifjt2A3aGNqyn9Svy8Kx8i4J');

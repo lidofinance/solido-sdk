@@ -10,7 +10,7 @@ import {
 } from '@/unstake';
 
 import { heaviestValidator, stakeAuthority, validatorList, validators } from '../data/snapshot';
-import { mockValidatorList } from '../helpers/validators';
+import { mockValidatorList } from '../mocks/validators';
 
 describe('getHeaviestValidator', () => {
   test('heaviest validator from validators list', () => {

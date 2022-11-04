@@ -3,7 +3,7 @@ import { Connection } from '@solana/web3.js';
 import { SolidoSDK } from '@/index';
 import { isUnStakeAvailable } from '@/unstake';
 
-import { mockValidatorList } from '../helpers/validators';
+import { mockValidatorList } from '../mocks/validators';
 
 describe('isUnStakeAvailable', () => {
   const cluster = 'testnet';
