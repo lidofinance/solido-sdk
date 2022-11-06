@@ -3,7 +3,7 @@ import { when } from 'jest-when';
 import BN from 'bn.js';
 
 import { LidoVersion, SolidoSDK } from '@/index';
-import { clusterProgramAddresses, ERROR_CODE, ERROR_MESSAGE } from '@/constants';
+import { clusterProgramAddresses, ERROR_CODE, ERROR_MESSAGE, VALIDATOR_LIST } from '@/constants';
 import {
   ExchangeRate,
   getAccountInfo,
@@ -15,7 +15,6 @@ import {
 } from '@/unstake';
 import { AccountInfoV2, AccountType } from '@/types';
 
-import { validatorList } from '../data/snapshot';
 import { mockValidatorList } from '../mocks/validators';
 
 describe('getAccountInfo', () => {
@@ -46,7 +45,7 @@ describe('getAccountInfo', () => {
 
   test(`Couldn't fetch getAccountInfo validatorList`, async () => {
     const spiedGetAccountInfo = jest.spyOn(connection, 'getAccountInfo');
-    when(spiedGetAccountInfo).calledWith(validatorList).mockReturnValueOnce(null);
+    when(spiedGetAccountInfo).calledWith(VALIDATOR_LIST).mockReturnValueOnce(null);
 
     try {
       await getAccountInfo.call(sdk);
@@ -67,7 +66,7 @@ describe('getAccountInfo', () => {
     expect(accountInfo.account_type).toEqual(AccountType.Lido);
 
     expect(new PublicKey(accountInfo.st_sol_mint)).toStrictEqual(stSolMintAddress);
-    expect(new PublicKey(accountInfo.validator_list)).toStrictEqual(validatorList);
+    expect(new PublicKey(accountInfo.validator_list)).toStrictEqual(VALIDATOR_LIST);
 
     expect(accountInfo.exchange_rate).toBeInstanceOf(ExchangeRate);
     expect(accountInfo.reward_distribution).toBeInstanceOf(RewardDistribution);

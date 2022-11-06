@@ -1,7 +1,7 @@
 import { Connection } from '@solana/web3.js';
 import { when } from 'jest-when';
 
-import { validatorList } from '../data/snapshot';
+import { VALIDATOR_LIST } from '@/constants';
 
 import validatorListFullDump from '../data/validator_list_full.json';
 import validatorListInActiveDump from '../data/validator_list_inactive.json';
@@ -21,7 +21,7 @@ const validatorsDumpMap: Record<ValidatorsDumpType, any> = {
 export const mockValidatorList = (connection: Connection, dumpType: ValidatorsDumpType = 'full') => {
   const spiedGetAccountInfo = jest.spyOn(connection, 'getAccountInfo');
   when(spiedGetAccountInfo)
-    .calledWith(validatorList)
+    .calledWith(VALIDATOR_LIST)
     // @ts-ignore
     .mockReturnValueOnce({ data: Buffer.from(validatorsDumpMap[dumpType].data) });
 };

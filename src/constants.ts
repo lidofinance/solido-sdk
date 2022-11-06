@@ -43,6 +43,8 @@ export const clusterProgramAddresses: Record<SupportedClusters, ProgramAddresses
 
 export const MEMO_PROGRAM_ID = new PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr');
 
+export const VALIDATOR_LIST = new PublicKey('7mLYFE8uN37j4JjyGpqh8N8e5EDirLE86sSvNLSt5pPM');
+
 export const SOL_API_HOST = 'https://sol-api-pub.lido.fi';
 
 // 1xx - blockchain error
@@ -67,12 +69,13 @@ export const ERROR_CODE_DESC: Record<ERROR_CODE, string> = {
   [ERROR_CODE.NO_PUBLIC_KEY]: 'NO_PUBLIC_KEY',
   [ERROR_CODE.NO_ACCOUNT_INFO]: 'NO_ACCOUNT_INFO',
   [ERROR_CODE.EXCEED_MAX]: 'EXCEED_MAX',
-}
+};
 
 export const ERROR_MESSAGE: Partial<Record<ERROR_CODE, string>> = {
   [ERROR_CODE.NO_VALIDATORS]: `Couldn't fetch validators list`,
   [ERROR_CODE.UNSUPPORTED_CLUSTER]: `SolidoSDK doesn't support devnet, please specify mainnet-beta or testnet`,
-  [ERROR_CODE.UNSTAKE_UNAVAILABLE]: 'Sorry, unStake is not available right now. Please contact lido developers for details.',
+  [ERROR_CODE.UNSTAKE_UNAVAILABLE]:
+    'Sorry, unStake is not available right now. Please contact lido developers for details.',
   [ERROR_CODE.NO_PUBLIC_KEY]: 'SolidoSDK: publicKey is null in wallet',
   [ERROR_CODE.NO_ACCOUNT_INFO]: `Couldn't fetch getAccountInfo`,
-}
+};

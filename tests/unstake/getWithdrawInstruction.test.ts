@@ -1,15 +1,14 @@
 import { Connection, Keypair, TransactionInstruction } from '@solana/web3.js';
 import { LidoVersion, SolidoSDK, solToLamports } from '@/index';
-import { clusterProgramAddresses, INSTRUCTION_V2 } from '@/constants';
+import { clusterProgramAddresses, INSTRUCTION_V2, VALIDATOR_LIST } from '@/constants';
 import {
-  calculateStakeAccountAddress,
   getHeaviestValidator,
   getValidatorIndex,
   getWithdrawInstruction,
   withdrawDataLayout,
 } from '@/unstake';
 
-import { heaviestValidator, stakeAuthority, validatorList, validators } from '../data/snapshot';
+import { heaviestValidator, stakeAuthority, validators } from '../data/snapshot';
 import { mockValidatorList } from '../mocks/validators';
 
 describe('getHeaviestValidator', () => {
@@ -70,7 +69,7 @@ describe('getWithdrawInstruction', () => {
     expect(keys[5].pubkey).toStrictEqual(heaviestValidator.stake_account_address);
     expect(keys[6].pubkey).toStrictEqual(stakeAccount);
     expect(keys[7].pubkey).toStrictEqual(stakeAuthority);
-    expect(keys[8].pubkey).toStrictEqual(validatorList);
+    expect(keys[8].pubkey).toStrictEqual(VALIDATOR_LIST);
   });
 
   test('withdrawInstruction.programId is correct', () => {

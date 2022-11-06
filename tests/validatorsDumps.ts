@@ -1,13 +1,13 @@
 import { Connection } from '@solana/web3.js';
+import { deserializeUnchecked, serialize } from 'borsh';
+import BN from 'bn.js';
 
 import fs from 'fs';
 import path from 'path';
 
-import { validatorList } from './data/snapshot';
-import { deserializeUnchecked, serialize } from 'borsh';
 import { AccountList, validatorsSchema } from '@/unstake';
+import { VALIDATOR_LIST } from '@/constants';
 import { ValidatorsList } from '@/types';
-import BN from 'bn.js';
 
 const connection = new Connection(
   'https://pyth-testnet-rpc-1.solana.p2p.org/yIwMoknPihQvrhSyxafcHvsAqkOE7KKrBUpplM5Xf',
@@ -27,7 +27,7 @@ const serializeAndSaveToFile = async (deserializedValidators, namePostFix: strin
 };
 
 const updateValidatorListDump = async () => {
-  const validatorListResp = await connection.getAccountInfo(validatorList);
+  const validatorListResp = await connection.getAccountInfo(VALIDATOR_LIST);
 
   if (validatorListResp === null) {
     console.log('getAccountInfo of validatorList returned null, try again');
