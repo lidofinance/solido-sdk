@@ -10,7 +10,8 @@
     "build": "rollup -c ./rollup.config.ts",
     "lint": "eslint --ext .js,.ts,.tsx,.jsx ./src",
     "lint:fix": "npm run lint -- --fix",
-    "dump:validators": "ts-node -r tsconfig-paths/register ./tests/validatorsDumps.ts && prettier --write ./tests/data/**"
+    "dump:validators": "ts-node -r tsconfig-paths/register ./tests/validatorsDumps.ts && prettier --write ./tests/data/**",
+    "dump:reserve-account": "ts-node -r tsconfig-paths/register ./tests/accountInfoDump.ts && prettier --write ./tests/data/reserve_account_info.json"
   },
   "repository": {
     "type": "git",
