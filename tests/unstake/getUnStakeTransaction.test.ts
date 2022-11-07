@@ -1,8 +1,11 @@
-import { Connection, Keypair, PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js';
+import { Keypair, PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js';
+
 import { SolidoSDK } from '@/index';
 import { ERROR_CODE, ERROR_MESSAGE } from '@/constants';
 import { getUnStakeTransaction } from '@/unstake';
+
 import { mockValidatorList } from '../mocks/validators';
+import { getConnection } from '../helpers';
 
 describe('getUnStakeTransaction', () => {
   const walletWithStSolTokenAccount = new PublicKey('2Vn1xSUTo292A3knejUeifjt2A3aGNqyn9Svy8Kx8i4J');
@@ -11,8 +14,8 @@ describe('getUnStakeTransaction', () => {
   const cluster = 'testnet';
   let sdk, connection;
 
-  beforeAll(async () => {
-    connection = new Connection('https://api.testnet.solana.com/');
+  beforeAll(() => {
+    connection = getConnection();
     sdk = new SolidoSDK(cluster, connection);
   });
 

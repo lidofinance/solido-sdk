@@ -1,18 +1,15 @@
-import { Connection } from '@solana/web3.js';
-
 import { SolidoSDK } from '@/index';
 import { isUnStakeAvailable } from '@/unstake';
 
 import { mockValidatorList } from '../mocks/validators';
+import { getConnection } from '../helpers';
 
 describe('isUnStakeAvailable', () => {
   const cluster = 'testnet';
   let sdk, connection;
 
-  beforeAll(async () => {
-    connection = new Connection(
-      'https://pyth-testnet-rpc-1.solana.p2p.org/yIwMoknPihQvrhSyxafcHvsAqkOE7KKrBUpplM5Xf',
-    );
+  beforeAll(() => {
+    connection = getConnection();
     sdk = new SolidoSDK(cluster, connection);
   });
 

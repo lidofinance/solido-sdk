@@ -1,8 +1,11 @@
-import { Connection, Keypair, TransactionInstruction } from '@solana/web3.js';
+import { Keypair, TransactionInstruction } from '@solana/web3.js';
+
 import { INSTRUCTION, SolidoSDK, solToLamports } from '@/index';
 import { depositDataLayout, getDepositInstruction } from '@/stake/getDepositInstruction';
 import { clusterProgramAddresses } from '@/constants';
+
 import { mintAuthority, reserveAccount } from '../data/snapshot';
+import { getConnection } from '../helpers';
 
 describe('getDepositInstruction', () => {
   let depositInstruction: TransactionInstruction;
@@ -15,10 +18,7 @@ describe('getDepositInstruction', () => {
   const { solidoInstanceId, solidoProgramId, stSolMintAddress } = clusterProgramAddresses[cluster];
 
   beforeAll(async () => {
-    // TODO get rpc endpoint from .env
-    const connection = new Connection(
-      'https://pyth-testnet-rpc-1.solana.p2p.org/yIwMoknPihQvrhSyxafcHvsAqkOE7KKrBUpplM5Xf',
-    );
+    const connection = getConnection();
     sdk = new SolidoSDK(cluster, connection);
 
     depositInstruction = await getDepositInstruction.call(sdk, {

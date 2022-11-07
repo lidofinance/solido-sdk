@@ -1,18 +1,18 @@
-import { Connection } from '@solana/web3.js';
-
 import { lamportsToSol, SolidoSDK } from '@/index';
 
 import reserveAccountInfo from '../data/reserve_account_info.json';
 import { validators } from '../data/snapshot';
+
 import { mockValidatorList } from '../mocks/validators';
 import { mockReserveAccountInfo } from '../mocks/accountInfo';
+import { getConnection } from '../helpers';
 
 describe('getTotalStaked', () => {
   const cluster = 'testnet';
   let sdk, connection;
 
-  beforeAll(async () => {
-    connection = new Connection('https://api.testnet.solana.com/');
+  beforeAll(() => {
+    connection = getConnection();
     sdk = new SolidoSDK(cluster, connection);
   });
 

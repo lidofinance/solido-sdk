@@ -1,7 +1,6 @@
-import { Connection } from '@solana/web3.js';
-
 import { INSTRUCTION, SolidoSDK } from '@/index';
 import { getSolPriceMock } from '../mocks/getSolPrice';
+import { getConnection } from '../helpers';
 
 describe('getTransactionCost', () => {
   const cluster = 'testnet';
@@ -9,8 +8,8 @@ describe('getTransactionCost', () => {
   const priceUsd = 20;
   let sdk, connection;
 
-  beforeAll(async () => {
-    connection = new Connection('https://api.testnet.solana.com/');
+  beforeAll(() => {
+    connection = getConnection();
     sdk = new SolidoSDK(cluster, connection);
 
     global.fetch = jest.fn();

@@ -1,14 +1,13 @@
-import { Connection } from '@solana/web3.js';
 import { SolidoSDK } from '@/index';
-import { getExchangeRate } from '@/statistics/getExchangeRate';
 import { mockValidatorList } from '../mocks/validators';
+import { getConnection } from '../helpers';
 
 describe('getExchangeRate', () => {
   const cluster = 'testnet';
   let sdk, connection;
 
-  beforeAll(async () => {
-    connection = new Connection('https://api.testnet.solana.com/');
+  beforeAll(() => {
+    connection = getConnection();
     sdk = new SolidoSDK(cluster, connection);
   });
 

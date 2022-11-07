@@ -1,10 +1,7 @@
-import { Connection } from '@solana/web3.js';
-
 import { formatWithCommas, SolidoSDK } from '@/index';
-import { getMarketCap } from '@/statistics/getMarketCap';
-import { getLidoStatistics } from '@/statistics/lidoStatistics';
 
 import { getStakeApyMock } from '../mocks/getStakeApy';
+import { getConnection } from '../helpers';
 
 describe('getLidoStatistics', () => {
   const cluster = 'testnet';
@@ -16,8 +13,8 @@ describe('getLidoStatistics', () => {
 
   let sdk, connection;
 
-  beforeAll(async () => {
-    connection = new Connection('https://api.testnet.solana.com/');
+  beforeAll(() => {
+    connection = getConnection();
     sdk = new SolidoSDK(cluster, connection);
 
     global.fetch = jest.fn();

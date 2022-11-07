@@ -1,13 +1,12 @@
-import { Connection } from '@solana/web3.js';
-
 import { SolidoSDK } from '@/index';
+import { getConnection } from '../helpers';
 
 describe('getStakersCount', () => {
   const cluster = 'testnet';
   let sdk, connection;
 
   beforeAll(async () => {
-    connection = new Connection('https://api.testnet.solana.com/');
+    connection = getConnection();
     sdk = new SolidoSDK(cluster, connection);
   });
 

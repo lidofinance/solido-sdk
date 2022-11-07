@@ -1,4 +1,4 @@
-import { Connection, PublicKey } from '@solana/web3.js';
+import { PublicKey } from '@solana/web3.js';
 import { when } from 'jest-when';
 import BN from 'bn.js';
 
@@ -16,6 +16,7 @@ import {
 import { AccountInfoV2, AccountType } from '@/types';
 
 import { mockValidatorList } from '../mocks/validators';
+import { getConnection } from '../helpers';
 
 describe('getAccountInfo', () => {
   const cluster = 'testnet';
@@ -23,11 +24,8 @@ describe('getAccountInfo', () => {
 
   const { solidoInstanceId, stSolMintAddress } = clusterProgramAddresses[cluster];
 
-  beforeAll(async () => {
-    // TODO get rpc endpoint from .env
-    connection = new Connection(
-      'https://pyth-testnet-rpc-1.solana.p2p.org/yIwMoknPihQvrhSyxafcHvsAqkOE7KKrBUpplM5Xf',
-    );
+  beforeAll(() => {
+    connection = getConnection();
     sdk = new SolidoSDK(cluster, connection);
   });
 

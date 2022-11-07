@@ -1,14 +1,14 @@
-import { Connection } from '@solana/web3.js';
 import BN from 'bn.js';
 
 import { SolidoSDK } from '@/index';
+import { getConnection } from '../helpers';
 
 describe('getTotalRewards', () => {
   const cluster = 'testnet';
   let sdk, connection;
 
-  beforeAll(async () => {
-    connection = new Connection('https://api.testnet.solana.com/');
+  beforeAll(() => {
+    connection = getConnection();
     sdk = new SolidoSDK(cluster, connection);
   });
 

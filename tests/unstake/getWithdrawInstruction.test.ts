@@ -1,4 +1,4 @@
-import { Connection, Keypair, TransactionInstruction } from '@solana/web3.js';
+import { Keypair, TransactionInstruction } from '@solana/web3.js';
 import { LidoVersion, SolidoSDK, solToLamports } from '@/index';
 import { clusterProgramAddresses, INSTRUCTION_V2, VALIDATOR_LIST } from '@/constants';
 import {
@@ -10,6 +10,7 @@ import {
 
 import { heaviestValidator, stakeAuthority, validators } from '../data/snapshot';
 import { mockValidatorList } from '../mocks/validators';
+import { getConnection } from '../helpers';
 
 describe('getHeaviestValidator', () => {
   test('heaviest validator from validators list', () => {
@@ -40,10 +41,7 @@ describe('getWithdrawInstruction', () => {
   const { solidoInstanceId, solidoProgramId, stSolMintAddress } = clusterProgramAddresses[cluster];
 
   beforeAll(async () => {
-    // TODO get rpc endpoint from .env
-    const connection = new Connection(
-      'https://pyth-testnet-rpc-1.solana.p2p.org/yIwMoknPihQvrhSyxafcHvsAqkOE7KKrBUpplM5Xf',
-    );
+    const connection = getConnection();
     sdk = new SolidoSDK(cluster, connection);
 
     mockValidatorList(connection);
@@ -54,7 +52,7 @@ describe('getWithdrawInstruction', () => {
       senderStSolAccountAddress,
       stakeAccount,
     });
-  }, 10000);
+  });
 
   test('withdrawInstruction keys validity', () => {
     const { keys } = withdrawInstruction;

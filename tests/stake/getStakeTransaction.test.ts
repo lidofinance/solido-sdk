@@ -1,20 +1,19 @@
-import { Connection, Keypair, PublicKey, Transaction } from '@solana/web3.js';
+import { Keypair, Transaction } from '@solana/web3.js';
+import { ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token';
+
 import { SolidoSDK } from '@/index';
 import { getStakeTransaction } from '@/stake/getStakeTransaction';
 import { ERROR_CODE, MEMO_PROGRAM_ID } from '@/constants';
-import { ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token';
+
+import { stSolTokenAccount, walletWithoutStSolTokenAccount, walletWithStSolTokenAccount } from '../constants';
+import { getConnection } from '../helpers';
 
 describe('getStakeTransaction', () => {
-  const walletWithStSolTokenAccount = new PublicKey('2Vn1xSUTo292A3knejUeifjt2A3aGNqyn9Svy8Kx8i4J');
-  const stSolTokenAccount = new PublicKey('Gwg78Gv1NZN6k4eFSm8pTQUz2bSRcLKbMVm72uYZL9mu');
-
-  const walletWithoutStSolTokenAccount = new PublicKey('EBMf62pD8rcEJ9UeyJ4ghdm7hXpgVQCptkKdcmZ9eoJn');
-
   const cluster = 'testnet';
   let sdk, connection;
 
-  beforeAll(async () => {
-    connection = new Connection('https://api.testnet.solana.com/');
+  beforeAll(() => {
+    connection = getConnection();
     sdk = new SolidoSDK(cluster, connection);
   });
 
