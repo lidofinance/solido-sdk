@@ -32,8 +32,7 @@ import { getTotalRewards } from '@/statistics/getTotalRewards';
 import { getStSolAccountsForUser } from '@/stake/getStSolAccountsForUser';
 import { ErrorWrapper } from '@/utils/errorWrapper';
 
-export { default as LidoStakeBanner } from '../../banner/src/components';
-export { getStakeApy } from './api/stakeApy';
+export { getStakeApy } from '../../common/stakeApy';
 export {
   MAINNET_PROGRAM_ADDRESSES,
   TESTNET_PROGRAM_ADDRESSES,

@@ -7,9 +7,7 @@
   "types": "dist/esm/index.d.ts",
   "scripts": {
     "tsc": "tsc --init",
-    "build": "rollup -c ./rollup.config.ts",
-    "lint": "eslint --ext .js,.ts,.tsx,.jsx src/components",
-    "lint:fix": "npm run lint -- --fix"
+    "build": "rollup -c ./rollup.config.mjs"
   },
   "repository": {
     "type": "git",

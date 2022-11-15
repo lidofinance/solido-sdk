@@ -7,7 +7,7 @@
   "types": "dist/esm/index.d.ts",
   "scripts": {
     "tsc": "tsc --init",
-    "build": "rollup -c ./rollup.config.ts"
+    "build": "rollup -c ./rollup.config.mjs"
   },
   "repository": {
     "type": "git",

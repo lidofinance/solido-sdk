@@ -1,16 +1,12 @@
 import typescript from 'rollup-plugin-typescript2';
 import del from 'rollup-plugin-delete';
-import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
 import url from '@rollup/plugin-url';
 import ttypescript from 'ttypescript';
 
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 
-const extensions = ['.svg', '.js', '.jsx', '.ts', '.tsx'];
-
-export default {
-  input: 'src/index.ts',
+export default (extensions) => ({
   output: [
     {
       dir: 'dist/esm',
@@ -26,9 +22,6 @@ export default {
 
   plugins: [
     del({ targets: 'dist/*', runOnce: true }),
-    alias({
-      entries: [{ find: '@/', replacement: './src/' }],
-    }),
     nodeResolve({ extensions, preferBuiltins: false }),
     commonjs({
       include: /node_modules/,
@@ -42,6 +35,4 @@ export default {
       limit: 30720,
     }),
   ],
-
-  external: ['@solana/web3.js', '@solana/buffer-layout', '@solana/spl-token', 'bn.js'],
-};
+});

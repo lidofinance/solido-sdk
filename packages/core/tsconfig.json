@@ -1,27 +1,14 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "es5",
-    "module": "esnext",
-    "rootDir": "./src/",
-    "moduleResolution": "node",
     "baseUrl": "./src/",
     "paths": {
       "@/*": ["*"],
-    },
-    "declaration": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitAny": false,
-    "jsx": "react",
-    "plugins": [
-      { "transform": "typescript-transform-paths", "useRootDirs": true },
-      { "transform": "typescript-transform-paths", "useRootDirs": true, "afterDeclarations": true }
-    ]
+      "@common/*": ["../../common/*"]
+    }
   },
   "exclude": [
     "node_modules",
-    "dist",
-    "rollup.config.ts"
+    "dist"
   ]
 }

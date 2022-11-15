@@ -1,4 +1,4 @@
-import { SOL_API_HOST } from '@/constants';
+import { SOL_API_HOST } from './constants';
 
 type StakeApyResponse = {
   data: {

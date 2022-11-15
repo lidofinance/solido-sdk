@@ -1,5 +1,5 @@
 import { SolidoSDK } from '@/index';
-import { getStakeApy } from '../api/stakeApy';
+import { getStakeApy } from '@common/stakeApy';
 import { formatWithCommas } from '@/utils/formatters';
 
 export async function getLidoStatistics(this: SolidoSDK) {

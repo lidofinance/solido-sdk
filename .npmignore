@@ -5,7 +5,7 @@
 .idea
 .docz
 tsconfig.json
-rollup.config.ts
+rollup.config.js
 src
 doczrc.js
 docz

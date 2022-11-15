@@ -2,19 +2,13 @@
   "compilerOptions": {
     "target": "es5",
     "module": "esnext",
-    "rootDir": "./src/",
     "moduleResolution": "node",
-    "baseUrl": "./packages/",
-    "paths": {
-      "@/*": ["*"]
-    },
     "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitAny": false,
     "skipLibCheck": true,
-    "jsx": "react",
     "plugins": [
       { "transform": "typescript-transform-paths", "useRootDirs": true },
       { "transform": "typescript-transform-paths", "useRootDirs": true, "afterDeclarations": true }
@@ -22,6 +16,6 @@
   },
   "exclude": [
     "node_modules",
-    "dist",
+    "dist"
   ]
 }

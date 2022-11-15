@@ -1,22 +1,12 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "es5",
-    "module": "esnext",
-    "moduleResolution": "node",
     "baseUrl": "./src/",
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["*"],
+      "@common/*": ["../../common/*"]
     },
-    "declaration": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitAny": false,
-    "jsx": "react",
-    "plugins": [
-      { "transform": "typescript-transform-paths", "useRootDirs": true },
-      { "transform": "typescript-transform-paths", "useRootDirs": true, "afterDeclarations": true }
-    ]
+    "jsx": "react"
   },
   "exclude": [
     "node_modules",
