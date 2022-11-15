@@ -31,7 +31,7 @@ $ yarn add @lidofinance/solido-sdk
 
 ## Using banner
 
-<img src="./src/assets/banner_horizontal.png" alt="Banner" />
+<img src="packages/banner/src/assets/banner_horizontal.png" alt="Banner" />
 
 ```ts
 import { LidoStakeBanner } from '@lidofinance/solido-sdk';

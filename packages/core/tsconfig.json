@@ -4,16 +4,15 @@
     "module": "esnext",
     "rootDir": "./src/",
     "moduleResolution": "node",
-    "baseUrl": "./packages/",
+    "baseUrl": "./src/",
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["*"],
     },
     "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitAny": false,
-    "skipLibCheck": true,
     "jsx": "react",
     "plugins": [
       { "transform": "typescript-transform-paths", "useRootDirs": true },
@@ -23,5 +22,6 @@
   "exclude": [
     "node_modules",
     "dist",
+    "rollup.config.ts"
   ]
 }

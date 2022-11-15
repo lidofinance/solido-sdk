@@ -1,9 +1,7 @@
 import typescript from 'rollup-plugin-typescript2';
 import del from 'rollup-plugin-delete';
-import svgr from '@svgr/rollup';
 import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
-import json from '@rollup/plugin-json';
 import url from '@rollup/plugin-url';
 import ttypescript from 'ttypescript';
 
@@ -43,18 +41,7 @@ export default {
       fileName: '[dirname][hash][extname]',
       limit: 30720,
     }),
-    svgr(),
-    json(),
   ],
 
-  external: [
-    'react',
-    'react-dom',
-    'react/jsx-runtime',
-    'styled-components',
-    '@solana/web3.js',
-    '@solana/buffer-layout',
-    '@solana/spl-token',
-    'bn.js',
-  ],
+  external: ['@solana/web3.js', '@solana/buffer-layout', '@solana/spl-token', 'bn.js'],
 };

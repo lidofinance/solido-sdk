@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Box, Text, Link, useBreakpoint } from '@lidofinance/lido-ui';
 
-import { getStakeApy, STATIC_DEFAULT_APY } from '@/api/stakeApy';
+import { getStakeApy, STATIC_DEFAULT_APY } from '../../../core/src/api/stakeApy';
 import { getDefiApy } from '@/api/defiApy';
 import { getStakeLink, getDefiLink } from '@/utils/getLinkWIthReferrer';
-import { ReactComponent as LidoLogo } from '../assets/lido-logo.inline.svg';
-import Background from '../assets/background.svg';
-import BackgroundVertical from '../assets/background_vertical.svg';
+
+import { ReactComponent as LidoLogo } from '@/assets/lido-logo.inline.svg';
+import Background from '@/assets/background.svg';
+import BackgroundVertical from '@/assets/background_vertical.svg';
 
 import { BannerWrapper } from './styles';
 

@@ -1,14 +1,10 @@
 {
-  "name": "@lidofinance/solido-sdk",
-  "version": "0.5.1",
+  "name": "solido-sdk",
   "description": "Lido on Solana frontend sdk",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/esm/index.d.ts",
   "scripts": {
     "tsc": "tsc --init",
-    "build": "rollup -c ./rollup.config.ts",
-    "lint": "eslint --ext .js,.ts,.tsx,.jsx ./src",
+    "build": "rollup -c packages/core/rollup.config.ts",
+    "lint": "eslint --ext .js,.ts,.tsx,.jsx ./packages",
     "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
@@ -26,17 +22,6 @@
     "url": "https://github.com/lidofinance/solido-sdk/issues"
   },
   "homepage": "https://github.com/lidofinance/solido-sdk#readme",
-  "dependencies": {
-    "@lidofinance/lido-ui": "^2.7.0",
-    "@solana/buffer-layout": "4.0.0",
-    "@solana/spl-token": "0.2.0",
-    "@solana/wallet-adapter-base": "^0.9.9",
-    "@solana/web3.js": "^1.47.3",
-    "bn.js": "^5.2.1",
-    "borsh": "^0.7.0",
-    "rollup": "^2.75.7",
-    "tslib": "^2.4.0"
-  },
   "devDependencies": {
     "@lidofinance/eslint-config": "^0.0.2",
     "@rollup/plugin-alias": "^3.1.9",
@@ -44,14 +29,9 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-url": "^7.0.0",
-    "@svgr/rollup": "^6.2.1",
-    "@types/bn.js": "^5.1.0",
-    "@types/react": "^18.0.14",
-    "@types/react-dom": "^18.0.5",
-    "@types/styled-components": "^5.1.25",
-    "@types/styled-system": "^5.1.15",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",
+    "rollup": "^2.75.7",
     "eslint": "^8.17.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
@@ -67,23 +47,10 @@
     "eslint-plugin-sonarjs": "^0.13.0",
     "eslint-plugin-unicorn": "^42.0.0",
     "prettier": "^2.7.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-typescript2": "^0.32.1",
-    "styled-components": "^5.3.5",
     "ttypescript": "^1.5.13",
     "typescript": "^4.7.4",
     "typescript-transform-paths": "^3.3.1"
-  },
-  "peerDependencies": {
-    "react": "16 || 17",
-    "react-dom": "16 || 17",
-    "styled-components": "5",
-    "@solana/web3.js": "^1.47.3",
-    "bn.js": "^5.2.1"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }
