@@ -11,15 +11,11 @@ Lido on Solana gives you:
 
 ### About sdk
 
-This sdk helps you integrate with us, using two ways:
-1. Simplest way is using React banner.
-2. Support UI widget in your project. We provide js functions for staking, unstaking, statistics and transaction info.
-3. Use staking widget with UI (coming soon)
+Here we provide js functions for staking, unstaking, statistics and transaction info.
 
 ## Contents:
-- [Using banner](#using-banner)
-- [Using SDK](#using-sdk)
-- [Using staking widget](#using-staking-widget)
+- [Installation](#installation)
+- [How to use](#how-to-use)
 - [Learn more](#learn-more)
 
 ## Installation
@@ -28,31 +24,7 @@ $ npm install @lidofinance/solido-sdk
 $ yarn add @lidofinance/solido-sdk
 ```
 
-## Using banner
-
-#### Installation
-```bash
-$ npm install @lidofinance/solido-sdk-banner
-$ yarn add @lidofinance/solido-sdk-banner
-```
-
-<img src="packages/banner/src/assets/banner_horizontal.png" alt="Banner" />
-
-```ts
-import LidoStakeBanner from '@lidofinance/solido-sdk';
-
-<LidoStakeBanner referrerId="your_solana_referral_address" direction="horizontal" />
-```
-
-_Note: also available vertical mode. [Read more](https://lidofinance.github.io/solido-sdk/banner)_
-
-## Using SDK
-
-#### Installation
-```bash
-$ npm install @lidofinance/solido-sdk
-$ yarn add @lidofinance/solido-sdk
-```
+## How to use
 
 Staking:
 
@@ -73,10 +45,6 @@ try {
 ```
 
 _[Read more for full examples & details](https://docs.solana.lido.fi/frontend-integration/sdk)_
-
-## Using staking widget
-
-In progress, will be available soon.
 
 ## Learn more
 - [Lido on Solana](https://solana.lido.fi/)

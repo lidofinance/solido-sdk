@@ -1,4 +1,4 @@
-# Lido on Solana - Frontend SDK
+# Lido on Solana - Frontend SDK, Banner integration
 
 ### About us
 
@@ -9,32 +9,18 @@ Lido on Solana gives you:
 - **One-click staking** — No complicated steps
 - **Decentralized** security — Assets spread across the industry’s leading validators chosen by the Lido DAO
 
-### About sdk
-
-This sdk helps you integrate with us, using two ways:
-1. Simplest way is using React banner.
-2. Support UI widget in your project. We provide js functions for staking, unstaking, statistics and transaction info.
-3. Use staking widget with UI (coming soon)
-
 ## Contents:
-- [Using banner](#using-banner)
-- [Using SDK](#using-sdk)
-- [Using staking widget](#using-staking-widget)
+- [Installation](#installation)
+- [How to use](#how-to-use)
 - [Learn more](#learn-more)
 
 ## Installation
 ```bash
-$ npm install @lidofinance/solido-sdk
-$ yarn add @lidofinance/solido-sdk
-```
-
-## Using banner
-
-#### Installation
-```bash
 $ npm install @lidofinance/solido-sdk-banner
 $ yarn add @lidofinance/solido-sdk-banner
 ```
+
+## How to use
 
 <img src="packages/banner/src/assets/banner_horizontal.png" alt="Banner" />
 
@@ -44,39 +30,12 @@ import LidoStakeBanner from '@lidofinance/solido-sdk';
 <LidoStakeBanner referrerId="your_solana_referral_address" direction="horizontal" />
 ```
 
-_Note: also available vertical mode. [Read more](https://lidofinance.github.io/solido-sdk/banner)_
+#### Props:
+- *`referrerId`* - Solana Referral Address. [Read more](https://help.lido.fi/en/articles/5847184-lido-referral-program-for-solana-integration-guide).
+- *`width?`* - This option is for customising width of vertical mode. Default and best fit value is `335px`.
+- *`direction`* = *`horizontal|vertical`*
 
-## Using SDK
-
-#### Installation
-```bash
-$ npm install @lidofinance/solido-sdk
-$ yarn add @lidofinance/solido-sdk
-```
-
-Staking:
-
-```ts
-import { SolidoSDK } from '@lidofinance/solido-sdk';
-// solana/web3.js Connection
-const solidoSDK = new SolidoSDK('mainnet-beta', connection, 'your_solana_referral_address');
-
-try {
-  const { transactionHash, stSolAccountAddress } = await solidoSDK.stake({
-    amount: 20, // The amount of SOL-s which need to stake
-    wallet: wallet, // Wallet instance
-    setTxStage: setTxStageCallback, // Optional callback for getting information about transaction stage (see TX_STAGE)
-  });
-} catch (e) {
-  // Handle Errors
-}
-```
-
-_[Read more for full examples & details](https://docs.solana.lido.fi/frontend-integration/sdk)_
-
-## Using staking widget
-
-In progress, will be available soon.
+[Read more](https://lidofinance.github.io/solido-sdk/banner)_
 
 ## Learn more
 - [Lido on Solana](https://solana.lido.fi/)
