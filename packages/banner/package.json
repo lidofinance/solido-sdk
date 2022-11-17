@@ -1,10 +1,10 @@
 {
   "name": "@lidofinance/solido-sdk-banner",
-  "version": "0.1.0",
+  "version": "0.1.0-local.2",
   "description": "Lido on Solana frontend sdk, banner integration",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
-  "types": "dist/esm/index.d.ts",
+  "types": "dist/esm/banner/src/index.d.ts",
   "scripts": {
     "tsc": "tsc --init",
     "build": "rollup -c ./rollup.config.mjs"
