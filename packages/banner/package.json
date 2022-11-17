@@ -1,6 +1,6 @@
 {
   "name": "@lidofinance/solido-sdk-banner",
-  "version": "0.1.0-local.2",
+  "version": "0.1.0",
   "description": "Lido on Solana frontend sdk, banner integration",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
