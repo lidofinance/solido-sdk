@@ -5,7 +5,8 @@
     "tsc": "tsc --init",
     "build": "lerna run build",
     "lint": "eslint --ext .js,.ts,.tsx,.jsx ./packages",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "postinstall": "lerna exec npm install"
   },
   "repository": {
     "type": "git",
