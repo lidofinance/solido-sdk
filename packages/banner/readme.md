@@ -25,7 +25,7 @@ $ yarn add @lidofinance/solido-sdk-banner
 <img src="packages/banner/src/assets/banner_horizontal.png" alt="Banner" />
 
 ```ts
-import LidoStakeBanner from '@lidofinance/solido-sdk';
+import LidoStakeBanner from '@lidofinance/solido-sdk-banner';
 
 <LidoStakeBanner referrerId="your_solana_referral_address" direction="horizontal" />
 ```

@@ -7,91 +7,91 @@ import { ERROR_CODE, LidoVersion } from '@/constants';
 import { ErrorWrapper } from '@/utils/errorWrapper';
 
 export class Lido {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class SeedRange {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class ValidatorClass {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class PubKeyAndEntry {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class PubKeyAndEntryMaintainer {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class RewardDistribution {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class FeeRecipients {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class Validators {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class Maintainers {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class ExchangeRate {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class Metrics {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class LamportsHistogram {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class WithdrawMetric {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class AccountList {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class ListHeader {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
@@ -464,7 +464,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoRes
   const accountInfo = await this.connection.getAccountInfo(solidoInstanceId);
 
   if (accountInfo === null) {
-    throw new ErrorWrapper({code: ERROR_CODE.NO_ACCOUNT_INFO});
+    throw new ErrorWrapper({ code: ERROR_CODE.NO_ACCOUNT_INFO });
   }
 
   try {
@@ -499,7 +499,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoRes
     const validators = await this.connection.getAccountInfo(validatorsList);
 
     if (validators === null) {
-      throw new ErrorWrapper({code: ERROR_CODE.NO_VALIDATORS});
+      throw new ErrorWrapper({ code: ERROR_CODE.NO_VALIDATORS });
     }
 
     const deserializedValidators = deserializeUnchecked(
