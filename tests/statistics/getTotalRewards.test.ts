@@ -2,14 +2,14 @@ import BN from 'bn.js';
 
 import { SolidoSDK } from '@/index';
 import { getConnection } from '../helpers';
+import { CLUSTER } from '../constants';
 
 describe('getTotalRewards', () => {
-  const cluster = 'testnet';
   let sdk, connection;
 
   beforeAll(() => {
     connection = getConnection();
-    sdk = new SolidoSDK(cluster, connection);
+    sdk = new SolidoSDK(CLUSTER, connection);
   });
 
   test('total rewards returned value', async () => {

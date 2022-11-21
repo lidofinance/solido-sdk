@@ -1,4 +1,4 @@
-import { Keypair, PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js';
+import { Keypair, Transaction, TransactionInstruction } from '@solana/web3.js';
 
 import { SolidoSDK } from '@/index';
 import { ERROR_CODE, ERROR_MESSAGE } from '@/constants';
@@ -6,17 +6,14 @@ import { getUnStakeTransaction } from '@/unstake';
 
 import { mockValidatorList } from '../mocks/validators';
 import { getConnection } from '../helpers';
+import { CLUSTER, stSolTokenAccount, walletWithStSolTokenAccount } from '../constants';
 
 describe('getUnStakeTransaction', () => {
-  const walletWithStSolTokenAccount = new PublicKey('2Vn1xSUTo292A3knejUeifjt2A3aGNqyn9Svy8Kx8i4J');
-  const stSolTokenAccount = new PublicKey('Gwg78Gv1NZN6k4eFSm8pTQUz2bSRcLKbMVm72uYZL9mu');
-
-  const cluster = 'testnet';
   let sdk, connection;
 
   beforeAll(() => {
     connection = getConnection();
-    sdk = new SolidoSDK(cluster, connection);
+    sdk = new SolidoSDK(CLUSTER, connection);
   });
 
   it('should throw Error "UNSTAKE_UNAVAILABLE"', async () => {

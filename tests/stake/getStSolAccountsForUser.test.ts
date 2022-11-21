@@ -4,15 +4,19 @@ import { SolidoSDK } from '@/index';
 import { getStSolAccountsForUser } from '@/stake/getStSolAccountsForUser';
 
 import { getConnection } from '../helpers';
-import { stSolTokenAccount, walletWithoutStSolTokenAccount, walletWithStSolTokenAccount } from '../constants';
+import {
+  CLUSTER,
+  stSolTokenAccount,
+  walletWithoutStSolTokenAccount,
+  walletWithStSolTokenAccount,
+} from '../constants';
 
 describe('getStSolAccountsForUser', () => {
-  const cluster = 'testnet';
   let sdk;
 
   beforeAll(() => {
     const connection = getConnection();
-    sdk = new SolidoSDK(cluster, connection);
+    sdk = new SolidoSDK(CLUSTER, connection);
   });
 
   test('wallet with stSol tokenAccount returns account as expected', async () => {

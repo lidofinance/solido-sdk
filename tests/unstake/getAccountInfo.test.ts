@@ -17,16 +17,16 @@ import { AccountInfoV2, AccountType } from '@/types';
 
 import { mockValidatorList } from '../mocks/validators';
 import { getConnection } from '../helpers';
+import { CLUSTER } from '../constants';
 
 describe('getAccountInfo', () => {
-  const cluster = 'testnet';
   let sdk, connection;
 
-  const { solidoInstanceId, stSolMintAddress } = clusterProgramAddresses[cluster];
+  const { solidoInstanceId, stSolMintAddress } = clusterProgramAddresses[CLUSTER];
 
   beforeAll(() => {
     connection = getConnection();
-    sdk = new SolidoSDK(cluster, connection);
+    sdk = new SolidoSDK(CLUSTER, connection);
   });
 
   test(`Couldn't fetch getAccountInfo solidoInstanceId`, async () => {

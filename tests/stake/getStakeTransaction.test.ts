@@ -5,16 +5,20 @@ import { SolidoSDK } from '@/index';
 import { getStakeTransaction } from '@/stake/getStakeTransaction';
 import { ERROR_CODE, MEMO_PROGRAM_ID } from '@/constants';
 
-import { stSolTokenAccount, walletWithoutStSolTokenAccount, walletWithStSolTokenAccount } from '../constants';
+import {
+  CLUSTER,
+  stSolTokenAccount,
+  walletWithoutStSolTokenAccount,
+  walletWithStSolTokenAccount,
+} from '../constants';
 import { getConnection } from '../helpers';
 
 describe('getStakeTransaction', () => {
-  const cluster = 'testnet';
   let sdk, connection;
 
   beforeAll(() => {
     connection = getConnection();
-    sdk = new SolidoSDK(cluster, connection);
+    sdk = new SolidoSDK(CLUSTER, connection);
   });
 
   it('should throw Error "Max exceed"', async () => {
@@ -53,7 +57,7 @@ describe('getStakeTransaction', () => {
   });
 
   test('memoInstruction correctness, transaction had it', async () => {
-    const sdk = new SolidoSDK(cluster, connection, 'test_referrer_id');
+    const sdk = new SolidoSDK(CLUSTER, connection, 'test_referrer_id');
 
     const { transaction: stakeTransaction } = await getStakeTransaction.call(sdk, {
       payerAddress: walletWithStSolTokenAccount,

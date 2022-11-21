@@ -472,7 +472,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoRes
       accountInfoV1Scheme,
       Lido,
       accountInfo.data,
-    ) as any as AccountInfoV1;
+    ) as AccountInfoV1;
 
     const validators = deserializedAccountInfo.validators.entries.map(({ entry, pubkey }) => ({
       vote_account_address: pubkey,
@@ -493,7 +493,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoRes
       accountInfoV2Scheme,
       Lido,
       accountInfo.data,
-    ) as any as AccountInfoV2;
+    ) as AccountInfoV2;
 
     const validatorsList = new PublicKey(deserializedAccountInfo.validator_list);
     const validators = await this.connection.getAccountInfo(validatorsList);
@@ -506,7 +506,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<getAccountInfoRes
       validatorsSchema,
       AccountList,
       validators.data,
-    ) as any as ValidatorsList;
+    ) as ValidatorsList;
 
     this.lidoVersion = LidoVersion.v2;
     this.solidoAccountInfo = {

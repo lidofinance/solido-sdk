@@ -1,14 +1,14 @@
 import { SolidoSDK } from '@/index';
 import { mockValidatorList } from '../mocks/validators';
 import { getConnection } from '../helpers';
+import { CLUSTER } from '../constants';
 
 describe('getExchangeRate', () => {
-  const cluster = 'testnet';
   let sdk, connection;
 
   beforeAll(() => {
     connection = getConnection();
-    sdk = new SolidoSDK(cluster, connection);
+    sdk = new SolidoSDK(CLUSTER, connection);
   });
 
   test('exchange rate returned properties', async () => {

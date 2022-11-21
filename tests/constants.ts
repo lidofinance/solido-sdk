@@ -4,3 +4,5 @@ export const walletWithStSolTokenAccount = new PublicKey('2Vn1xSUTo292A3knejUeif
 export const stSolTokenAccount = new PublicKey('Gwg78Gv1NZN6k4eFSm8pTQUz2bSRcLKbMVm72uYZL9mu');
 
 export const walletWithoutStSolTokenAccount = new PublicKey('EBMf62pD8rcEJ9UeyJ4ghdm7hXpgVQCptkKdcmZ9eoJn');
+
+export const CLUSTER = 'testnet';

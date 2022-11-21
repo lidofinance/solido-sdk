@@ -3,14 +3,14 @@ import { isUnStakeAvailable } from '@/unstake';
 
 import { mockValidatorList } from '../mocks/validators';
 import { getConnection } from '../helpers';
+import { CLUSTER } from '../constants';
 
 describe('isUnStakeAvailable', () => {
-  const cluster = 'testnet';
   let sdk, connection;
 
   beforeAll(() => {
     connection = getConnection();
-    sdk = new SolidoSDK(cluster, connection);
+    sdk = new SolidoSDK(CLUSTER, connection);
   });
 
   it('should return true when validators are normal', async () => {

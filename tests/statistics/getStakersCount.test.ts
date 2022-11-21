@@ -1,13 +1,13 @@
 import { SolidoSDK } from '@/index';
 import { getConnection } from '../helpers';
+import { CLUSTER } from '../constants';
 
 describe('getStakersCount', () => {
-  const cluster = 'testnet';
   let sdk, connection;
 
   beforeAll(async () => {
     connection = getConnection();
-    sdk = new SolidoSDK(cluster, connection);
+    sdk = new SolidoSDK(CLUSTER, connection);
   });
 
   test('stakersCount accounts quantity', async () => {

@@ -1,14 +1,16 @@
 import { Keypair, PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js';
+
 import { ensureTokenAccount } from '@/stake/ensureTokenAccount';
 import { clusterProgramAddresses } from '@/constants';
+
+import { CLUSTER } from '../constants';
 
 describe('ensureTokenAccount', () => {
   const payerAddress = Keypair.generate().publicKey;
   const transaction = new Transaction({ feePayer: payerAddress });
-  const cluster = 'testnet';
   let tokenAccount;
 
-  const { stSolMintAddress } = clusterProgramAddresses[cluster];
+  const { stSolMintAddress } = clusterProgramAddresses[CLUSTER];
 
   beforeAll(async () => {
     tokenAccount = await ensureTokenAccount(transaction, payerAddress, stSolMintAddress);

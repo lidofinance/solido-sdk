@@ -1,16 +1,17 @@
 import { INSTRUCTION, SolidoSDK } from '@/index';
+
 import { getSolPriceMock } from '../mocks/getSolPrice';
 import { getConnection } from '../helpers';
+import { CLUSTER } from '../constants';
 
 describe('getTransactionCost', () => {
-  const cluster = 'testnet';
   const lamportsPerSignature = 50000000;
   const priceUsd = 20;
   let sdk, connection;
 
   beforeAll(() => {
     connection = getConnection();
-    sdk = new SolidoSDK(cluster, connection);
+    sdk = new SolidoSDK(CLUSTER, connection);
 
     global.fetch = jest.fn();
   });

@@ -1,11 +1,11 @@
 import { SolidoSDK, TX_STAGE } from '@/index';
-import { Connection, PublicKey } from '@solana/web3.js';
 import { ERROR_CODE, ERROR_CODE_DESC, ERROR_MESSAGE } from '@/constants';
 
+import { getConnection } from './helpers';
+import { CLUSTER, walletWithStSolTokenAccount } from './constants';
+
 describe('SolidoSDK', () => {
-  const walletWithStSolTokenAccount = new PublicKey('2Vn1xSUTo292A3knejUeifjt2A3aGNqyn9Svy8Kx8i4J');
-  const cluster = 'testnet';
-  const hash = 'hashed_of_transaction';
+  const hash = 'hash_of_transaction';
   let sdk, connection, transaction;
   const wallet = {
     signTransaction: () => ({
@@ -19,10 +19,8 @@ describe('SolidoSDK', () => {
   };
 
   beforeAll(() => {
-    connection = new Connection(
-      'https://pyth-testnet-rpc-1.solana.p2p.org/yIwMoknPihQvrhSyxafcHvsAqkOE7KKrBUpplM5Xf',
-    );
-    sdk = new SolidoSDK(cluster, connection);
+    connection = getConnection();
+    sdk = new SolidoSDK(CLUSTER, connection);
     sdk.getStakeTransaction({
       payerAddress: walletWithStSolTokenAccount,
       amount: 1,

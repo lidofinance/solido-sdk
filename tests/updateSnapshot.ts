@@ -3,20 +3,19 @@ import path from 'path';
 import util from 'util';
 
 import BN from 'bn.js';
-import { Connection, PublicKey } from '@solana/web3.js';
+import { PublicKey } from '@solana/web3.js';
 
 import { SolidoSDK } from '@/index';
 import { calculateStakeAccountAddress, getAccountInfo } from '@/unstake';
 import { Validator } from '@/types';
 import { findProgramAddress } from '@/stake';
+import { getConnection } from './helpers';
+import { CLUSTER } from './constants';
 
 export type TestValidator = Validator & { stake_account_address: PublicKey };
 
-const cluster = 'testnet';
-const connection = new Connection(
-  'https://pyth-testnet-rpc-1.solana.p2p.org/yIwMoknPihQvrhSyxafcHvsAqkOE7KKrBUpplM5Xf',
-);
-const sdk = new SolidoSDK(cluster, connection);
+const connection = getConnection();
+const sdk = new SolidoSDK(CLUSTER, connection);
 
 const toPublicKeyStrVar = (varObj: { [key: string]: PublicKey }) => {
   const [name, value] = Object.entries(varObj)[0];

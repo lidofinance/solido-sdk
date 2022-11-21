@@ -1,6 +1,6 @@
 import { Keypair, TransactionInstruction } from '@solana/web3.js';
 import { LidoVersion, SolidoSDK, solToLamports } from '@/index';
-import { clusterProgramAddresses, INSTRUCTION_V2, VALIDATOR_LIST } from '@/constants';
+import { clusterProgramAddresses, VALIDATOR_LIST } from '@/constants';
 import {
   getHeaviestValidator,
   getValidatorIndex,
@@ -11,6 +11,7 @@ import {
 import { heaviestValidator, stakeAuthority, validators } from '../data/snapshot';
 import { mockValidatorList } from '../mocks/validators';
 import { getConnection } from '../helpers';
+import { CLUSTER } from '../constants';
 
 describe('getHeaviestValidator', () => {
   test('heaviest validator from validators list', () => {
@@ -35,14 +36,13 @@ describe('getWithdrawInstruction', () => {
   const senderStSolAccountAddress = Keypair.generate().publicKey;
   const stakeAccount = Keypair.generate().publicKey;
   const amount = 10;
-  const cluster = 'testnet';
   let sdk;
 
-  const { solidoInstanceId, solidoProgramId, stSolMintAddress } = clusterProgramAddresses[cluster];
+  const { solidoInstanceId, solidoProgramId, stSolMintAddress } = clusterProgramAddresses[CLUSTER];
 
   beforeAll(async () => {
     const connection = getConnection();
-    sdk = new SolidoSDK(cluster, connection);
+    sdk = new SolidoSDK(CLUSTER, connection);
 
     mockValidatorList(connection);
 
@@ -77,7 +77,7 @@ describe('getWithdrawInstruction', () => {
   test('withdrawInstruction.data is fulled as expected', () => {
     const data = withdrawDataLayout[LidoVersion.v2].decode(withdrawInstruction.data);
 
-    expect(data.instruction).toBe(INSTRUCTION_V2.UNSTAKE);
+    expect(data.instruction).toBe(23);
     expect(data.amount).toBe(solToLamports(amount));
   });
 });

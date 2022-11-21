@@ -1,25 +1,25 @@
 import { Keypair, TransactionInstruction } from '@solana/web3.js';
 
-import { INSTRUCTION, SolidoSDK, solToLamports } from '@/index';
+import { SolidoSDK, solToLamports } from '@/index';
 import { depositDataLayout, getDepositInstruction } from '@/stake/getDepositInstruction';
 import { clusterProgramAddresses } from '@/constants';
 
 import { mintAuthority, reserveAccount } from '../data/snapshot';
 import { getConnection } from '../helpers';
+import { CLUSTER } from '../constants';
 
 describe('getDepositInstruction', () => {
   let depositInstruction: TransactionInstruction;
   const payerAddress = Keypair.generate().publicKey;
   const recipientStSolAddress = Keypair.generate().publicKey;
   const amount = 10;
-  const cluster = 'testnet';
   let sdk;
 
-  const { solidoInstanceId, solidoProgramId, stSolMintAddress } = clusterProgramAddresses[cluster];
+  const { solidoInstanceId, solidoProgramId, stSolMintAddress } = clusterProgramAddresses[CLUSTER];
 
   beforeAll(async () => {
     const connection = getConnection();
-    sdk = new SolidoSDK(cluster, connection);
+    sdk = new SolidoSDK(CLUSTER, connection);
 
     depositInstruction = await getDepositInstruction.call(sdk, {
       amount,
@@ -48,7 +48,7 @@ describe('getDepositInstruction', () => {
   test('depositInstruction.data is fulled as expected', () => {
     const data = depositDataLayout.decode(depositInstruction.data);
 
-    expect(data.instruction).toBe(INSTRUCTION.STAKE);
+    expect(data.instruction).toBe(1);
     expect(data.amount).toBe(solToLamports(amount));
   });
 });

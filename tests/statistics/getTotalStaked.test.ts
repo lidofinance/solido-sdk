@@ -6,14 +6,14 @@ import { validators } from '../data/snapshot';
 import { mockValidatorList } from '../mocks/validators';
 import { mockReserveAccountInfo } from '../mocks/accountInfo';
 import { getConnection } from '../helpers';
+import { CLUSTER } from '../constants';
 
 describe('getTotalStaked', () => {
-  const cluster = 'testnet';
   let sdk, connection;
 
   beforeAll(() => {
     connection = getConnection();
-    sdk = new SolidoSDK(cluster, connection);
+    sdk = new SolidoSDK(CLUSTER, connection);
   });
 
   test('total staked returned value', async () => {

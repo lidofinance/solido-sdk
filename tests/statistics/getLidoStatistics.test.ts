@@ -2,9 +2,9 @@ import { formatWithCommas, SolidoSDK } from '@/index';
 
 import { getStakeApyMock } from '../mocks/getStakeApy';
 import { getConnection } from '../helpers';
+import { CLUSTER } from '../constants';
 
 describe('getLidoStatistics', () => {
-  const cluster = 'testnet';
   const totalStaked = 1000;
   const stakersCount = 30;
   const marketCap = 30000;
@@ -15,7 +15,7 @@ describe('getLidoStatistics', () => {
 
   beforeAll(() => {
     connection = getConnection();
-    sdk = new SolidoSDK(cluster, connection);
+    sdk = new SolidoSDK(CLUSTER, connection);
 
     global.fetch = jest.fn();
   });

@@ -1,13 +1,10 @@
-import { Connection } from '@solana/web3.js';
-
 import fs from 'fs';
 import path from 'path';
 
 import { reserveAccount } from './data/snapshot';
+import { getConnection } from './helpers';
 
-const connection = new Connection(
-  'https://pyth-testnet-rpc-1.solana.p2p.org/yIwMoknPihQvrhSyxafcHvsAqkOE7KKrBUpplM5Xf',
-);
+const connection = getConnection();
 
 const updateReserveAccountInfoDump = async () => {
   const accountInfo = await connection.getAccountInfo(reserveAccount);

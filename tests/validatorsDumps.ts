@@ -1,4 +1,3 @@
-import { Connection } from '@solana/web3.js';
 import { deserializeUnchecked, serialize } from 'borsh';
 import BN from 'bn.js';
 
@@ -8,10 +7,9 @@ import path from 'path';
 import { AccountList, validatorsSchema } from '@/unstake';
 import { VALIDATOR_LIST } from '@/constants';
 import { ValidatorsList } from '@/types';
+import { getConnection } from './helpers';
 
-const connection = new Connection(
-  'https://pyth-testnet-rpc-1.solana.p2p.org/yIwMoknPihQvrhSyxafcHvsAqkOE7KKrBUpplM5Xf',
-);
+const connection = getConnection();
 
 const serializeAndSaveToFile = async (deserializedValidators, namePostFix: string) => {
   const serializedValidators = serialize(validatorsSchema, deserializedValidators);
@@ -38,7 +36,7 @@ const updateValidatorListDump = async () => {
     validatorsSchema,
     AccountList,
     validatorListResp.data,
-  ) as any as ValidatorsList;
+  ) as ValidatorsList;
 
   await serializeAndSaveToFile(deserializedValidators, '_full');
 
