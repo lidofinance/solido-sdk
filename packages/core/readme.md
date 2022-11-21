@@ -48,7 +48,7 @@ _[Read more for full examples & details](https://docs.solana.lido.fi/frontend-in
 
 ## Learn more
 - [Lido on Solana](https://solana.lido.fi/)
-- [Docs](https://docs.solana.lido.fi/)
+- [Docs](https://docs.solana.lido.fi/frontend-integration/sdk)
 - [Lido Referral Program for Solana](https://help.lido.fi/en/articles/5847184-lido-referral-program-for-solana-integration-guide)
 - [Join on Discord](https://discord.gg/vgdPfhZ)
 - [Discord Support Channel](https://discord.com/channels/761182643269795850/1008674036508790784)

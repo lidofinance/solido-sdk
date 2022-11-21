@@ -35,11 +35,11 @@ import LidoStakeBanner from '@lidofinance/solido-sdk-banner';
 - *`width?`* - This option is for customising width of vertical mode. Default and best fit value is `335px`.
 - *`direction`* = *`horizontal|vertical`*
 
-[Read more](https://lidofinance.github.io/solido-sdk/banner)_
+[Read more](https://docs.solana.lido.fi/frontend-integration/sdk/banner)_
 
 ## Learn more
 - [Lido on Solana](https://solana.lido.fi/)
-- [Docs](https://docs.solana.lido.fi/)
+- [Docs](https://docs.solana.lido.fi/frontend-integration/sdk/banner)
 - [Lido Referral Program for Solana](https://help.lido.fi/en/articles/5847184-lido-referral-program-for-solana-integration-guide)
 - [Join on Discord](https://discord.gg/vgdPfhZ)
 - [Discord Support Channel](https://discord.com/channels/761182643269795850/1008674036508790784)
