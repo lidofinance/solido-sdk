@@ -3,12 +3,11 @@ import json from '@rollup/plugin-json';
 
 import rootConfig from '../../rollup.config.mjs';
 
-const _rootConfig = rootConfig(['.svg', '.ts', '.tsx'])
+const config = rootConfig(['.svg', '.ts', '.tsx']);
 
 export default {
-  ..._rootConfig,
+  ...config,
   input: './src/index.tsx',
-  plugins: [..._rootConfig.plugins, svgr(), json()],
-
+  plugins: [...config.plugins, svgr(), json()],
   external: ['react', 'react-dom', 'react/jsx-runtime', 'styled-components'],
 };
