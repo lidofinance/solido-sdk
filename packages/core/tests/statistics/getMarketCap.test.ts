@@ -1,10 +1,12 @@
+import { Connection } from '@solana/web3.js';
 import { SolidoSDK } from '@/index';
+
 import { getSolPriceMock } from '../mocks/getSolPrice';
 import { getConnection } from '../helpers';
 import { CLUSTER } from '../constants';
 
 describe('getMarketCap', () => {
-  let sdk, connection;
+  let sdk: SolidoSDK, connection: Connection;
 
   beforeAll(() => {
     connection = getConnection();
@@ -14,7 +16,7 @@ describe('getMarketCap', () => {
   });
 
   test('market cap returned valued', async () => {
-    jest.spyOn(sdk, 'getTotalStaked').mockReturnValueOnce(1000);
+    jest.spyOn(sdk, 'getTotalStaked').mockReturnValueOnce(Promise.resolve(1000));
     getSolPriceMock(33);
 
     const marketCap = await sdk.getMarketCap();

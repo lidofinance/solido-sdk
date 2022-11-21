@@ -13,7 +13,7 @@ describe('getDepositInstruction', () => {
   const payerAddress = Keypair.generate().publicKey;
   const recipientStSolAddress = Keypair.generate().publicKey;
   const amount = 10;
-  let sdk;
+  let sdk: SolidoSDK;
 
   const { solidoInstanceId, solidoProgramId, stSolMintAddress } = clusterProgramAddresses[CLUSTER];
 

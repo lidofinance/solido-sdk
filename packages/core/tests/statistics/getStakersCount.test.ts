@@ -1,9 +1,11 @@
+import { Connection } from '@solana/web3.js';
 import { SolidoSDK } from '@/index';
+
 import { getConnection } from '../helpers';
 import { CLUSTER } from '../constants';
 
 describe('getStakersCount', () => {
-  let sdk, connection;
+  let sdk: SolidoSDK, connection: Connection;
 
   beforeAll(async () => {
     connection = getConnection();
@@ -13,7 +15,9 @@ describe('getStakersCount', () => {
   test('stakersCount accounts quantity', async () => {
     jest
       .spyOn(connection, 'getProgramAccounts')
+      // @ts-expect-error not important result
       .mockReturnValueOnce([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) // accountsTotal
+      // @ts-expect-error not important result
       .mockReturnValueOnce([1, 2, 3, 4, 5]); // accountsEmpty
 
     const stakersCount = await sdk.getStakersCount();

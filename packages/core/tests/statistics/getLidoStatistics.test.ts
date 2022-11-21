@@ -1,3 +1,4 @@
+import { Connection } from '@solana/web3.js';
 import { formatWithCommas, SolidoSDK } from '@/index';
 
 import { getStakeApyMock } from '../mocks/getStakeApy';
@@ -11,7 +12,7 @@ describe('getLidoStatistics', () => {
   const totalRewards = 25;
   const apy = 7;
 
-  let sdk, connection;
+  let sdk: SolidoSDK, connection: Connection;
 
   beforeAll(() => {
     connection = getConnection();
@@ -22,10 +23,11 @@ describe('getLidoStatistics', () => {
 
   test('all returned values are correct', async () => {
     getStakeApyMock(apy);
-    jest.spyOn(sdk, 'getTotalStaked').mockReturnValueOnce(totalStaked);
-    jest.spyOn(sdk, 'getStakersCount').mockReturnValueOnce({ value: stakersCount });
-    jest.spyOn(sdk, 'getMarketCap').mockReturnValueOnce(marketCap);
-    jest.spyOn(sdk, 'getTotalRewards').mockReturnValueOnce(totalRewards);
+    jest.spyOn(sdk, 'getTotalStaked').mockReturnValueOnce(Promise.resolve(totalStaked));
+    // @ts-expect-error all fields not important
+    jest.spyOn(sdk, 'getStakersCount').mockReturnValueOnce(Promise.resolve({ value: stakersCount }));
+    jest.spyOn(sdk, 'getMarketCap').mockReturnValueOnce(Promise.resolve(marketCap));
+    jest.spyOn(sdk, 'getTotalRewards').mockReturnValueOnce(Promise.resolve(totalRewards));
 
     const lidoStatistics = await sdk.getLidoStatistics();
 

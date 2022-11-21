@@ -12,7 +12,7 @@ import {
 } from '../constants';
 
 describe('getStSolAccountsForUser', () => {
-  let sdk;
+  let sdk: SolidoSDK;
 
   beforeAll(() => {
     const connection = getConnection();

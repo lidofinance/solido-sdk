@@ -1,3 +1,4 @@
+import { Connection } from '@solana/web3.js';
 import { INSTRUCTION, SolidoSDK } from '@/index';
 
 import { getSolPriceMock } from '../mocks/getSolPrice';
@@ -7,7 +8,7 @@ import { CLUSTER } from '../constants';
 describe('getTransactionCost', () => {
   const lamportsPerSignature = 50000000;
   const priceUsd = 20;
-  let sdk, connection;
+  let sdk: SolidoSDK, connection: Connection;
 
   beforeAll(() => {
     connection = getConnection();
@@ -19,6 +20,7 @@ describe('getTransactionCost', () => {
   test('transaction cost in sol, usd, lamports', async () => {
     jest
       .spyOn(connection, 'getRecentBlockhash')
+      // @ts-expect-error not important all fields
       .mockReturnValueOnce({ feeCalculator: { lamportsPerSignature } });
     getSolPriceMock(priceUsd);
 

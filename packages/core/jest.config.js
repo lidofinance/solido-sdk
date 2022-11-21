@@ -9,12 +9,4 @@ module.exports = {
     '^@common/(.*)': path.join(__dirname, '..', 'common', '$1'),
   },
   testTimeout: 10 * 1000,
-  transform: {
-    '^.+\\.tsx?$': [
-      'ts-jest',
-      {
-        tsconfig: './tsconfig.jest.json',
-      },
-    ],
-  },
 };

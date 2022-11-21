@@ -1,4 +1,4 @@
-import { PublicKey } from '@solana/web3.js';
+import { Connection, PublicKey } from '@solana/web3.js';
 import { when } from 'jest-when';
 import BN from 'bn.js';
 
@@ -20,7 +20,7 @@ import { getConnection } from '../helpers';
 import { CLUSTER } from '../constants';
 
 describe('getAccountInfo', () => {
-  let sdk, connection;
+  let sdk: SolidoSDK, connection: Connection;
 
   const { solidoInstanceId, stSolMintAddress } = clusterProgramAddresses[CLUSTER];
 
@@ -31,7 +31,7 @@ describe('getAccountInfo', () => {
 
   test(`Couldn't fetch getAccountInfo solidoInstanceId`, async () => {
     const spiedGetAccountInfo = jest.spyOn(connection, 'getAccountInfo');
-    when(spiedGetAccountInfo).calledWith(solidoInstanceId).mockReturnValueOnce(null);
+    when(spiedGetAccountInfo).calledWith(solidoInstanceId).mockReturnValueOnce(Promise.resolve(null));
 
     try {
       await getAccountInfo.call(sdk);
@@ -43,7 +43,7 @@ describe('getAccountInfo', () => {
 
   test(`Couldn't fetch getAccountInfo validatorList`, async () => {
     const spiedGetAccountInfo = jest.spyOn(connection, 'getAccountInfo');
-    when(spiedGetAccountInfo).calledWith(VALIDATOR_LIST).mockReturnValueOnce(null);
+    when(spiedGetAccountInfo).calledWith(VALIDATOR_LIST).mockReturnValueOnce(Promise.resolve(null));
 
     try {
       await getAccountInfo.call(sdk);

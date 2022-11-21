@@ -7,7 +7,7 @@ import { getConnection } from '../helpers';
 import { CLUSTER } from '../constants';
 
 describe('isUnStakeAvailable', () => {
-  let sdk, connection;
+  let sdk: SolidoSDK, connection: Connection;
 
   beforeAll(() => {
     connection = getConnection();

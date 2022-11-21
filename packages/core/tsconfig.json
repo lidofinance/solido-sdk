@@ -5,7 +5,8 @@
     "paths": {
       "@/*": ["*"],
       "@common/*": ["../../common/*"]
-    }
+    },
+    "useUnknownInCatchVariables": false
   },
   "exclude": [
     "node_modules",

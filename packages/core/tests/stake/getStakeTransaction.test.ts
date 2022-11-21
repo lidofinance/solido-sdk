@@ -14,7 +14,7 @@ import {
 import { getConnection } from '../helpers';
 
 describe('getStakeTransaction', () => {
-  let sdk, connection;
+  let sdk: SolidoSDK, connection: Connection;
 
   beforeAll(() => {
     connection = getConnection();

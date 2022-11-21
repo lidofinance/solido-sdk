@@ -1,17 +1,19 @@
+import { Connection, Transaction } from '@solana/web3.js';
+import { SignerWalletAdapter } from '@solana/wallet-adapter-base';
 import { SolidoSDK, TX_STAGE } from '@/index';
-import { ERROR_CODE, ERROR_CODE_DESC, ERROR_MESSAGE } from '@/constants';
 
+import { ERROR_CODE, ERROR_CODE_DESC, ERROR_MESSAGE } from '@/constants';
 import { getConnection } from './helpers';
 import { CLUSTER, walletWithStSolTokenAccount } from './constants';
 
 describe('SolidoSDK', () => {
   const hash = 'hash_of_transaction';
-  let sdk, connection, transaction;
+  let sdk: SolidoSDK, connection: Connection, transaction: Transaction;
   const wallet = {
     signTransaction: () => ({
       serialize: () => '',
     }),
-  };
+  } as any as SignerWalletAdapter;
 
   let txStage: TX_STAGE = TX_STAGE.IDLE;
   const setTxStage = (props: { txStage: TX_STAGE }) => {
@@ -29,7 +31,7 @@ describe('SolidoSDK', () => {
 
   test('constructor throws error with devnet', () => {
     try {
-      //@ts-ignore
+      //@ts-expect-error devnet is not allowed
       new SolidoSDK('devnet', connection);
     } catch (error) {
       expect(error.code).toEqual(ERROR_CODE.UNSUPPORTED_CLUSTER);
@@ -39,7 +41,8 @@ describe('SolidoSDK', () => {
   });
 
   test('signAndConfirmTransaction method success case', async () => {
-    jest.spyOn(connection, 'sendRawTransaction').mockReturnValueOnce(hash);
+    jest.spyOn(connection, 'sendRawTransaction').mockReturnValueOnce(Promise.resolve(hash));
+    // @ts-expect-error
     jest.spyOn(connection, 'confirmTransaction').mockReturnValueOnce({ value: 'ok' });
 
     const expectedHash = await sdk.signAndConfirmTransaction({
@@ -54,7 +57,8 @@ describe('SolidoSDK', () => {
 
   test('signAndConfirmTransaction method error case', async () => {
     const err = new Error('expected error');
-    jest.spyOn(connection, 'sendRawTransaction').mockReturnValueOnce(hash);
+    jest.spyOn(connection, 'sendRawTransaction').mockReturnValueOnce(Promise.resolve(hash));
+    // @ts-expect-error
     jest.spyOn(connection, 'confirmTransaction').mockReturnValueOnce({ value: { err } });
 
     try {
