@@ -1,4 +1,4 @@
-import { Keypair, Transaction } from '@solana/web3.js';
+import { Keypair, LAMPORTS_PER_SOL, Transaction } from '@solana/web3.js';
 import { ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token';
 
 import { SolidoSDK } from '@/index';
@@ -23,7 +23,7 @@ describe('getStakeTransaction', () => {
 
   it('should throw Error "Max exceed"', async () => {
     try {
-      await getStakeTransaction.call(sdk, { payerAddress: Keypair.generate().publicKey, amount: 100000 });
+      await sdk.getStakeTransaction({ payerAddress: Keypair.generate().publicKey, amount: 100000 });
     } catch (error) {
       expect(error.message).toContain('Amount must not exceed MAX');
       expect(error.code).toEqual(ERROR_CODE.EXCEED_MAX);
@@ -31,7 +31,8 @@ describe('getStakeTransaction', () => {
   });
 
   test('transaction structure correctness, recentBlockhash, feePayer, stSolAccountAddress', async () => {
-    const { transaction: stakeTransaction, stSolAccountAddress } = await getStakeTransaction.call(sdk, {
+    jest.spyOn(sdk, 'calculateMaxStakeAmount').mockReturnValueOnce(2 * LAMPORTS_PER_SOL);
+    const { transaction: stakeTransaction, stSolAccountAddress } = await sdk.getStakeTransaction({
       payerAddress: walletWithStSolTokenAccount,
       amount: 1,
     });
@@ -45,7 +46,8 @@ describe('getStakeTransaction', () => {
   });
 
   test('not exist stSolAccountAddress case', async () => {
-    const { transaction: stakeTransaction } = await getStakeTransaction.call(sdk, {
+    jest.spyOn(sdk, 'calculateMaxStakeAmount').mockReturnValueOnce(2 * LAMPORTS_PER_SOL);
+    const { transaction: stakeTransaction } = await sdk.getStakeTransaction({
       payerAddress: walletWithoutStSolTokenAccount,
       amount: 1,
     });
@@ -58,8 +60,9 @@ describe('getStakeTransaction', () => {
 
   test('memoInstruction correctness, transaction had it', async () => {
     const sdk = new SolidoSDK(CLUSTER, connection, 'test_referrer_id');
+    jest.spyOn(sdk, 'calculateMaxStakeAmount').mockReturnValueOnce(Promise.resolve(2 * LAMPORTS_PER_SOL));
 
-    const { transaction: stakeTransaction } = await getStakeTransaction.call(sdk, {
+    const { transaction: stakeTransaction } = await sdk.getStakeTransaction({
       payerAddress: walletWithStSolTokenAccount,
       amount: 1,
     });

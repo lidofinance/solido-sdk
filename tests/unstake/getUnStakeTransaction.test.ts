@@ -1,4 +1,4 @@
-import { Keypair, Transaction, TransactionInstruction } from '@solana/web3.js';
+import { Keypair, LAMPORTS_PER_SOL, Transaction, TransactionInstruction } from '@solana/web3.js';
 
 import { SolidoSDK } from '@/index';
 import { ERROR_CODE, ERROR_MESSAGE } from '@/constants';
@@ -20,7 +20,7 @@ describe('getUnStakeTransaction', () => {
     mockValidatorList(connection, 'empty');
 
     try {
-      await getUnStakeTransaction.call(sdk, { payerAddress: Keypair.generate().publicKey, amount: 100000 });
+      await sdk.getUnStakeTransaction({ payerAddress: Keypair.generate().publicKey, amount: 100000 });
     } catch (error) {
       expect(error.message).toContain(ERROR_MESSAGE[ERROR_CODE.UNSTAKE_UNAVAILABLE]);
       expect(error.code).toEqual(ERROR_CODE.UNSTAKE_UNAVAILABLE);
@@ -29,7 +29,7 @@ describe('getUnStakeTransaction', () => {
 
   it('should throw Error "Max exceed"', async () => {
     try {
-      await getUnStakeTransaction.call(sdk, { payerAddress: Keypair.generate().publicKey, amount: 100000 });
+      await sdk.getUnStakeTransaction({ payerAddress: Keypair.generate().publicKey, amount: 100000 });
     } catch (error) {
       expect(error.message).toContain('Amount must not exceed MAX');
       expect(error.code).toEqual(ERROR_CODE.EXCEED_MAX);
@@ -37,7 +37,8 @@ describe('getUnStakeTransaction', () => {
   });
 
   test('transaction structure correctness, recentBlockhash, feePayer, stSolAccountAddress', async () => {
-    const { transaction } = await getUnStakeTransaction.call(sdk, {
+    jest.spyOn(sdk, 'calculateMaxUnStakeAmount').mockReturnValueOnce(2 * LAMPORTS_PER_SOL);
+    const { transaction } = await sdk.getUnStakeTransaction({
       payerAddress: walletWithStSolTokenAccount,
       amount: 1,
     });
@@ -53,7 +54,8 @@ describe('getUnStakeTransaction', () => {
   });
 
   test('deactivateTransaction correctness', async () => {
-    const { transaction, deactivatingSolAccountAddress } = await getUnStakeTransaction.call(sdk, {
+    jest.spyOn(sdk, 'calculateMaxUnStakeAmount').mockReturnValueOnce(2 * LAMPORTS_PER_SOL);
+    const { transaction, deactivatingSolAccountAddress } = await sdk.getUnStakeTransaction({
       payerAddress: walletWithStSolTokenAccount,
       amount: 1,
     });
