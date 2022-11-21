@@ -7,91 +7,91 @@ import { ERROR_CODE, LidoVersion } from '@/constants';
 import { ErrorWrapper } from '@/utils/errorWrapper';
 
 export class Lido {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 export class SeedRange {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 export class ValidatorClass {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class PubKeyAndEntry {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class PubKeyAndEntryMaintainer {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 export class RewardDistribution {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 export class FeeRecipients {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class Validators {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class Maintainers {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 export class ExchangeRate {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 export class Metrics {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class LamportsHistogram {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class WithdrawMetric {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 export class AccountList {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }
 
 class ListHeader {
-  constructor(data) {
+  constructor(data: unknown) {
     Object.assign(this, data);
   }
 }

@@ -45,8 +45,6 @@ export const MEMO_PROGRAM_ID = new PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqX
 
 export const VALIDATOR_LIST = new PublicKey('7mLYFE8uN37j4JjyGpqh8N8e5EDirLE86sSvNLSt5pPM');
 
-export const SOL_API_HOST = 'https://sol-api-pub.lido.fi';
-
 // 1xx - blockchain error
 // 2xx - protocol errors
 // 3xx - sdk errors

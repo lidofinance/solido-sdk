@@ -1,0 +1,47 @@
+{
+  "name": "@lidofinance/solido-sdk",
+  "version": "0.6.0",
+  "description": "Lido on Solana frontend sdk",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/core/src/index.d.ts",
+  "scripts": {
+    "tsc": "tsc --init",
+    "build": "rollup -c ./rollup.config.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lidofinance/solido-sdk.git"
+  },
+  "keywords": [
+    "lido",
+    "sdk",
+    "solido"
+  ],
+  "author": "Lido on Solana Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lidofinance/solido-sdk/issues"
+  },
+  "homepage": "https://github.com/lidofinance/solido-sdk#readme",
+  "dependencies": {
+    "borsh": "^0.7.0"
+  },
+  "devDependencies": {
+    "@solana/buffer-layout": "4.0.0",
+    "@solana/spl-token": "0.2.0",
+    "@solana/wallet-adapter-base": "^0.9.9",
+    "@solana/web3.js": "^1.47.3",
+    "bn.js": "^5.2.1",
+    "@types/bn.js": "^5.1.0"
+  },
+  "peerDependencies": {
+    "@solana/buffer-layout": "4.0.0",
+    "@solana/spl-token": "0.2.0",
+    "@solana/web3.js": "^1.47.3",
+    "bn.js": "^5.2.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
