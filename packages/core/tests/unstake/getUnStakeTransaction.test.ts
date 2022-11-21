@@ -1,4 +1,4 @@
-import { Keypair, LAMPORTS_PER_SOL, Transaction, TransactionInstruction } from '@solana/web3.js';
+import { Connection, Keypair, LAMPORTS_PER_SOL, Transaction, TransactionInstruction } from '@solana/web3.js';
 
 import { SolidoSDK } from '@/index';
 import { ERROR_CODE, ERROR_MESSAGE } from '@/constants';
@@ -37,7 +37,7 @@ describe('getUnStakeTransaction', () => {
   });
 
   test('transaction structure correctness, recentBlockhash, feePayer, stSolAccountAddress', async () => {
-    jest.spyOn(sdk, 'calculateMaxUnStakeAmount').mockReturnValueOnce(2 * LAMPORTS_PER_SOL);
+    jest.spyOn(sdk, 'calculateMaxUnStakeAmount').mockReturnValueOnce(Promise.resolve(2 * LAMPORTS_PER_SOL));
     const { transaction } = await sdk.getUnStakeTransaction({
       payerAddress: walletWithStSolTokenAccount,
       amount: 1,
@@ -54,7 +54,7 @@ describe('getUnStakeTransaction', () => {
   });
 
   test('deactivateTransaction correctness', async () => {
-    jest.spyOn(sdk, 'calculateMaxUnStakeAmount').mockReturnValueOnce(2 * LAMPORTS_PER_SOL);
+    jest.spyOn(sdk, 'calculateMaxUnStakeAmount').mockReturnValueOnce(Promise.resolve(2 * LAMPORTS_PER_SOL));
     const { transaction, deactivatingSolAccountAddress } = await sdk.getUnStakeTransaction({
       payerAddress: walletWithStSolTokenAccount,
       amount: 1,

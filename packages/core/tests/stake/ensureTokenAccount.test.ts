@@ -8,7 +8,7 @@ import { CLUSTER } from '../constants';
 describe('ensureTokenAccount', () => {
   const payerAddress = Keypair.generate().publicKey;
   const transaction = new Transaction({ feePayer: payerAddress });
-  let tokenAccount;
+  let tokenAccount: PublicKey;
 
   const { stSolMintAddress } = clusterProgramAddresses[CLUSTER];
 

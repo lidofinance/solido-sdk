@@ -1,4 +1,6 @@
+import { Connection } from '@solana/web3.js';
 import { SolidoSDK } from '@/index';
+
 import { mockValidatorList } from '../mocks/validators';
 import { getConnection } from '../helpers';
 import { CLUSTER } from '../constants';

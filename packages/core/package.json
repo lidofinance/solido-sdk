@@ -7,7 +7,10 @@
   "types": "dist/esm/core/src/index.d.ts",
   "scripts": {
     "tsc": "tsc --init",
-    "build": "rollup -c ./rollup.config.mjs"
+    "test": "jest",
+    "build": "rollup -c ./rollup.config.mjs",
+    "dump:validators": "ts-node -r tsconfig-paths/register ./tests/validatorsDumps.ts && prettier --write ./tests/data/**",
+    "dump:reserve-account": "ts-node -r tsconfig-paths/register ./tests/accountInfoDump.ts && prettier --write ./tests/data/reserve_account_info.json"
   },
   "repository": {
     "type": "git",

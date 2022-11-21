@@ -1,4 +1,4 @@
-import { Keypair, LAMPORTS_PER_SOL, Transaction } from '@solana/web3.js';
+import { Connection, Keypair, LAMPORTS_PER_SOL, Transaction } from '@solana/web3.js';
 import { ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token';
 
 import { SolidoSDK } from '@/index';
@@ -31,7 +31,7 @@ describe('getStakeTransaction', () => {
   });
 
   test('transaction structure correctness, recentBlockhash, feePayer, stSolAccountAddress', async () => {
-    jest.spyOn(sdk, 'calculateMaxStakeAmount').mockReturnValueOnce(2 * LAMPORTS_PER_SOL);
+    jest.spyOn(sdk, 'calculateMaxStakeAmount').mockReturnValueOnce(Promise.resolve(2 * LAMPORTS_PER_SOL));
     const { transaction: stakeTransaction, stSolAccountAddress } = await sdk.getStakeTransaction({
       payerAddress: walletWithStSolTokenAccount,
       amount: 1,
@@ -46,7 +46,7 @@ describe('getStakeTransaction', () => {
   });
 
   test('not exist stSolAccountAddress case', async () => {
-    jest.spyOn(sdk, 'calculateMaxStakeAmount').mockReturnValueOnce(2 * LAMPORTS_PER_SOL);
+    jest.spyOn(sdk, 'calculateMaxStakeAmount').mockReturnValueOnce(Promise.resolve(2 * LAMPORTS_PER_SOL));
     const { transaction: stakeTransaction } = await sdk.getStakeTransaction({
       payerAddress: walletWithoutStSolTokenAccount,
       amount: 1,

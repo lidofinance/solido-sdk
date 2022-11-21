@@ -1,3 +1,4 @@
+import { Connection } from '@solana/web3.js';
 import { SolidoSDK } from '@/index';
 import { isUnStakeAvailable } from '@/unstake';
 

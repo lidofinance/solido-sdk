@@ -3,12 +3,10 @@
   "description": "Lido on Solana frontend sdk",
   "scripts": {
     "tsc": "tsc --init",
-    "test": "jest",
+    "test": "lerna exec npm test",
     "build": "lerna run build",
     "lint": "eslint --ext .js,.ts,.tsx,.jsx ./src",
     "lint:fix": "npm run lint -- --fix",
-    "dump:validators": "ts-node -r tsconfig-paths/register ./tests/validatorsDumps.ts && prettier --write ./tests/data/**",
-    "dump:reserve-account": "ts-node -r tsconfig-paths/register ./tests/accountInfoDump.ts && prettier --write ./tests/data/reserve_account_info.json",
     "postinstall": "lerna exec npm install"
   },
   "repository": {
