@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./src/",
+    "paths": {
+      "@/*": ["*"],
+      "@common/*": ["../../common/*"]
+    },
+    "useUnknownInCatchVariables": false
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

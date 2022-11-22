@@ -1,0 +1,48 @@
+{
+  "name": "@lidofinance/solido-sdk-banner",
+  "version": "0.1.0",
+  "description": "Lido on Solana frontend sdk, banner integration",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/banner/src/index.d.ts",
+  "scripts": {
+    "tsc": "tsc --init",
+    "build": "rollup -c ./rollup.config.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lidofinance/solido-sdk.git"
+  },
+  "keywords": [
+    "lido",
+    "sdk",
+    "solido"
+  ],
+  "author": "Lido on Solana Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lidofinance/solido-sdk/issues"
+  },
+  "homepage": "https://github.com/lidofinance/solido-sdk#readme",
+  "dependencies": {
+    "@lidofinance/lido-ui": "^2.7.0"
+  },
+  "devDependencies": {
+    "@svgr/rollup": "^6.5.1",
+    "@types/react": "^18.0.14",
+    "@types/react-dom": "^18.0.5",
+    "@types/styled-components": "^5.1.25",
+    "@types/styled-system": "^5.1.15",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "styled-components": "^5.3.5"
+  },
+  "peerDependencies": {
+    "react": "16 || 17",
+    "react-dom": "16 || 17",
+    "styled-components": "5"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

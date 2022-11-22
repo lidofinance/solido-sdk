@@ -22,10 +22,14 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
+      - name: Running tests
+        env:
+          RPC_ENDPOINT: ${{ secrets.RPC_ENDPOINT }}
+        run: npm test
       - name: Publish to NPM
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-          npm publish --tag=rc
+          lerna publish from-package --dist-tag rc --yes
