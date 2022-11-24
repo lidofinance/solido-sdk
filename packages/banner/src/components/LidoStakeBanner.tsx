@@ -50,8 +50,8 @@ const LidoStakeBanner: React.FC<Props> = (props) => {
   }, [direction]);
 
   useEffect(() => {
-    getStakeApy().then((stakeApy) => {
-      setApy(stakeApy);
+    getStakeApy().then(({ max }) => {
+      setApy(max.apy);
     });
   }, []);
 
