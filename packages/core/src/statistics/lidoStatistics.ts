@@ -3,7 +3,7 @@ import { getStakeApy } from '@common/stakeApy';
 import { formatWithCommas } from '@/utils/formatters';
 
 export async function getLidoStatistics(this: SolidoSDK) {
-  const [apy, totalStaked, stakers, marketCap, totalRewards] = await Promise.all([
+  const [stakeApy, totalStaked, stakers, marketCap, totalRewards] = await Promise.all([
     getStakeApy(),
     this.getTotalStaked(),
     this.getStakersCount(),
@@ -12,7 +12,7 @@ export async function getLidoStatistics(this: SolidoSDK) {
   ]);
 
   return {
-    apy,
+    apy: stakeApy.max,
     totalStaked: {
       value: totalStaked,
       formatted: formatWithCommas(totalStaked),

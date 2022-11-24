@@ -1,7 +1,7 @@
 import { Connection } from '@solana/web3.js';
 import { formatWithCommas, SolidoSDK } from '@/index';
 
-import { getStakeApyMock } from '../mocks/getStakeApy';
+import { getStakeApyMock, maxApy } from '../mocks/getStakeApy';
 import { getConnection } from '../helpers';
 import { CLUSTER } from '../constants';
 
@@ -10,7 +10,6 @@ describe('getLidoStatistics', () => {
   const stakersCount = 30;
   const marketCap = 30000;
   const totalRewards = 25;
-  const apy = 7;
 
   let sdk: SolidoSDK, connection: Connection;
 
@@ -22,7 +21,7 @@ describe('getLidoStatistics', () => {
   });
 
   test('all returned values are correct', async () => {
-    getStakeApyMock(apy);
+    getStakeApyMock();
     jest.spyOn(sdk, 'getTotalStaked').mockReturnValueOnce(Promise.resolve(totalStaked));
     // @ts-expect-error all fields not important
     jest.spyOn(sdk, 'getStakersCount').mockReturnValueOnce(Promise.resolve({ value: stakersCount }));
@@ -31,7 +30,7 @@ describe('getLidoStatistics', () => {
 
     const lidoStatistics = await sdk.getLidoStatistics();
 
-    expect(lidoStatistics.apy).toEqual(apy.toFixed(2));
+    expect(lidoStatistics.apy).toStrictEqual(maxApy);
     expect(lidoStatistics.totalStaked.value).toEqual(totalStaked);
     expect(lidoStatistics.totalStaked.formatted).toEqual(formatWithCommas(totalStaked));
     expect(lidoStatistics.stakers.value).toEqual(stakersCount);
