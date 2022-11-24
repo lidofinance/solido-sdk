@@ -1,6 +1,10 @@
 import { SOL_API_HOST } from './constants';
+import { ErrorWrapper } from '../core/src/utils/errorWrapper';
+import { ERROR_CODE } from '../core/src/constants/errors';
 
 export const STATIC_DEFAULT_APY = 9.35; // TODO think
+
+const { NO_APY_DATA } = ERROR_CODE;
 
 type ApyData = {
   apy: number;
@@ -39,6 +43,6 @@ export const getStakeApy = async (): Promise<StakeApyResponse['data'] & { max: A
       ...data,
     }))
     .catch(() => {
-      throw Error("Couldn't fetch apy for period");
+      throw new ErrorWrapper({ code: NO_APY_DATA });
     });
 };
