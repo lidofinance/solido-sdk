@@ -12,7 +12,7 @@ export async function getLidoStatistics(this: SolidoSDK) {
   ]);
 
   return {
-    apy: stakeApy.max,
+    stakeApy: stakeApy.max,
     totalStaked: {
       value: totalStaked,
       formatted: formatWithCommas(totalStaked),
