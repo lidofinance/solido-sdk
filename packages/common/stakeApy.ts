@@ -25,7 +25,7 @@ type StakeApyResponse = {
   };
 };
 
-const getMaxApy = (data: StakeApyResponse['data']) => {
+export const getMaxApy = (data: StakeApyResponse['data']) => {
   return Object.values(data).reduce((max, curr) => {
     if (max.apy < curr.apy) {
       return curr;
