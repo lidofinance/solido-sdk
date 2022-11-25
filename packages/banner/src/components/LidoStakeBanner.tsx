@@ -37,7 +37,7 @@ const LidoStakeBanner: React.FC<Props> = (props) => {
   const defiLink = getDefiLink(referrerId);
   const defiApy = getDefiApy();
 
-  const [apy, setApy] = useState<string | number>(STATIC_DEFAULT_APY);
+  const [apy, setApy] = useState(STATIC_DEFAULT_APY.toString());
   const [width, setWidth] = useState('100%');
 
   const isMobile = useBreakpoint('lg');
