@@ -30,7 +30,7 @@ describe('getLidoStatistics', () => {
 
     const lidoStatistics = await sdk.getLidoStatistics();
 
-    expect(lidoStatistics.stakeApy).toStrictEqual(maxApy);
+    expect(lidoStatistics.apy).toStrictEqual(maxApy);
     expect(lidoStatistics.totalStaked.value).toEqual(totalStaked);
     expect(lidoStatistics.totalStaked.formatted).toEqual(formatWithCommas(totalStaked));
     expect(lidoStatistics.stakers.value).toEqual(stakersCount);

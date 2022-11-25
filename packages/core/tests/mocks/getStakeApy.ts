@@ -43,7 +43,7 @@ export const mockedApyResponse = {
   },
 };
 
-export const maxApy = mockedApyResponse.data.twoWeeks;
+export const maxApy = mockedApyResponse.data.twoWeeks.apy;
 
 export const getStakeApyMock = (error?: boolean) => {
   jest.spyOn(global, 'fetch').mockReturnValueOnce(
