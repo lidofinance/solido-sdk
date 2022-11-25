@@ -3,7 +3,8 @@ import { ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token';
 
 import { SolidoSDK } from '@/index';
 import { getStakeTransaction } from '@/stake/getStakeTransaction';
-import { ERROR_CODE, MEMO_PROGRAM_ID } from '@/constants';
+import { MEMO_PROGRAM_ID } from '@/constants';
+import { ERROR_CODE } from '@common/constants';
 
 import {
   CLUSTER,

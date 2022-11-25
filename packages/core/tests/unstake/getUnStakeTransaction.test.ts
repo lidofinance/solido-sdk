@@ -1,7 +1,7 @@
 import { Connection, Keypair, LAMPORTS_PER_SOL, Transaction, TransactionInstruction } from '@solana/web3.js';
 
 import { SolidoSDK } from '@/index';
-import { ERROR_CODE, ERROR_MESSAGE } from '@/constants';
+import { ERROR_CODE, ERROR_MESSAGE } from '@common/constants';
 import { getUnStakeTransaction } from '@/unstake';
 
 import { mockValidatorList } from '../mocks/validators';

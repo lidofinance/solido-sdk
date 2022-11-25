@@ -1,6 +1,7 @@
 import { SOL_API_HOST } from '@common/constants';
-import { SolApiPriceResponse } from '@/types';
 import { hasAPIError } from '@/utils/errors';
+
+import { SolApiPriceResponse } from '@/types';
 
 export const getSolPrice = async () => {
   try {

@@ -3,7 +3,8 @@ import { when } from 'jest-when';
 import BN from 'bn.js';
 
 import { LidoVersion, SolidoSDK } from '@/index';
-import { clusterProgramAddresses, ERROR_CODE, ERROR_MESSAGE, VALIDATOR_LIST } from '@/constants';
+import { clusterProgramAddresses, VALIDATOR_LIST } from '@/constants';
+import { ERROR_CODE, ERROR_MESSAGE } from '@common/constants';
 import {
   ExchangeRate,
   getAccountInfo,

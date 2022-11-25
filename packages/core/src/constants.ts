@@ -1,8 +1,6 @@
 import { PublicKey } from '@solana/web3.js';
 import { ProgramAddresses, SupportedClusters } from '@/types';
 
-export * from './errors';
-
 export enum INSTRUCTION {
   STAKE = 1,
   UNSTAKE = 2,

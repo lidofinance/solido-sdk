@@ -1,6 +1,5 @@
-import { SOL_API_HOST } from './constants';
-import { ErrorWrapper } from '../core/src/utils/errorWrapper';
-import { ERROR_CODE } from '../core/src/constants/errors';
+import { ErrorWrapper } from './errorWrapper';
+import { SOL_API_HOST, ERROR_CODE } from './constants';
 
 export const STATIC_DEFAULT_APY = 9.35; // TODO think
 
@@ -42,7 +41,7 @@ export const getStakeApy = async (): Promise<StakeApyResponse['data'] & { max: A
       max: getMaxApy(data),
       ...data,
     }))
-    .catch(() => {
-      throw new ErrorWrapper({ code: NO_APY_DATA });
+    .catch((error) => {
+      throw new ErrorWrapper({ error, code: NO_APY_DATA });
     });
 };

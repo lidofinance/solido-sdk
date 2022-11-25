@@ -2,7 +2,7 @@ import { Connection, Transaction } from '@solana/web3.js';
 import { SignerWalletAdapter } from '@solana/wallet-adapter-base';
 import { SolidoSDK, TX_STAGE } from '@/index';
 
-import { ERROR_CODE, ERROR_CODE_DESC, ERROR_MESSAGE } from '@/constants';
+import { ERROR_CODE, ERROR_CODE_DESC, ERROR_MESSAGE } from '@common/constants';
 import { getConnection } from './helpers';
 import { CLUSTER, walletWithStSolTokenAccount } from './constants';
 

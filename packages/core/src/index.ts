@@ -1,7 +1,8 @@
 import { Connection, PublicKey, TransactionSignature } from '@solana/web3.js';
 
 import { ProgramAddresses, SignAndConfirmTransactionProps, StakeProps, SupportedClusters } from '@/types';
-import { clusterProgramAddresses, ERROR_CODE, LidoVersion, TX_STAGE } from '@/constants';
+import { clusterProgramAddresses, LidoVersion, TX_STAGE } from '@/constants';
+import { ERROR_CODE } from '@common/constants';
 
 import {
   calculateMaxStakeAmount,
@@ -30,9 +31,9 @@ import { getMarketCap } from '@/statistics/getMarketCap';
 import { getLidoStatistics } from '@/statistics/lidoStatistics';
 import { getTotalRewards } from '@/statistics/getTotalRewards';
 import { getStSolAccountsForUser } from '@/stake/getStSolAccountsForUser';
-import { ErrorWrapper } from '@/utils/errorWrapper';
+import { ErrorWrapper } from '@common/errorWrapper';
 
-export { getStakeApy } from '../../common/stakeApy';
+export { getStakeApy } from '@common/stakeApy';
 export {
   MAINNET_PROGRAM_ADDRESSES,
   TESTNET_PROGRAM_ADDRESSES,

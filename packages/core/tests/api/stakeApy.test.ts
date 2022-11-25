@@ -1,5 +1,5 @@
 import { getStakeApy, getMaxApy } from '@common/stakeApy';
-import { ERROR_CODE, ERROR_CODE_DESC, ERROR_MESSAGE } from '@/constants';
+import { ERROR_CODE, ERROR_CODE_DESC, ERROR_MESSAGE } from '@common/constants';
 
 import { getStakeApyMock, maxApy, mockedApyResponse } from '../mocks/getStakeApy';
 
