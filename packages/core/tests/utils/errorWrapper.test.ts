@@ -1,5 +1,5 @@
-import { ErrorWrapper } from '@/utils/errorWrapper';
-import { ERROR_CODE, ERROR_CODE_DESC, ERROR_MESSAGE } from '@/constants';
+import { ErrorWrapper } from '@common/errorWrapper';
+import { ERROR_CODE, ERROR_CODE_DESC, ERROR_MESSAGE } from '@common/constants';
 
 describe('ErrorWrapper', () => {
   test('properties correctness', () => {

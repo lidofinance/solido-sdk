@@ -3,8 +3,9 @@ import { PublicKey } from '@solana/web3.js';
 
 import { SolidoSDK } from '@/index';
 import { AccountInfoV1, AccountInfoV2, ValidatorsList, Validator } from '@/types';
-import { ERROR_CODE, LidoVersion } from '@/constants';
-import { ErrorWrapper } from '@/utils/errorWrapper';
+import { LidoVersion } from '@/constants';
+import { ERROR_CODE } from '@common/constants';
+import { ErrorWrapper } from '@common/errorWrapper';
 
 export class Lido {
   constructor(data: unknown) {

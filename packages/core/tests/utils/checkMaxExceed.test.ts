@@ -1,7 +1,7 @@
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 
 import { checkMaxExceed } from '@/utils/checkMaxExceed';
-import { ERROR_CODE } from '@/constants';
+import { ERROR_CODE } from '@common/constants';
 
 describe('checkMaxExceed', () => {
   it('should throw Error if amount is bigger than maxInLamports', () => {
