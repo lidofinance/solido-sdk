@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import type {Node} from 'react';
 import {Buffer} from 'buffer';
 global.Buffer = global.Buffer || Buffer;
@@ -8,6 +8,7 @@ import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
 
 import {
+  Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -22,6 +23,8 @@ import {Connection} from '@solana/web3.js';
 import {ConnectionProvider} from '@solana/wallet-adapter-react';
 import ConnectButton from './components/ConnectButton';
 import AccountBalance from './components/AccountBalance';
+import {transact} from '@solana-mobile/mobile-wallet-adapter-protocol-web3js';
+import useAuthorization from './components/useAuthorization';
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
@@ -57,6 +60,7 @@ const App: () => Node = () => {
   const connection = new Connection(rpcEndpoint);
   const sdk = new SolidoSDK('testnet', connection);
   const [lidoStats, setLidoStats] = useState({});
+  const {authorizeSession, selectedAccount} = useAuthorization();
 
   // useEffect(() => {
   // sdk.getLidoStatistics().then(sc => {
@@ -67,6 +71,37 @@ const App: () => Node = () => {
   const backgroundStyle = {
     backgroundColor: Colors.lighter,
   };
+
+  const handleStakePress = useCallback(async () => {
+    await transact(async wallet => {
+      const freshAccount = await authorizeSession(wallet);
+      const {transaction} = await sdk.getStakeTransaction({
+        amount: 1,
+        payerAddress: freshAccount?.publicKey,
+      });
+
+      const [signed] = await wallet.signTransactions({
+        transactions: [transaction],
+      });
+
+      const transactionHash = await connection.sendRawTransaction(
+        signed.serialize(),
+      );
+
+      const {blockhash, lastValidBlockHeight} =
+        await connection.getLatestBlockhash();
+
+      const {value: status} = await connection.confirmTransaction({
+        blockhash,
+        lastValidBlockHeight,
+        signature: transactionHash,
+      });
+
+      if (status?.err) {
+        throw status.err;
+      }
+    });
+  }, [selectedAccount]);
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -100,6 +135,8 @@ const App: () => Node = () => {
             </Section>
 
             <ConnectButton title="Connect Wallet" />
+            <Text>{'\n'}</Text>
+            <Button title="Stake" onPress={handleStakePress} />
           </ConnectionProvider>
         </View>
       </ScrollView>
