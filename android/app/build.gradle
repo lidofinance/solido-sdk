@@ -277,6 +277,8 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+    implementation project(':react-native-safe-area-context')
 }
 
 if (isNewArchitectureEnabled()) {

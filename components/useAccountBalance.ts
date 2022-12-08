@@ -1,12 +1,9 @@
-import React, {useCallback, useMemo, useState, useEffect} from 'react';
+import {useCallback, useMemo, useState, useEffect} from 'react';
 import {LAMPORTS_PER_SOL, PublicKey} from '@solana/web3.js';
 import {useConnection} from '@solana/wallet-adapter-react';
-import {SolidoSDK} from '@lidofinance/solido-sdk';
-
-import {StyleSheet, Text} from 'react-native';
 import useAuthorization from './useAuthorization';
 
-export default function AccountBalance({sdk}: {sdk: SolidoSDK}) {
+export default function useAccountBalance(sdk) {
   const {connection} = useConnection();
   const {selectedAccount} = useAuthorization();
   const [solBalance, setSolBalance] = useState(0);
@@ -50,21 +47,8 @@ export default function AccountBalance({sdk}: {sdk: SolidoSDK}) {
     [stSolAccount?.balanceInLamports],
   );
 
-  return (
-    <>
-      <Text style={styles.currencySymbol}>SOL:</Text>
-      <Text>
-        {balance}
-        {'\n'}
-      </Text>
-      <Text style={styles.currencySymbol}>stSOL:</Text>
-      <Text>{stSolBalance}</Text>
-    </>
-  );
+  return {
+    balance,
+    stSolBalance,
+  };
 }
-
-const styles = StyleSheet.create({
-  currencySymbol: {
-    marginRight: 4,
-  },
-});

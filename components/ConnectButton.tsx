@@ -1,12 +1,10 @@
 import {transact} from '@solana-mobile/mobile-wallet-adapter-protocol';
-import React, {ComponentProps, useCallback, useState} from 'react';
-import {Button} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {Button} from 'react-native-paper';
 
 import useAuthorization from './useAuthorization';
 
-type Props = Readonly<ComponentProps<typeof Button>>;
-
-export default function ConnectButton(props: Props) {
+export default function ConnectButton() {
   const {authorizeSession} = useAuthorization();
   const [authorizationInProgress, setAuthorizationInProgress] = useState(false);
 
@@ -26,9 +24,14 @@ export default function ConnectButton(props: Props) {
 
   return (
     <Button
-      {...props}
+      mode="contained"
+      textColor="#fff"
+      buttonColor="#00a3ff"
+      style={{borderRadius: 5}}
       disabled={authorizationInProgress}
-      onPress={handleConnectPress}
-    />
+      loading={authorizationInProgress}
+      onPress={handleConnectPress}>
+      Connect Wallet
+    </Button>
   );
 }
