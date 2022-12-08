@@ -16,13 +16,12 @@ import {
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {SolidoSDK, getStakeApy} from '@lidofinance/solido-sdk';
+import {SolidoSDK, getStakeApy, TX_STAGE} from '@lidofinance/solido-sdk';
 import {Connection} from '@solana/web3.js';
 import {ConnectionProvider} from '@solana/wallet-adapter-react';
 import {
   Appbar,
   Provider as PaperProvider,
-  Portal,
   Text,
   Card,
   Paragraph,
@@ -34,6 +33,7 @@ import ConnectButton from './components/ConnectButton';
 import useAuthorization from './components/useAuthorization';
 import useAccountBalance from './components/useAccountBalance';
 import StakeButton from './components/StakeButton';
+import TxStateModal from './components/TxStateModal';
 
 const styles = StyleSheet.create({
   sectionContainer: {
@@ -79,6 +79,12 @@ const App: () => Node = () => {
   });
   const {selectedAccount} = useAuthorization();
   const {balance, stSolBalance} = useAccountBalance(sdk);
+
+  const [txStage, setTxStage] = useState({
+    stage: TX_STAGE.IDLE,
+    transactionHash: '',
+  });
+  const [txModalVisible, setTxModalVisible] = useState(false);
 
   useEffect(() => {
     getStakeApy().then(({max}) => {
@@ -129,121 +135,131 @@ const App: () => Node = () => {
         <Appbar.Content color="#273852" title="Lido on Solana" />
       </Appbar.Header>
 
-      <Portal.Host>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={backgroundStyle}>
-          <View style={{backgroundColor: Colors.white, padding: 12}}>
-            <Text
-              variant="headlineLarge"
-              style={{
-                fontWeight: '800',
-                textAlign: 'center',
-                paddingTop: 12,
-                color: '#273852',
-              }}>
-              Stake Solana
-            </Text>
-            <Text
-              variant="bodyMedium"
-              style={{
-                textAlign: 'center',
-                color: '#7a8aa0',
-                marginBottom: 24,
-              }}>
-              Stake SOL and receive stSOL while staking
-            </Text>
+      <TxStateModal
+        visible={txModalVisible}
+        transactionHash={txStage.transactionHash}
+        amount={1}
+        stage={txStage.stage}
+        setTxModalVisible={setTxModalVisible}
+      />
 
-            <Card style={{padding: 12}}>
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={backgroundStyle}>
+        <View style={{backgroundColor: Colors.white, padding: 12}}>
+          <Text
+            variant="headlineLarge"
+            style={{
+              fontWeight: '800',
+              textAlign: 'center',
+              paddingTop: 12,
+              color: '#273852',
+            }}>
+            Stake Solana
+          </Text>
+          <Text
+            variant="bodyMedium"
+            style={{
+              textAlign: 'center',
+              color: '#7a8aa0',
+              marginBottom: 24,
+            }}>
+            Stake SOL and receive stSOL while staking
+          </Text>
+
+          <Card style={{padding: 12}}>
+            <Card.Content>
+              <Text variant="bodyMedium">SOL Balance</Text>
+              <Paragraph>
+                <Text variant="titleLarge" style={{fontWeight: '900'}}>
+                  {balance} SOL
+                </Text>
+              </Paragraph>
+
+              <Divider style={{marginBottom: 12, marginTop: 6}} />
+
+              <Text variant="bodyMedium">stSOL Balance</Text>
+              <Paragraph>
+                <Text variant="titleLarge" style={{fontWeight: '900'}}>
+                  {stSolBalance} stSOL
+                </Text>
+              </Paragraph>
+            </Card.Content>
+
+            <Card
+              style={{
+                margin: -13,
+                marginTop: 12,
+                backgroundColor: '#fff',
+                padding: 12,
+              }}>
               <Card.Content>
-                <Text variant="bodyMedium">SOL Balance</Text>
-                <Paragraph>
-                  <Text variant="titleLarge" style={{fontWeight: '900'}}>
-                    {balance} SOL
-                  </Text>
-                </Paragraph>
+                <TextInput
+                  mode="outlined"
+                  label="Stake amount"
+                  outlineColor="#d1d8df"
+                  textColor="#273852"
+                  activeOutlineColor="#00a3ff"
+                  style={{backgroundColor: '#fff', marginBottom: 12}}
+                />
 
-                <Divider style={{marginBottom: 12, marginTop: 6}} />
-
-                <Text variant="bodyMedium">stSOL Balance</Text>
-                <Paragraph>
-                  <Text variant="titleLarge" style={{fontWeight: '900'}}>
-                    {stSolBalance} stSOL
-                  </Text>
-                </Paragraph>
-              </Card.Content>
-
-              <Card
-                style={{
-                  margin: -13,
-                  marginTop: 12,
-                  backgroundColor: '#fff',
-                  padding: 12,
-                }}>
-                <Card.Content>
-                  <TextInput
-                    mode="outlined"
-                    label="Stake amount"
-                    outlineColor="#d1d8df"
-                    textColor="#273852"
-                    activeOutlineColor="#00a3ff"
-                    style={{backgroundColor: '#fff', marginBottom: 12}}
+                {selectedAccount ? (
+                  <StakeButton
+                    sdk={sdk}
+                    setTxStage={setTxStage}
+                    setTxModalVisible={setTxModalVisible}
                   />
+                ) : (
+                  <ConnectButton />
+                )}
 
-                  {selectedAccount ? (
-                    <StakeButton sdk={sdk} />
-                  ) : (
-                    <ConnectButton />
-                  )}
-
-                  <View style={{marginTop: 24}}>
-                    <Section
-                      label="You will receive:"
-                      value={`~${transactionInfo.exchangeRate} stSOL`}
-                    />
-                    <Section
-                      label="Exchange rate:"
-                      value={`1 SOL = ${transactionInfo.exchangeRate} stSOL`}
-                    />
-                    <Section
-                      label="Transaction cost:"
-                      value={`~${transactionInfo.transactionCost.costInSol} SOL ($${transactionInfo.transactionCost.costInUsd})`}
-                    />
-                    <Section
-                      label="Staking rewards fee:"
-                      value={transactionInfo.stakingRewardsFee}
-                    />
-                  </View>
-                </Card.Content>
-              </Card>
-            </Card>
-
-            <Text
-              variant="titleLarge"
-              style={{
-                fontWeight: '800',
-                paddingTop: 24,
-                color: '#273852',
-              }}>
-              Lido statistics
-            </Text>
-            <Card style={{padding: 12, marginTop: 12, backgroundColor: '#fff'}}>
-              <Card.Content>
-                <Section
-                  label="Annual percentage yield:"
-                  value={`${lidoStats.apy.toFixed(2)}%`}
-                />
-                <Section
-                  label="Total staked with Lido:"
-                  value={`${lidoStats.totalStaked} SOL`}
-                />
-                <Section label="Stakers" value={lidoStats.stakers} />
-                <Section label="MarketCap:" value={`$${lidoStats.marketCap}`} />
+                <View style={{marginTop: 24}}>
+                  <Section
+                    label="You will receive:"
+                    value={`~${transactionInfo.exchangeRate} stSOL`}
+                  />
+                  <Section
+                    label="Exchange rate:"
+                    value={`1 SOL = ${transactionInfo.exchangeRate} stSOL`}
+                  />
+                  <Section
+                    label="Transaction cost:"
+                    value={`~${transactionInfo.transactionCost.costInSol} SOL ($${transactionInfo.transactionCost.costInUsd})`}
+                  />
+                  <Section
+                    label="Staking rewards fee:"
+                    value={transactionInfo.stakingRewardsFee}
+                  />
+                </View>
               </Card.Content>
             </Card>
-          </View>
-        </ScrollView>
-      </Portal.Host>
+          </Card>
+
+          <Text
+            variant="titleLarge"
+            style={{
+              fontWeight: '800',
+              paddingTop: 24,
+              color: '#273852',
+            }}>
+            Lido statistics
+          </Text>
+          <Card style={{padding: 12, marginTop: 12, backgroundColor: '#fff'}}>
+            <Card.Content>
+              <Section
+                label="Annual percentage yield:"
+                value={`${lidoStats.apy.toFixed(2)}%`}
+              />
+              <Section
+                label="Total staked with Lido:"
+                value={`${lidoStats.totalStaked} SOL`}
+              />
+              <Section label="Stakers" value={lidoStats.stakers} />
+              <Section label="MarketCap:" value={`$${lidoStats.marketCap}`} />
+            </Card.Content>
+          </Card>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
