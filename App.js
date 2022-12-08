@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {SolidoSDK} from '@lidofinance/solido-sdk';
+import {SolidoSDK, getStakeApy} from '@lidofinance/solido-sdk';
 import {Connection} from '@solana/web3.js';
 import {ConnectionProvider} from '@solana/wallet-adapter-react';
 import {
@@ -63,15 +63,53 @@ const connection = new Connection(rpcEndpoint);
 const sdk = new SolidoSDK('testnet', connection);
 
 const App: () => Node = () => {
-  const [lidoStats, setLidoStats] = useState({});
+  const [lidoStats, setLidoStats] = useState({
+    apy: 8.72,
+    totalStaked: 0,
+    stakers: 0,
+    marketCap: 0,
+  });
+  const [transactionInfo, setTransactionInfo] = useState({
+    exchangeRate: 1,
+    transactionCost: {
+      costInSol: 0.000005,
+      costInUsd: 0.00006,
+    },
+    stakingRewardsFee: '10%',
+  });
   const {selectedAccount} = useAuthorization();
   const {balance, stSolBalance} = useAccountBalance(sdk);
 
-  // useEffect(() => {
-  // sdk.getLidoStatistics().then(sc => {
-  //   setLidoStats(sc);
-  // });
-  // }, []);
+  useEffect(() => {
+    getStakeApy().then(({max}) => {
+      setLidoStats(prevState => ({
+        ...prevState,
+        apy: max.apy,
+      }));
+    });
+
+    sdk.getTransactionInfo(1).then(txInfo => {
+      setTransactionInfo({
+        ...txInfo,
+        exchangeRate: txInfo.exchangeRate.value,
+        stakingRewardsFee: txInfo.stakingRewardsFee.fee,
+      });
+    });
+
+    sdk.getStakersCount().then(({value: stakers}) => {
+      setLidoStats(prevState => ({...prevState, stakers}));
+    });
+
+    sdk.getTotalStaked().then(totalStaked => {
+      sdk.getMarketCap(totalStaked).then(marketCap => {
+        setLidoStats(prevState => ({
+          ...prevState,
+          totalStaked,
+          marketCap,
+        }));
+      });
+    });
+  }, []);
 
   const backgroundStyle = {
     backgroundColor: Colors.lighter,
@@ -159,16 +197,22 @@ const App: () => Node = () => {
                   )}
 
                   <View style={{marginTop: 24}}>
-                    <Section label="You will receive:" value="~0.9202 stSOL" />
+                    <Section
+                      label="You will receive:"
+                      value={`~${transactionInfo.exchangeRate} stSOL`}
+                    />
                     <Section
                       label="Exchange rate:"
-                      value="1 SOL = ~0.9202 stSOL"
+                      value={`1 SOL = ${transactionInfo.exchangeRate} stSOL`}
                     />
                     <Section
                       label="Transaction cost:"
-                      value="~0.000005 SOL ($0.00006)"
+                      value={`~${transactionInfo.transactionCost.costInSol} SOL ($${transactionInfo.transactionCost.costInUsd})`}
                     />
-                    <Section label="Staking rewards fee:" value="10%" />
+                    <Section
+                      label="Staking rewards fee:"
+                      value={transactionInfo.stakingRewardsFee}
+                    />
                   </View>
                 </Card.Content>
               </Card>
@@ -185,23 +229,16 @@ const App: () => Node = () => {
             </Text>
             <Card style={{padding: 12, marginTop: 12, backgroundColor: '#fff'}}>
               <Card.Content>
-                <Section label="Annual percentage yield:" value="8.72%" />
-                <Section label="Total staked with Lido:" value="42 SOL" />
-                <Section label="Stakers" value="12" />
-                <Section label="MarketCap:" value="$570" />
-                {/*<Text variant="bodyMedium" style={{color: '#273852'}}>*/}
-                {/*  Annual percentage yield: {lidoStats.apy?.toFixed(2) ?? 0}%*/}
-                {/*</Text>*/}
-                {/*<Text variant="bodyMedium" style={{color: '#273852'}}>*/}
-                {/*  Stakes count: {lidoStats.stakers?.formatted ?? 0}*/}
-                {/*</Text>*/}
-                {/*<Text variant="bodyMedium" style={{color: '#273852'}}>*/}
-                {/*  Total staked with Lido:{' '}*/}
-                {/*  {lidoStats.totalStaked?.formatted ?? 0}*/}
-                {/*</Text>*/}
-                {/*<Text variant="bodyMedium" style={{color: '#273852'}}>*/}
-                {/*  MarketCap: {lidoStats.marketCap ?? 0}*/}
-                {/*</Text>*/}
+                <Section
+                  label="Annual percentage yield:"
+                  value={`${lidoStats.apy.toFixed(2)}%`}
+                />
+                <Section
+                  label="Total staked with Lido:"
+                  value={`${lidoStats.totalStaked} SOL`}
+                />
+                <Section label="Stakers" value={lidoStats.stakers} />
+                <Section label="MarketCap:" value={`$${lidoStats.marketCap}`} />
               </Card.Content>
             </Card>
           </View>
