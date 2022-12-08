@@ -8,12 +8,11 @@ import Link from './Link';
 
 const TxStateModal = ({
   transactionHash,
-  amount,
+  stakeAmount,
   stage,
   visible,
-  setTxModalVisible,
+  onDismiss,
 }) => {
-  const hideModal = () => setTxModalVisible(false);
   const containerStyle = {
     backgroundColor: 'white',
     padding: 20,
@@ -65,7 +64,7 @@ const TxStateModal = ({
           <CheckRoundSvg />
 
           <Text variant="titleMedium" style={modalTextStyle}>
-            {amount} SOL Successfully Staked
+            {stakeAmount} SOL Successfully Staked
           </Text>
         </>
       );
@@ -100,7 +99,7 @@ const TxStateModal = ({
       <Modal
         visible={visible}
         dismissable={stage !== TX_STAGE.ERROR || stage !== TX_STAGE.SUCCESS}
-        handleDismiss={hideModal}
+        onDismiss={onDismiss}
         contentContainerStyle={containerStyle}>
         {header}
 

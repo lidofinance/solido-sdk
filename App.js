@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import type {Node} from 'react';
 import {Buffer} from 'buffer';
 global.Buffer = global.Buffer || Buffer;
@@ -77,14 +77,20 @@ const App: () => Node = () => {
     },
     stakingRewardsFee: '10%',
   });
+  const [stakeAmount, setStakeAmount] = useState(0);
   const {selectedAccount} = useAuthorization();
-  const {balance, stSolBalance} = useAccountBalance(sdk);
 
   const [txStage, setTxStage] = useState({
     stage: TX_STAGE.IDLE,
     transactionHash: '',
   });
   const [txModalVisible, setTxModalVisible] = useState(false);
+
+  const {balance, stSolBalance} = useAccountBalance({
+    sdk,
+    stakeAmount,
+    txStage: txStage.stage,
+  });
 
   useEffect(() => {
     getStakeApy().then(({max}) => {
@@ -122,6 +128,18 @@ const App: () => Node = () => {
     height: '100%',
   };
 
+  const onChangeStakeInput = useCallback(text => {
+    if (!isNaN(+text)) {
+      setStakeAmount(+text);
+    }
+  }, []);
+
+  const hideModal = useCallback(() => {
+    setStakeAmount('');
+    setTxStage(TX_STAGE.IDLE);
+    setTxModalVisible(false);
+  });
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -138,9 +156,9 @@ const App: () => Node = () => {
       <TxStateModal
         visible={txModalVisible}
         transactionHash={txStage.transactionHash}
-        amount={1}
+        stakeAmount={stakeAmount}
         stage={txStage.stage}
-        setTxModalVisible={setTxModalVisible}
+        onDismiss={hideModal}
       />
 
       <ScrollView
@@ -200,6 +218,8 @@ const App: () => Node = () => {
                   outlineColor="#d1d8df"
                   textColor="#273852"
                   activeOutlineColor="#00a3ff"
+                  onChangeText={onChangeStakeInput}
+                  value={stakeAmount}
                   style={{backgroundColor: '#fff', marginBottom: 12}}
                 />
 
@@ -208,6 +228,7 @@ const App: () => Node = () => {
                     sdk={sdk}
                     setTxStage={setTxStage}
                     setTxModalVisible={setTxModalVisible}
+                    stakeAmount={stakeAmount}
                   />
                 ) : (
                   <ConnectButton />
