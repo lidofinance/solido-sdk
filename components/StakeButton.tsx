@@ -10,11 +10,13 @@ export default function StakeButton({
   stakeAmount,
   setTxStage,
   setTxModalVisible,
+  disabled,
 }: {
   sdk: SolidoSDK;
   stakeAmount: number;
   setTxStage;
   setTxModalVisible;
+  disabled: boolean;
 }) {
   const {connection} = useConnection();
   const {authorizeSession, selectedAccount} = useAuthorization();
@@ -73,6 +75,7 @@ export default function StakeButton({
       textColor="#fff"
       buttonColor="#00a3ff"
       style={{borderRadius: 5}}
+      disabled={disabled}
       onPress={handleStakePress}>
       Stake
     </Button>

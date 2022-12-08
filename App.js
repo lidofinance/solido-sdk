@@ -27,6 +27,7 @@ import {
   Paragraph,
   Divider,
   TextInput,
+  Switch,
 } from 'react-native-paper';
 
 import ConnectButton from './components/ConnectButton';
@@ -91,6 +92,12 @@ const App: () => Node = () => {
     stakeAmount,
     txStage: txStage.stage,
   });
+
+  const [isSwitchOn, setIsSwitchOn] = React.useState(false);
+  const onToggleSwitch = () => {
+    setStakeAmount('');
+    setIsSwitchOn(!isSwitchOn);
+  };
 
   useEffect(() => {
     getStakeApy().then(({max}) => {
@@ -173,7 +180,7 @@ const App: () => Node = () => {
               paddingTop: 12,
               color: '#273852',
             }}>
-            Stake Solana
+            {isSwitchOn ? 'Un' : ''}Stake Solana
           </Text>
           <Text
             variant="bodyMedium"
@@ -187,12 +194,29 @@ const App: () => Node = () => {
 
           <Card style={{padding: 12}}>
             <Card.Content>
-              <Text variant="bodyMedium">SOL Balance</Text>
-              <Paragraph>
-                <Text variant="titleLarge" style={{fontWeight: '900'}}>
-                  {balance} SOL
-                </Text>
-              </Paragraph>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                <View>
+                  <Text variant="bodyMedium">SOL Balance</Text>
+                  <Paragraph>
+                    <Text variant="titleLarge" style={{fontWeight: '900'}}>
+                      {balance} SOL
+                    </Text>
+                  </Paragraph>
+                </View>
+
+                <View>
+                  <Switch
+                    color="#00a3ff"
+                    value={isSwitchOn}
+                    onValueChange={onToggleSwitch}
+                  />
+                </View>
+              </View>
 
               <Divider style={{marginBottom: 12, marginTop: 6}} />
 
@@ -219,6 +243,7 @@ const App: () => Node = () => {
                   textColor="#273852"
                   activeOutlineColor="#00a3ff"
                   onChangeText={onChangeStakeInput}
+                  editable={!isSwitchOn}
                   value={stakeAmount}
                   style={{backgroundColor: '#fff', marginBottom: 12}}
                 />
@@ -229,6 +254,7 @@ const App: () => Node = () => {
                     setTxStage={setTxStage}
                     setTxModalVisible={setTxModalVisible}
                     stakeAmount={stakeAmount}
+                    disabled={isSwitchOn}
                   />
                 ) : (
                   <ConnectButton />
@@ -237,7 +263,9 @@ const App: () => Node = () => {
                 <View style={{marginTop: 24}}>
                   <Section
                     label="You will receive:"
-                    value={`~${transactionInfo.exchangeRate} stSOL`}
+                    value={`~${+(
+                      (stakeAmount || 0) * transactionInfo.exchangeRate
+                    ).toFixed(4)} stSOL`}
                   />
                   <Section
                     label="Exchange rate:"
