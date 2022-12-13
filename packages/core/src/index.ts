@@ -1,6 +1,12 @@
 import { Connection, PublicKey, TransactionSignature } from '@solana/web3.js';
 
-import { ProgramAddresses, SignAndConfirmTransactionProps, StakeProps, SupportedClusters } from '@/types';
+import {
+  AccountInfoV2,
+  ProgramAddresses,
+  SignAndConfirmTransactionProps,
+  StakeProps,
+  SupportedClusters,
+} from '@/types';
 import { clusterProgramAddresses, LidoVersion, TX_STAGE } from '@/constants';
 import { ERROR_CODE } from '@common/constants';
 
@@ -14,11 +20,11 @@ import {
   calculateMaxUnStakeAmount,
   calculateStakeAccountAddress,
   getAccountInfo,
-  getAccountInfoResponse,
   getUnStakeTransaction,
   getWithdrawInstruction,
   isUnStakeAvailable,
 } from '@/unstake';
+import { getValidatorList } from '@/unstake/getValidatorList';
 
 import { getExchangeRate } from '@/statistics/getExchangeRate';
 import { getTransactionCost } from '@/statistics/getTransactionCost';
@@ -48,7 +54,7 @@ export class SolidoSDK {
 
   protected referrerId?: string;
 
-  protected solidoAccountInfo?: getAccountInfoResponse;
+  protected solidoAccountInfo?: AccountInfoV2;
 
   public lidoVersion: LidoVersion = LidoVersion.v1;
 
@@ -169,6 +175,8 @@ export class SolidoSDK {
   protected getWithdrawInstruction = getWithdrawInstruction.bind(this);
 
   protected getAccountInfo = getAccountInfo.bind(this);
+
+  protected getValidatorList = getValidatorList.bind(this);
 
   protected calculateStakeAccountAddress = calculateStakeAccountAddress.bind(this);
 

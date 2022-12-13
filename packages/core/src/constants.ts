@@ -31,6 +31,7 @@ export const MAINNET_PROGRAM_ADDRESSES: ProgramAddresses = Object.freeze({
   reserveAccount: new PublicKey('3Kwv3pEAuoe4WevPB4rgMBTZndGDb53XT7qwQKnvHPfX'),
   mintAuthority: new PublicKey('8kRRsKezwXS21beVDcAoTmih1XbyFnEAMXXiGXz6J3Jz'),
   stakeAuthority: new PublicKey('W1ZQRwUfSkDKy2oefRBUWph82Vr2zg9txWMA8RQazN5'),
+  validatorList: new PublicKey('GL9kqRNUTUosW3RsDoXHCuXUZn73SgQQmBvtp1ng2co4'),
 });
 
 export const TESTNET_PROGRAM_ADDRESSES: ProgramAddresses = Object.freeze({
@@ -40,6 +41,7 @@ export const TESTNET_PROGRAM_ADDRESSES: ProgramAddresses = Object.freeze({
   reserveAccount: new PublicKey('9zu4upPBBDqbk6upLT4YycwUR9UoXWhs5NfMHeUdTDCv'),
   mintAuthority: new PublicKey('83xtC3WGv1kJXgGo2HFZv7dJSBQshee6HqUvRe9mnrqz'),
   stakeAuthority: new PublicKey('GnLPhRU8vP8kWkExA5s8pmzfr8tZgbyGNPNr7Qxef3Jx'),
+  validatorList: new PublicKey('7mLYFE8uN37j4JjyGpqh8N8e5EDirLE86sSvNLSt5pPM'),
 });
 
 export const clusterProgramAddresses: Record<SupportedClusters, ProgramAddresses> = {

@@ -42,6 +42,7 @@ export interface ProgramAddresses {
   reserveAccount: PublicKey;
   mintAuthority: PublicKey;
   stakeAuthority: PublicKey;
+  validatorList: PublicKey;
 }
 
 export type TransactionProps = {
