@@ -72,7 +72,7 @@ export const withdrawDataLayout = {
 export async function getWithdrawInstruction(this: SolidoSDK, props: WithdrawInstructionProps) {
   const { senderStSolAccountAddress, payerAddress, amount, stakeAccount } = props;
 
-  const { solidoProgramId, stSolMintAddress, solidoInstanceId } = this.programAddresses;
+  const { solidoProgramId, stSolMintAddress, solidoInstanceId, stakeAuthority } = this.programAddresses;
 
   const { validators, accountInfo, lidoVersion } = await this.getAccountInfo();
 
@@ -97,8 +97,6 @@ export async function getWithdrawInstruction(this: SolidoSDK, props: WithdrawIns
       data,
     );
   }
-
-  const stakeAuthority = await this.findProgramAddress('stake_authority');
 
   const validatorStakeAccount = await this.calculateStakeAccountAddress(validator);
 

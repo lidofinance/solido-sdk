@@ -3,8 +3,7 @@ import { lamportsToSol } from '@/utils/formatters';
 
 export async function getTotalStaked(this: SolidoSDK, precision = 2) {
   const { validators } = await this.getAccountInfo();
-
-  const reserveAccount = await this.findProgramAddress('reserve_account');
+  const { reserveAccount } = this.programAddresses;
 
   const reserveAccountInfo = await this.connection.getAccountInfo(reserveAccount);
   if (reserveAccountInfo === null) {
