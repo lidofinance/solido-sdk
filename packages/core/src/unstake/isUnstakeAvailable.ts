@@ -1,7 +1,7 @@
 import { SolidoSDK } from '@/index';
 
 export async function isUnStakeAvailable(this: SolidoSDK) {
-  const { validators } = await this.getAccountInfo();
+  const validators = await this.getValidatorList();
 
   const areValidatorsEmpty = validators.length === 0;
   const areExistSomeActiveValidators = validators.some(({ active }) => active);
