@@ -6,7 +6,7 @@ import BN from 'bn.js';
 import { PublicKey } from '@solana/web3.js';
 
 import { SolidoSDK } from '@/index';
-import { calculateStakeAccountAddress, getAccountInfo } from '@/unstake';
+import { calculateStakeAccountAddress, getValidatorList } from '@/unstake';
 import { Validator } from '@/types';
 import { findProgramAddress } from '@/stake';
 import { getConnection } from './helpers';
@@ -36,7 +36,7 @@ const programAddresses = async () => {
 };
 
 const updateSnapshot = async () => {
-  const { validators } = await getAccountInfo.call(sdk);
+  const validators = await getValidatorList.call(sdk);
 
   const validatorsToDump: TestValidator[] = [];
   for (let validator of validators) {
