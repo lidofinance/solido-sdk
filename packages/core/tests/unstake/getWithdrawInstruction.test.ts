@@ -1,5 +1,5 @@
 import { Keypair, TransactionInstruction } from '@solana/web3.js';
-import { LidoVersion, SolidoSDK, solToLamports } from '@/index';
+import { SolidoSDK, solToLamports } from '@/index';
 import { clusterProgramAddresses, VALIDATOR_LIST } from '@/constants';
 import {
   getHeaviestValidator,
@@ -75,7 +75,7 @@ describe('getWithdrawInstruction', () => {
   });
 
   test('withdrawInstruction.data is fulled as expected', () => {
-    const data = withdrawDataLayout[LidoVersion.v2].decode(withdrawInstruction.data);
+    const data = withdrawDataLayout.decode(withdrawInstruction.data);
 
     expect(data.instruction).toBe(23);
     expect(data.amount).toBe(solToLamports(amount));

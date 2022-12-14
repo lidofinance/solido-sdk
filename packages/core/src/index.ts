@@ -56,7 +56,7 @@ export class SolidoSDK {
 
   protected solidoAccountInfo?: AccountInfoV2;
 
-  public lidoVersion: LidoVersion = LidoVersion.v1;
+  public lidoVersion: LidoVersion = LidoVersion.v2;
 
   public programAddresses: ProgramAddresses;
 
