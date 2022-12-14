@@ -50,5 +50,3 @@ export const clusterProgramAddresses: Record<SupportedClusters, ProgramAddresses
 };
 
 export const MEMO_PROGRAM_ID = new PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr');
-
-export const VALIDATOR_LIST = new PublicKey('7mLYFE8uN37j4JjyGpqh8N8e5EDirLE86sSvNLSt5pPM');

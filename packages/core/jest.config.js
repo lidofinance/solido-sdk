@@ -2,6 +2,7 @@ const path = require('path');
 
 /** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
+  silent: true,
   preset: 'ts-jest',
   testEnvironment: 'node',
   moduleNameMapper: {

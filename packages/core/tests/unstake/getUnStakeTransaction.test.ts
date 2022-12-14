@@ -1,10 +1,9 @@
 import { Connection, Keypair, LAMPORTS_PER_SOL, Transaction, TransactionInstruction } from '@solana/web3.js';
 
 import { SolidoSDK } from '@/index';
-import { ERROR_CODE, ERROR_MESSAGE } from '@common/constants';
+import { ERROR_CODE } from '@common/constants';
 import { getUnStakeTransaction } from '@/unstake';
 
-import { mockValidatorList } from '../mocks/validators';
 import { getConnection } from '../helpers';
 import { CLUSTER, stSolTokenAccount, walletWithStSolTokenAccount } from '../constants';
 
@@ -14,17 +13,6 @@ describe('getUnStakeTransaction', () => {
   beforeAll(() => {
     connection = getConnection();
     sdk = new SolidoSDK(CLUSTER, connection);
-  });
-
-  it('should throw Error "UNSTAKE_UNAVAILABLE"', async () => {
-    mockValidatorList(connection, 'empty');
-
-    try {
-      await sdk.getUnStakeTransaction({ payerAddress: Keypair.generate().publicKey, amount: 100000 });
-    } catch (error) {
-      expect(error.message).toContain(ERROR_MESSAGE[ERROR_CODE.UNSTAKE_UNAVAILABLE]);
-      expect(error.code).toEqual(ERROR_CODE.UNSTAKE_UNAVAILABLE);
-    }
   });
 
   it('should throw Error "Max exceed"', async () => {

@@ -14,9 +14,11 @@ describe('getTotalRewards', () => {
   });
 
   test('total rewards returned value', async () => {
-    // @ts-ignore
+    // @ts-expect-error We don't need full state mock
     jest.spyOn(sdk, 'getAccountInfo').mockReturnValueOnce({
-      accountInfo: { metrics: { st_sol_appreciation_sol_total: new BN('2701000960') } },
+      metrics: {
+        st_sol_appreciation_sol_total: new BN('2701000960'),
+      },
     });
 
     const totalRewards = await sdk.getTotalRewards(3);

@@ -2,11 +2,10 @@ import { Connection } from '@solana/web3.js';
 import { lamportsToSol, SolidoSDK } from '@/index';
 
 import reserveAccountInfo from '../data/reserve_account_info.json';
-import { validators } from '../data/snapshot';
-import { mockValidatorList } from '../mocks/validators';
 import { mockReserveAccountInfo } from '../mocks/accountInfo';
 import { getConnection } from '../helpers';
 import { CLUSTER } from '../constants';
+import BN from 'bn.js';
 
 describe('getTotalStaked', () => {
   let sdk: SolidoSDK, connection: Connection;
@@ -17,17 +16,18 @@ describe('getTotalStaked', () => {
   });
 
   test('total staked returned value', async () => {
-    mockValidatorList(connection);
+    const solBalance = 2701000960;
+    // @ts-expect-error We don't need full state mock
+    jest.spyOn(sdk, 'getAccountInfo').mockReturnValueOnce({
+      exchange_rate: {
+        sol_balance: new BN(solBalance),
+      },
+    });
     mockReserveAccountInfo(connection);
 
     const totalStaked = await sdk.getTotalStaked();
 
-    const validatorsStake = validators.reduce(
-      (arr, { stake_accounts_balance }) => arr + stake_accounts_balance.toNumber(),
-      0,
-    );
-
-    const totalStakedExpected = lamportsToSol(validatorsStake + reserveAccountInfo.lamports, 2);
+    const totalStakedExpected = lamportsToSol(solBalance + reserveAccountInfo.lamports, 2);
 
     expect(totalStaked).toEqual(totalStakedExpected);
   });

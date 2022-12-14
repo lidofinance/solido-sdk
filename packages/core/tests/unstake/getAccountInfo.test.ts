@@ -2,14 +2,14 @@ import { Connection, PublicKey } from '@solana/web3.js';
 import { when } from 'jest-when';
 
 import { LidoVersion, SolidoSDK } from '@/index';
-import { clusterProgramAddresses, VALIDATOR_LIST } from '@/constants';
+import { clusterProgramAddresses } from '@/constants';
 import { ERROR_CODE, ERROR_MESSAGE } from '@common/constants';
 import { ExchangeRate, getAccountInfo, RewardDistribution, FeeRecipients, Metrics } from '@/unstake';
 import { AccountInfoV2, AccountType } from '@/types';
 
 import { mockValidatorList } from '../mocks/validators';
 import { getConnection } from '../helpers';
-import { CLUSTER } from '../constants';
+import { CLUSTER, VALIDATOR_LIST } from '../constants';
 
 describe('getAccountInfo', () => {
   let sdk: SolidoSDK, connection: Connection;
