@@ -68,7 +68,8 @@ export const withdrawDataLayout = struct<WithdrawInstructionStruct>([
 
 export async function getWithdrawInstruction(this: SolidoSDK, props: WithdrawInstructionProps) {
   const { senderStSolAccountAddress, payerAddress, amount, stakeAccount } = props;
-  const { solidoProgramId, stSolMintAddress, solidoInstanceId, stakeAuthority, validatorList } = this.programAddresses;
+  const { solidoProgramId, stSolMintAddress, solidoInstanceId, stakeAuthority, validatorList } =
+    this.programAddresses;
 
   const validators = await this.getValidatorList();
 
@@ -95,7 +96,7 @@ export async function getWithdrawInstruction(this: SolidoSDK, props: WithdrawIns
     { pubkey: validatorStakeAccount, isSigner: false, isWritable: true },
     { pubkey: stakeAccount, isSigner: true, isWritable: true },
     { pubkey: stakeAuthority, isSigner: false, isWritable: false },
-    { pubkey: validatorList, isSigner: false, isWritable: true, },
+    { pubkey: validatorList, isSigner: false, isWritable: true },
     { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },
     { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
     { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },

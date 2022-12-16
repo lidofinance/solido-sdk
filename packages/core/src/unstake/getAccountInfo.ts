@@ -172,8 +172,7 @@ const accountInfoV2Scheme = new Map([
 ]);
 
 export async function getAccountInfo(this: SolidoSDK): Promise<AccountInfoV2> {
-  // save answer only for clients
-  if (this.solidoAccountInfo && typeof window !== 'undefined') {
+  if (this.solidoAccountInfo) {
     return this.solidoAccountInfo;
   }
 
@@ -185,13 +184,7 @@ export async function getAccountInfo(this: SolidoSDK): Promise<AccountInfoV2> {
     throw new ErrorWrapper({ code: ERROR_CODE.NO_ACCOUNT_INFO });
   }
 
-  const deserializedAccountInfo = deserializeUnchecked(
-    accountInfoV2Scheme,
-    Lido,
-    accountInfo.data,
-  ) as AccountInfoV2;
-
-  this.solidoAccountInfo = deserializedAccountInfo;
+  this.solidoAccountInfo = deserializeUnchecked(accountInfoV2Scheme, Lido, accountInfo.data) as AccountInfoV2;
 
   setTimeout(() => {
     // clear cache after 7 seconds, in order to avoid outdated data
