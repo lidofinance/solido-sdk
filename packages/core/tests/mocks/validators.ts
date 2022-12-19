@@ -1,7 +1,7 @@
 import { Connection } from '@solana/web3.js';
 import { when } from 'jest-when';
 
-import { VALIDATOR_LIST } from '@/constants';
+import { VALIDATOR_LIST } from '../constants';
 
 import validatorListFullDump from '../data/validator_list_full.json';
 import validatorListInActiveDump from '../data/validator_list_inactive.json';

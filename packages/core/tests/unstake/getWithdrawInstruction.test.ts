@@ -1,6 +1,6 @@
 import { Keypair, TransactionInstruction } from '@solana/web3.js';
-import { LidoVersion, SolidoSDK, solToLamports } from '@/index';
-import { clusterProgramAddresses, VALIDATOR_LIST } from '@/constants';
+import { SolidoSDK, solToLamports } from '@/index';
+import { clusterProgramAddresses } from '@/constants';
 import {
   getHeaviestValidator,
   getValidatorIndex,
@@ -11,7 +11,7 @@ import {
 import { heaviestValidator, stakeAuthority, validators } from '../data/snapshot';
 import { mockValidatorList } from '../mocks/validators';
 import { getConnection } from '../helpers';
-import { CLUSTER } from '../constants';
+import { CLUSTER, VALIDATOR_LIST } from '../constants';
 
 describe('getHeaviestValidator', () => {
   test('heaviest validator from validators list', () => {
@@ -75,7 +75,7 @@ describe('getWithdrawInstruction', () => {
   });
 
   test('withdrawInstruction.data is fulled as expected', () => {
-    const data = withdrawDataLayout[LidoVersion.v2].decode(withdrawInstruction.data);
+    const data = withdrawDataLayout.decode(withdrawInstruction.data);
 
     expect(data.instruction).toBe(23);
     expect(data.amount).toBe(solToLamports(amount));

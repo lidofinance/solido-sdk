@@ -39,6 +39,10 @@ export interface ProgramAddresses {
   solidoProgramId: PublicKey;
   solidoInstanceId: PublicKey;
   stSolMintAddress: PublicKey;
+  reserveAccount: PublicKey;
+  mintAuthority: PublicKey;
+  stakeAuthority: PublicKey;
+  validatorList: PublicKey;
 }
 
 export type TransactionProps = {

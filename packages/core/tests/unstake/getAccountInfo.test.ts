@@ -1,24 +1,15 @@
 import { Connection, PublicKey } from '@solana/web3.js';
 import { when } from 'jest-when';
-import BN from 'bn.js';
 
 import { LidoVersion, SolidoSDK } from '@/index';
-import { clusterProgramAddresses, VALIDATOR_LIST } from '@/constants';
+import { clusterProgramAddresses } from '@/constants';
 import { ERROR_CODE, ERROR_MESSAGE } from '@common/constants';
-import {
-  ExchangeRate,
-  getAccountInfo,
-  RewardDistribution,
-  FeeRecipients,
-  Metrics,
-  ValidatorClass,
-  SeedRange,
-} from '@/unstake';
+import { ExchangeRate, getAccountInfo, RewardDistribution, FeeRecipients, Metrics } from '@/unstake';
 import { AccountInfoV2, AccountType } from '@/types';
 
 import { mockValidatorList } from '../mocks/validators';
 import { getConnection } from '../helpers';
-import { CLUSTER } from '../constants';
+import { CLUSTER, VALIDATOR_LIST } from '../constants';
 
 describe('getAccountInfo', () => {
   let sdk: SolidoSDK, connection: Connection;
@@ -56,12 +47,9 @@ describe('getAccountInfo', () => {
   test('getAccountInfo success case, all fields parsed as expected', async () => {
     mockValidatorList(connection); // because it's not important here
 
-    let { lidoVersion, accountInfo } = await getAccountInfo.call(sdk);
-    accountInfo = accountInfo as AccountInfoV2;
+    let accountInfo = (await getAccountInfo.call(sdk)) as AccountInfoV2;
 
-    expect(lidoVersion).toEqual(LidoVersion.v2);
     expect(accountInfo.lido_version).toEqual(LidoVersion.v2);
-
     expect(accountInfo.account_type).toEqual(AccountType.Lido);
 
     expect(new PublicKey(accountInfo.st_sol_mint)).toStrictEqual(stSolMintAddress);
@@ -82,32 +70,5 @@ describe('getAccountInfo', () => {
     expect(typeof accountInfo.stake_authority_bump_seed).toBe('number');
     expect(typeof accountInfo.mint_authority_bump_seed).toBe('number');
     expect(typeof accountInfo.max_commission_percentage).toBe('number');
-  });
-
-  test('getAccountInfo parsed correctly validatorList', async () => {
-    mockValidatorList(connection);
-
-    let { lidoVersion, validators } = await getAccountInfo.call(sdk);
-
-    expect(lidoVersion).toEqual(LidoVersion.v2);
-    expect(validators).toHaveLength(2); // definite length from dump
-
-    const validatorSample = validators[0];
-    expect(validatorSample).toBeInstanceOf(ValidatorClass);
-
-    const validatorPubkey = validatorSample.vote_account_address;
-    expect(validatorPubkey).toBeInstanceOf(Uint8Array);
-    expect(validatorPubkey).toHaveLength(32);
-
-    expect(validatorSample.stake_seeds).toBeInstanceOf(SeedRange);
-    expect(validatorSample.stake_seeds.begin).toBeInstanceOf(BN);
-    expect(validatorSample.stake_seeds.end).toBeInstanceOf(BN);
-    expect(validatorSample.unstake_seeds).toBeInstanceOf(SeedRange);
-
-    expect(validatorSample.stake_accounts_balance).toBeInstanceOf(BN);
-    expect(validatorSample.unstake_accounts_balance).toBeInstanceOf(BN);
-    expect(validatorSample.effective_stake_balance).toBeInstanceOf(BN);
-
-    expect(validatorSample.active).toBe(1);
   });
 });

@@ -5,9 +5,9 @@ import fs from 'fs';
 import path from 'path';
 
 import { AccountList, validatorsSchema } from '@/unstake';
-import { VALIDATOR_LIST } from '@/constants';
 import { ValidatorsList } from '@/types';
 import { getConnection } from './helpers';
+import { VALIDATOR_LIST } from './constants';
 
 const connection = getConnection();
 

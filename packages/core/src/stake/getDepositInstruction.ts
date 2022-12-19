@@ -16,7 +16,7 @@ type DepositInstructionProps = {
 
 export async function findProgramAddress(
   this: SolidoSDK,
-  bufferFrom: 'reserve_account' | 'mint_authority' | 'stake_authority' | 'validator_list',
+  bufferFrom: 'reserve_account' | 'mint_authority' | 'stake_authority',
 ) {
   const { solidoInstanceId, solidoProgramId } = this.programAddresses;
   const bufferArray = [solidoInstanceId.toBuffer(), Buffer.from(bufferFrom)];
@@ -30,7 +30,8 @@ export const depositDataLayout = struct<InstructionStruct>([u8('instruction'), n
 
 export async function getDepositInstruction(this: SolidoSDK, props: DepositInstructionProps) {
   const { amount, payerAddress, recipientStSolAddress } = props;
-  const { solidoProgramId, stSolMintAddress, solidoInstanceId } = this.programAddresses;
+  const { solidoProgramId, stSolMintAddress, solidoInstanceId, reserveAccount, mintAuthority } =
+    this.programAddresses;
 
   const data = Buffer.alloc(depositDataLayout.span);
 
@@ -41,10 +42,6 @@ export async function getDepositInstruction(this: SolidoSDK, props: DepositInstr
     },
     data,
   );
-
-  const reserveAccount = await this.findProgramAddress('reserve_account');
-
-  const mintAuthority = await this.findProgramAddress('mint_authority');
 
   const keys = [
     { pubkey: solidoInstanceId, isSigner: false, isWritable: true },
