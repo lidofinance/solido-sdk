@@ -35,6 +35,7 @@ import useAuthorization from './components/useAuthorization';
 import useAccountBalance from './components/useAccountBalance';
 import StakeButton from './components/StakeButton';
 import TxStateModal from './components/TxStateModal';
+import LidoLogo from './components/Logo';
 
 const styles = StyleSheet.create({
   sectionContainer: {
@@ -57,8 +58,7 @@ const Section = ({label, value}): Node => {
   );
 };
 
-const rpcEndpoint =
-  'https://pyth-testnet-rpc-1.solana.p2p.org/yIwMoknPihQvrhSyxafcHvsAqkOE7KKrBUpplM5Xf';
+const rpcEndpoint = 'https://api.testnet.solana.com/';
 
 const connection = new Connection(rpcEndpoint);
 const sdk = new SolidoSDK('testnet', connection);
@@ -157,7 +157,28 @@ const App: () => Node = () => {
         mode="center-aligned"
         elevated
         style={{backgroundColor: Colors.lighter}}>
-        <Appbar.Content color="#273852" title="Lido on Solana" />
+        <View
+          style={{
+            paddingLeft: 12,
+            paddingRight: 12,
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
+            height: '100%',
+          }}>
+          <LidoLogo />
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <Text style={{color: 'green', marginLeft: 6}}>Testnet</Text>
+          </View>
+        </View>
       </Appbar.Header>
 
       <TxStateModal
@@ -238,12 +259,13 @@ const App: () => Node = () => {
               <Card.Content>
                 <TextInput
                   mode="outlined"
+                  keyboardType="numeric"
                   label="Stake amount"
                   outlineColor="#d1d8df"
                   textColor="#273852"
                   activeOutlineColor="#00a3ff"
                   onChangeText={onChangeStakeInput}
-                  editable={!isSwitchOn}
+                  disabled={isSwitchOn}
                   value={stakeAmount}
                   style={{backgroundColor: '#fff', marginBottom: 12}}
                 />
