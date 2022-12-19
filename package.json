@@ -66,5 +66,8 @@
   "workspaces": [
     "packages/core",
     "packages/banner"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }
