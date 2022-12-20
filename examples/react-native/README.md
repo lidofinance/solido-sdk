@@ -4,7 +4,9 @@
 
 This demonstrates how you can use the `solido-sdk` in a React Native app.
 
-https://lidofinance.github.io/solana-docs-preview/assets/medias/example-demo-585fcd62262ed913b2baea7eae1e98bb.mp4
+
+https://user-images.githubusercontent.com/99960252/208771257-9d2e9746-75a9-41cd-9aa5-e56baf4beb15.mp4
+
 
 ## Features
 
