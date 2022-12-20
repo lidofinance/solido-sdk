@@ -29,42 +29,46 @@ export default function StakeButton({
     setTxModalVisible(true);
 
     try {
-      await transact(async wallet => {
-        const freshAccount = await authorizeSession(wallet);
-        const {transaction} = await sdk.getStakeTransaction({
-          amount: stakeAmount,
-          payerAddress: freshAccount?.publicKey,
-        });
+      const {transaction} = await sdk.getStakeTransaction({
+        amount: stakeAmount,
+        payerAddress: selectedAccount?.publicKey,
+      });
 
-        setTxStage({stage: TX_STAGE.AWAITING_SIGNING});
+      setTxStage({stage: TX_STAGE.AWAITING_SIGNING});
+
+      const signed = await transact(async wallet => {
+        await authorizeSession(wallet);
 
         const [signed] = await wallet.signTransactions({
           transactions: [transaction],
         });
 
-        const transactionHash = await connection.sendRawTransaction(
-          signed.serialize(),
-        );
-
-        setTxStage({stage: TX_STAGE.AWAITING_BLOCK, transactionHash});
-
-        const {blockhash, lastValidBlockHeight} =
-          await connection.getLatestBlockhash();
-
-        const {value: status} = await connection.confirmTransaction({
-          blockhash,
-          lastValidBlockHeight,
-          signature: transactionHash,
-        });
-
-        if (status?.err) {
-          setTxStage({stage: TX_STAGE.ERROR, transactionHash});
-          throw status.err;
-        }
-
-        setTxStage({stage: TX_STAGE.SUCCESS, transactionHash});
+        return signed;
       });
-    } catch {
+
+      const transactionHash = await connection.sendRawTransaction(
+        signed.serialize(),
+      );
+
+      setTxStage({stage: TX_STAGE.AWAITING_BLOCK, transactionHash});
+
+      const {blockhash, lastValidBlockHeight} =
+        await connection.getLatestBlockhash();
+
+      const {value: status} = await connection.confirmTransaction({
+        blockhash,
+        lastValidBlockHeight,
+        signature: transactionHash,
+      });
+
+      if (status?.err) {
+        setTxStage({stage: TX_STAGE.ERROR, transactionHash});
+        throw status.err;
+      }
+
+      setTxStage({stage: TX_STAGE.SUCCESS, transactionHash});
+    } catch (e) {
+      console.log(e);
       setTxStage({stage: TX_STAGE.ERROR});
     }
   }, [selectedAccount, stakeAmount, sdk]);

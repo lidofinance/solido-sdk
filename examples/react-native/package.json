@@ -10,7 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@lidofinance/solido-sdk": "^0.7.0",
+    "@lidofinance/solido-sdk": "^0.8.0",
     "@solana-mobile/mobile-wallet-adapter-protocol": "^0.9.8",
     "@solana-mobile/mobile-wallet-adapter-protocol-web3js": "^0.9.8",
     "@solana-mobile/wallet-adapter-mobile": "^0.9.8",
