@@ -1,9 +1,10 @@
 import { Keypair, PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js';
+import { TokenOwnerOffCurveError } from '@solana/spl-token';
 
 import { ensureTokenAccount } from '@/stake/ensureTokenAccount';
-import { clusterProgramAddresses } from '@/constants';
 
-import { CLUSTER } from '../constants';
+import { clusterProgramAddresses } from '@/constants';
+import { CLUSTER, examplePDAAccount } from '../constants';
 
 describe('ensureTokenAccount', () => {
   const payerAddress = Keypair.generate().publicKey;
@@ -41,5 +42,19 @@ describe('ensureTokenAccount', () => {
     expect(keys[2].pubkey).toStrictEqual(payerAddress);
     // fourth key should be stSolMintAddress
     expect(keys[3].pubkey).toStrictEqual(stSolMintAddress);
+  });
+
+  it('throw error when try to use PDA account', async () => {
+    const tx = new Transaction();
+
+    await expect(ensureTokenAccount(tx, examplePDAAccount, stSolMintAddress)).rejects.toEqual(
+      new TokenOwnerOffCurveError(),
+    );
+  });
+
+  it('should pass with PDA account when we pass allowOwnerOffCurve flag', async () => {
+    const tx = new Transaction();
+
+    await expect(ensureTokenAccount(tx, examplePDAAccount, stSolMintAddress, true)).resolves.toBeTruthy();
   });
 });
