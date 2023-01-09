@@ -48,6 +48,7 @@ export {
   LidoVersion,
 } from '@/constants';
 export * from '@/utils/formatters';
+export { SupportedClusters };
 
 export class SolidoSDK {
   protected connection: Connection;
@@ -109,7 +110,7 @@ export class SolidoSDK {
 
   // Staking functions
   public async stake(props: StakeProps) {
-    const { amount, wallet, setTxStage } = props;
+    const { amount, wallet, setTxStage, allowOwnerOffCurve } = props;
 
     if (wallet.publicKey === null) {
       throw new ErrorWrapper({ code: ERROR_CODE.NO_PUBLIC_KEY });
@@ -118,6 +119,7 @@ export class SolidoSDK {
     const { transaction, stSolAccountAddress } = await this.getStakeTransaction({
       amount: +amount,
       payerAddress: new PublicKey(wallet.publicKey),
+      allowOwnerOffCurve,
     });
 
     setTxStage?.({ txStage: TX_STAGE.AWAITING_SIGNING, stSolAccountAddress });

@@ -56,8 +56,14 @@ export type TransactionProps = {
   payerAddress: PublicKey;
 };
 
+// ATA = Associated Token Address
+export type ATAAllowOwnerOffCurve = {
+  allowOwnerOffCurve?: boolean;
+};
+
 export type StakeProps = Omit<SignAndConfirmTransactionProps, 'transaction'> &
-  Pick<TransactionProps, 'amount'>;
+  Pick<TransactionProps, 'amount'> &
+  ATAAllowOwnerOffCurve;
 
 export type InstructionStruct = {
   /**
