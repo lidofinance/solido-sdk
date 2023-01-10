@@ -56,8 +56,15 @@ export type TransactionProps = {
   payerAddress: PublicKey;
 };
 
+export type StakeAdditionalProps = {
+  // Allow the owner account to be a PDA (Program Derived Address)
+  // see getAssociatedTokenAddress in solana/web3.js
+  allowOwnerOffCurve?: boolean;
+};
+
 export type StakeProps = Omit<SignAndConfirmTransactionProps, 'transaction'> &
-  Pick<TransactionProps, 'amount'>;
+  Pick<TransactionProps, 'amount'> &
+  StakeAdditionalProps;
 
 export type InstructionStruct = {
   /**

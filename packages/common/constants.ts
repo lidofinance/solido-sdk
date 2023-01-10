@@ -13,6 +13,7 @@ export enum ERROR_CODE {
   NO_ACCOUNT_INFO = 303,
   NO_APY_DATA = 304,
   EXCEED_MAX = 400,
+  PUBLIC_KEY_IS_PDA = 401, // PDA (Program Derived Address)
 }
 
 export const ERROR_CODE_DESC: Record<ERROR_CODE, string> = {
@@ -24,6 +25,7 @@ export const ERROR_CODE_DESC: Record<ERROR_CODE, string> = {
   [ERROR_CODE.NO_ACCOUNT_INFO]: 'NO_ACCOUNT_INFO',
   [ERROR_CODE.NO_APY_DATA]: 'NO_APY_DATA',
   [ERROR_CODE.EXCEED_MAX]: 'EXCEED_MAX',
+  [ERROR_CODE.PUBLIC_KEY_IS_PDA]: 'PUBLIC_KEY_IS_PDA',
 };
 
 export const ERROR_MESSAGE: Partial<Record<ERROR_CODE, string>> = {
@@ -34,4 +36,5 @@ export const ERROR_MESSAGE: Partial<Record<ERROR_CODE, string>> = {
   [ERROR_CODE.NO_PUBLIC_KEY]: 'SolidoSDK: publicKey is null in wallet',
   [ERROR_CODE.NO_ACCOUNT_INFO]: `Couldn't fetch getAccountInfo`,
   [ERROR_CODE.NO_APY_DATA]: `Couldn't fetch apy data`,
+  [ERROR_CODE.PUBLIC_KEY_IS_PDA]: 'Your publicKey is PDA type. Please use allowOwnerOffCurve=true flag.',
 };

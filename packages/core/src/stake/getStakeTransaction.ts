@@ -1,13 +1,13 @@
 import { Transaction } from '@solana/web3.js';
 
 import { SolidoSDK } from '@/index';
-import { TransactionProps } from '@/types';
+import { StakeAdditionalProps, TransactionProps } from '@/types';
 import { getMemoInstruction } from '@/utils/memo';
 import { checkMaxExceed } from '@/utils/checkMaxExceed';
 import { ensureTokenAccount } from './ensureTokenAccount';
 
-export async function getStakeTransaction(this: SolidoSDK, props: TransactionProps) {
-  const { payerAddress, amount } = props;
+export async function getStakeTransaction(this: SolidoSDK, props: TransactionProps & StakeAdditionalProps) {
+  const { payerAddress, amount, allowOwnerOffCurve } = props;
   const { stSolMintAddress } = this.programAddresses;
 
   const maxInLamports = await this.calculateMaxStakeAmount(payerAddress);
@@ -21,7 +21,12 @@ export async function getStakeTransaction(this: SolidoSDK, props: TransactionPro
   let stSolAccountAddress = stSolAccount?.address;
 
   if (!stSolAccountAddress) {
-    stSolAccountAddress = await ensureTokenAccount(transaction, payerAddress, stSolMintAddress);
+    stSolAccountAddress = await ensureTokenAccount(
+      transaction,
+      payerAddress,
+      stSolMintAddress,
+      allowOwnerOffCurve,
+    );
   }
 
   const depositInstruction = await this.getDepositInstruction({
