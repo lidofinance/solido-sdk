@@ -1,10 +1,10 @@
 import { Connection, Keypair, LAMPORTS_PER_SOL, Transaction } from '@solana/web3.js';
-import { ASSOCIATED_TOKEN_PROGRAM_ID, TokenOwnerOffCurveError } from '@solana/spl-token';
+import { ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token';
 
 import { SolidoSDK } from '@/index';
 import { getStakeTransaction } from '@/stake/getStakeTransaction';
 import { MEMO_PROGRAM_ID } from '@/constants';
-import { ERROR_CODE } from '@common/constants';
+import { ERROR_CODE, ERROR_CODE_DESC, ERROR_MESSAGE } from '@common/constants';
 
 import {
   CLUSTER,
@@ -63,12 +63,16 @@ describe('getStakeTransaction', () => {
   it('should fall when we try to call with PDA account, but without allowOwnerOffCurve flag', async () => {
     jest.spyOn(sdk, 'calculateMaxStakeAmount').mockReturnValueOnce(Promise.resolve(2 * LAMPORTS_PER_SOL));
 
-    await expect(
-      sdk.getStakeTransaction({
+    try {
+      await sdk.getStakeTransaction({
         payerAddress: examplePDAAccount,
         amount: 1,
-      }),
-    ).rejects.toEqual(new TokenOwnerOffCurveError());
+      });
+    } catch (error) {
+      expect(error.code).toEqual(ERROR_CODE.PUBLIC_KEY_IS_PDA);
+      expect(error.codeDesc).toEqual(ERROR_CODE_DESC[ERROR_CODE.PUBLIC_KEY_IS_PDA]);
+      expect(error.message).toEqual(ERROR_MESSAGE[ERROR_CODE.PUBLIC_KEY_IS_PDA]);
+    }
   });
 
   it('should pass when we try to call with PDA account and with allowOwnerOffCurve flag', async () => {
