@@ -56,14 +56,15 @@ export type TransactionProps = {
   payerAddress: PublicKey;
 };
 
-// ATA = Associated Token Address
-export type ATAAllowOwnerOffCurve = {
+export type StakeAdditionalProps = {
+  // Allow the owner account to be a PDA (Program Derived Address)
+  // see getAssociatedTokenAddress in solana/web3.js
   allowOwnerOffCurve?: boolean;
 };
 
 export type StakeProps = Omit<SignAndConfirmTransactionProps, 'transaction'> &
   Pick<TransactionProps, 'amount'> &
-  ATAAllowOwnerOffCurve;
+  StakeAdditionalProps;
 
 export type InstructionStruct = {
   /**

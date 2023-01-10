@@ -1,12 +1,12 @@
 import { Transaction } from '@solana/web3.js';
 
 import { SolidoSDK } from '@/index';
-import { ATAAllowOwnerOffCurve, TransactionProps } from '@/types';
+import { StakeAdditionalProps, TransactionProps } from '@/types';
 import { getMemoInstruction } from '@/utils/memo';
 import { checkMaxExceed } from '@/utils/checkMaxExceed';
 import { ensureTokenAccount } from './ensureTokenAccount';
 
-export async function getStakeTransaction(this: SolidoSDK, props: TransactionProps & ATAAllowOwnerOffCurve) {
+export async function getStakeTransaction(this: SolidoSDK, props: TransactionProps & StakeAdditionalProps) {
   const { payerAddress, amount, allowOwnerOffCurve } = props;
   const { stSolMintAddress } = this.programAddresses;
 
