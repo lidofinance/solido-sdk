@@ -3,12 +3,16 @@ import { Keypair, StakeProgram, Transaction, TransactionInstruction } from '@sol
 import { SolidoSDK } from '@/index';
 import { TransactionProps } from '@/types';
 import { checkMaxExceed } from '@/utils/checkMaxExceed';
+import { checkMinExceed } from '@/utils/checkMinExceed';
 
 export async function getUnStakeTransaction(this: SolidoSDK, props: TransactionProps) {
   const { payerAddress, amount } = props;
 
   const maxInLamports = await this.calculateMaxUnStakeAmount(payerAddress);
   checkMaxExceed(amount, maxInLamports);
+
+  const minInLamports = await this.calculateMinUnStakeAmount();
+  checkMinExceed(amount, minInLamports);
 
   const newStakeAccount = Keypair.generate();
   const newStakeAccountPubkey = newStakeAccount.publicKey;

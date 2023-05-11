@@ -5,6 +5,7 @@ import { ERROR_CODE } from '@common/constants';
 
 describe('checkMaxExceed', () => {
   it('should throw Error if amount is bigger than maxInLamports', () => {
+    expect.assertions(2);
     try {
       checkMaxExceed(10, 9.9 * LAMPORTS_PER_SOL);
     } catch (error) {

@@ -2,7 +2,6 @@ import { Connection, Keypair, LAMPORTS_PER_SOL, Transaction, TransactionInstruct
 
 import { SolidoSDK } from '@/index';
 import { ERROR_CODE } from '@common/constants';
-import { getUnStakeTransaction } from '@/unstake';
 
 import { getConnection } from '../helpers';
 import { CLUSTER, stSolTokenAccount, walletWithStSolTokenAccount } from '../constants';
@@ -16,11 +15,25 @@ describe('getUnStakeTransaction', () => {
   });
 
   it('should throw Error "Max exceed"', async () => {
+    expect.assertions(2);
     try {
       await sdk.getUnStakeTransaction({ payerAddress: Keypair.generate().publicKey, amount: 100000 });
     } catch (error) {
       expect(error.message).toContain('Amount must not exceed MAX');
       expect(error.code).toEqual(ERROR_CODE.EXCEED_MAX);
+    }
+  });
+
+  it('should throw Error "rent-exempt"', async () => {
+    expect.assertions(2);
+    try {
+      await sdk.getUnStakeTransaction({
+        payerAddress: walletWithStSolTokenAccount,
+        amount: 0.001,
+      });
+    } catch (error) {
+      expect(error.message).toContain('Amount must be greater than rent-exempt fee');
+      expect(error.code).toEqual(ERROR_CODE.EXCEED_MIN);
     }
   });
 
