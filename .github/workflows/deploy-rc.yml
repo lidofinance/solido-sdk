@@ -23,8 +23,8 @@ jobs:
       - name: Build
         run: npm run build
       - name: Running tests
-        env:
-          RPC_ENDPOINT: ${{ secrets.RPC_ENDPOINT }}
+        # env:
+        #   RPC_ENDPOINT: ${{ secrets.RPC_ENDPOINT }}
         run: npm test
       - name: Publish to NPM
         env:
