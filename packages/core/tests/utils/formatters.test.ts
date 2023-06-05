@@ -1,4 +1,11 @@
-import { formatWithCommas, lamportsToSol, solToLamports, toPrecision } from '@/utils/formatters';
+import {
+  formatWithCommas,
+  lamportsToSol,
+  lamportsToSolUp,
+  solToLamports,
+  toPrecision,
+  toPrecisionUp,
+} from '@/utils/formatters';
 
 describe('formatters', () => {
   test('formatWithCommas', () => {
@@ -14,9 +21,21 @@ describe('formatters', () => {
     expect(toPrecision(0.9, 5)).toEqual(0.9);
   });
 
+  test('toPrecisionUp', () => {
+    expect(toPrecisionUp(0.9383, 2)).toEqual(0.94);
+    expect(toPrecisionUp(1.065793443, 4)).toEqual(1.0658);
+
+    expect(toPrecisionUp(0.9, 5)).toEqual(0.9);
+  });
+
   test('lamportsToSol', () => {
     expect(lamportsToSol(7366553238)).toEqual(7.3665);
     expect(lamportsToSol(5000, 6)).toEqual(0.000005);
+  });
+
+  test('lamportsToSolUp', () => {
+    expect(lamportsToSolUp(7366553238)).toEqual(7.3666);
+    expect(lamportsToSolUp(2282880)).toEqual(0.0023);
   });
 
   test('solToLamports', () => {

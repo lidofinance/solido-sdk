@@ -18,6 +18,7 @@ import {
 } from '@/stake';
 import {
   calculateMaxUnStakeAmount,
+  calculateMinUnStakeAmount,
   calculateStakeAccountAddress,
   getAccountInfo,
   getUnStakeTransaction,
@@ -171,6 +172,8 @@ export class SolidoSDK {
   public getUnStakeTransaction = getUnStakeTransaction.bind(this);
 
   public calculateMaxUnStakeAmount = calculateMaxUnStakeAmount.bind(this);
+
+  public calculateMinUnStakeAmount = calculateMinUnStakeAmount.bind(this);
 
   public isUnStakeAvailable = isUnStakeAvailable.bind(this);
 
