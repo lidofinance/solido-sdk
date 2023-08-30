@@ -1,5 +1,6 @@
 import { Connection, PublicKey, TransactionSignature } from '@solana/web3.js';
 
+import { LidoVersion, TX_STAGE, clusterProgramAddresses } from '@/constants';
 import {
   AccountInfoV2,
   ProgramAddresses,
@@ -7,7 +8,6 @@ import {
   StakeProps,
   SupportedClusters,
 } from '@/types';
-import { clusterProgramAddresses, LidoVersion, TX_STAGE } from '@/constants';
 import { ERROR_CODE } from '@common/constants';
 
 import {
@@ -16,6 +16,7 @@ import {
   getDepositInstruction,
   getStakeTransaction,
 } from '@/stake';
+import { getStSolAccountsForUser } from '@/stake/getStSolAccountsForUser';
 import {
   calculateMaxUnStakeAmount,
   calculateMinUnStakeAmount,
@@ -28,27 +29,27 @@ import {
 import { getValidatorList } from '@/unstake/getValidatorList';
 
 import { getExchangeRate } from '@/statistics/getExchangeRate';
-import { getTransactionCost } from '@/statistics/getTransactionCost';
+import { getMarketCap } from '@/statistics/getMarketCap';
+import { getStakersCount } from '@/statistics/getStakersCount';
 import { getStakingRewardsFee } from '@/statistics/getStakingRewardsFee';
+import { getTotalRewards } from '@/statistics/getTotalRewards';
+import { getTotalStaked } from '@/statistics/getTotalStaked';
+import { getTransactionCost } from '@/statistics/getTransactionCost';
+import { getLidoStatistics } from '@/statistics/lidoStatistics';
 import { getTransactionInfo } from '@/statistics/transactionInfo';
 
-import { getTotalStaked } from '@/statistics/getTotalStaked';
-import { getStakersCount } from '@/statistics/getStakersCount';
-import { getMarketCap } from '@/statistics/getMarketCap';
-import { getLidoStatistics } from '@/statistics/lidoStatistics';
-import { getTotalRewards } from '@/statistics/getTotalRewards';
-import { getStSolAccountsForUser } from '@/stake/getStSolAccountsForUser';
+import { getValidatorsInfo } from '@/utils/getValidatorsInfo';
 import { ErrorWrapper } from '@common/errorWrapper';
 
-export { getStakeApy } from '@common/stakeApy';
 export {
+  INSTRUCTION,
+  LidoVersion,
   MAINNET_PROGRAM_ADDRESSES,
   TESTNET_PROGRAM_ADDRESSES,
-  INSTRUCTION,
   TX_STAGE,
-  LidoVersion,
 } from '@/constants';
 export * from '@/utils/formatters';
+export { getStakeApy } from '@common/stakeApy';
 export { SupportedClusters };
 
 export class SolidoSDK {
@@ -204,4 +205,6 @@ export class SolidoSDK {
   public getMarketCap = getMarketCap.bind(this);
 
   public getTotalRewards = getTotalRewards.bind(this);
+
+  public getValidatorsInfo = getValidatorsInfo.bind(this);
 }
