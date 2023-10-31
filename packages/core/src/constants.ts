@@ -24,6 +24,9 @@ export enum LidoVersion {
   v2,
 }
 
+// Max count of withdraw instructions in one transaction
+export const MAX_WITHDRAW_COUNT = 15;
+
 export const MAINNET_PROGRAM_ADDRESSES: ProgramAddresses = Object.freeze({
   solidoProgramId: new PublicKey('CrX7kMhLC3cSsXJdT7JDgqrRVWGnUpX3gfEfxxU2NVLi'),
   solidoInstanceId: new PublicKey('49Yi1TKkNyYjPAFdR9LBvoHcUjuPX4Df5T5yv39w2XTn'),

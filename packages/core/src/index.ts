@@ -27,6 +27,8 @@ import {
 } from '@/unstake';
 import { getValidatorList } from '@/unstake/getValidatorList';
 
+import { getStakeAccounts, getWithdrawTransaction, isSolidoStakeAccount, withdraw } from '@/withdraw';
+
 import { getExchangeRate } from '@/statistics/getExchangeRate';
 import { getTransactionCost } from '@/statistics/getTransactionCost';
 import { getStakingRewardsFee } from '@/statistics/getStakingRewardsFee';
@@ -46,6 +48,7 @@ export {
   TESTNET_PROGRAM_ADDRESSES,
   INSTRUCTION,
   TX_STAGE,
+  MAX_WITHDRAW_COUNT,
   LidoVersion,
 } from '@/constants';
 export * from '@/utils/formatters';
@@ -184,6 +187,16 @@ export class SolidoSDK {
   protected getValidatorList = getValidatorList.bind(this);
 
   protected calculateStakeAccountAddress = calculateStakeAccountAddress.bind(this);
+
+  // Withdraw functions
+
+  protected isSolidoStakeAccount = isSolidoStakeAccount.bind(this);
+
+  protected getWithdrawTransaction = getWithdrawTransaction.bind(this);
+
+  public getStakeAccounts = getStakeAccounts.bind(this);
+
+  public withdraw = withdraw.bind(this);
 
   // Transaction Info
   public getTransactionInfo = getTransactionInfo.bind(this);
