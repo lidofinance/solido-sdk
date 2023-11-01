@@ -265,3 +265,26 @@ export type AccountInfoV2 = {
   // Maximum validation commission percentage in [0, 100]
   max_commission_percentage: number;
 };
+
+export enum StakeAccountState {
+  activating,
+  active,
+  deactivating,
+  inactive,
+}
+
+export type StakeAccountDelegation = {
+  activationEpoch: string;
+  deactivationEpoch: string;
+};
+
+export type StakeAccount = {
+  pubkey: PublicKey;
+  lamports: number;
+  isReady: boolean;
+};
+
+export type WithdrawProps = {
+  accounts: Omit<StakeAccount, 'isReady'>[];
+  payerAddress: PublicKey;
+};
