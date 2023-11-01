@@ -1,6 +1,6 @@
 {
   "name": "@lidofinance/solido-sdk",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "Lido on Solana frontend sdk",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -36,8 +36,8 @@
     "@solana/spl-token": "0.2.0",
     "@solana/wallet-adapter-base": "^0.9.9",
     "@solana/web3.js": "^1.47.3",
-    "bn.js": "^5.2.1",
-    "@types/bn.js": "^5.1.0"
+    "@types/bn.js": "^5.1.0",
+    "bn.js": "^5.2.1"
   },
   "peerDependencies": {
     "@solana/buffer-layout": "4.0.0",
