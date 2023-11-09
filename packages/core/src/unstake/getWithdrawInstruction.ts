@@ -13,15 +13,12 @@ import { INSTRUCTION_V2 } from '@/constants';
 import { Validator, WithdrawInstructionStruct } from '@/types';
 import { SolidoSDK } from '@/index';
 import { solToLamports } from '@/utils/formatters';
+import { toBufferLE } from 'bigint-buffer';
 
-export const getHeaviestValidator = (validatorEntries: Validator[]): Validator => {
-  return validatorEntries.reduce((validatorB, validatorA) => {
-    const { effective_stake_balance: effectiveStakeBalanceValidatorA } = validatorA;
-    const { effective_stake_balance: effectiveStakeBalanceValidatorB } = validatorB;
-
-    return effectiveStakeBalanceValidatorB.gt(effectiveStakeBalanceValidatorA) ? validatorB : validatorA;
-  });
-};
+export const getHeaviestValidator = (validatorEntries: Validator[]): Validator =>
+  validatorEntries.reduce((validatorB, validatorA) =>
+    validatorB.effective_stake_balance > validatorA.effective_stake_balance ? validatorB : validatorA,
+  );
 
 export const getValidatorIndex = (validatorEntries: Validator[], validator: Validator) =>
   validatorEntries.findIndex(
@@ -45,7 +42,7 @@ export async function calculateStakeAccountAddress(this: SolidoSDK, heaviestVali
     solidoInstanceId.toBuffer(),
     validatorVoteAccount.toBuffer(),
     Buffer.from('validator_stake_account'),
-    seed.toArray('le', 8) as any as Uint8Array,
+    toBufferLE(seed, 8),
   ];
 
   const [stakeAccountAddress] = await PublicKey.findProgramAddress(bufferArray, solidoProgramId);

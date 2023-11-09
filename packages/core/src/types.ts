@@ -109,47 +109,47 @@ export type SolApiPriceResponse<K extends string> = SolApiResponse<
 >;
 
 type ListHeader = {
-  max_entries: BN;
+  max_entries: number;
   lido_version: LidoVersion;
   account_type: AccountType;
 };
 
 type SeedRange = {
-  begin: BN;
-  end: BN;
+  begin: bigint;
+  end: bigint;
 };
 
 type ExchangeRate = {
   // The epoch in which when was last called `UpdateExchangeRate`
-  computed_in_epoch: BN;
+  computed_in_epoch: bigint;
   // The amount of stSOL that existed at that time
-  sol_balance: BN;
+  sol_balance: bigint;
   // The amount of SOL we managed at that time, according to our internal
   // bookkeeping, so excluding the validation rewards paid at the start of
   // epoch `computed_in_epoch`.
-  st_sol_supply: BN;
+  st_sol_supply: bigint;
 };
 
 type LamportsHistogram = {
-  counts1: BN;
-  counts2: BN;
-  counts3: BN;
-  counts4: BN;
-  counts5: BN;
-  counts6: BN;
-  counts7: BN;
-  counts8: BN;
-  counts9: BN;
-  counts10: BN;
-  counts11: BN;
-  counts12: BN;
-  total: BN;
+  counts1: bigint;
+  counts2: bigint;
+  counts3: bigint;
+  counts4: bigint;
+  counts5: bigint;
+  counts6: bigint;
+  counts7: bigint;
+  counts8: bigint;
+  counts9: bigint;
+  counts10: bigint;
+  counts11: bigint;
+  counts12: bigint;
+  total: bigint;
 };
 
 type WithdrawMetric = {
-  total_st_sol_amount: BN;
-  total_sol_amount: BN;
-  count: BN;
+  total_st_sol_amount: bigint;
+  total_sol_amount: bigint;
+  count: bigint;
 };
 
 type RewardDistribution = {
@@ -160,44 +160,46 @@ type RewardDistribution = {
 
 export type AccountInfoMetrics = {
   // Fees paid to the treasury, in total since we started tracking, before conversion to stSOL
-  fee_treasury_sol_total: BN;
+  fee_treasury_sol_total: bigint;
   // Fees paid to validators, in total since we started tracking, before conversion to stSOL
-  fee_validation_sol_total: BN;
+  fee_validation_sol_total: bigint;
   // Fees paid to the developer, in total since we started tracking, before conversion to stSOL
-  fee_developer_sol_total: BN;
+  fee_developer_sol_total: bigint;
   // Total rewards that benefited stSOL holders, in total, since we started tracking
-  st_sol_appreciation_sol_total: BN;
+  st_sol_appreciation_sol_total: bigint;
   // Fees paid to the treasury, in total since we started tracking
-  fee_treasury_st_sol_total: BN;
+  fee_treasury_st_sol_total: bigint;
   // Fees paid to validators, in total since we started tracking
-  fee_validation_st_sol_total: BN;
+  fee_validation_st_sol_total: bigint;
   // Fees paid to the developer, in total since we started tracking
-  fee_developer_st_sol_total: BN;
+  fee_developer_st_sol_total: bigint;
   // Histogram of deposits, including the total amount deposited since we started tracking
   deposit_amount: LamportsHistogram;
   // Total amount withdrawn since the beginning
   withdraw_amount: WithdrawMetric;
 };
 
+type UintArray32 = Array<number>;
+
 type FeeRecipients = {
-  treasury_account: PublicKey;
-  developer_account: PublicKey;
+  treasury_account: UintArray32;
+  developer_account: UintArray32;
 };
 
 export type ValidatorV2 = {
   // Validator vote account address
-  vote_account_address: PublicKey;
+  vote_account_address: UintArray32;
   // Seeds for active stake accounts
   stake_seeds: SeedRange;
   // Seeds for inactive stake accounts
   unstake_seeds: SeedRange;
   // Sum of the balances of the stake accounts and unstake accounts
-  stake_accounts_balance: BN;
+  stake_accounts_balance: bigint;
   // Sum of the balances of the unstake accounts
-  unstake_accounts_balance: BN;
+  unstake_accounts_balance: bigint;
   // Effective stake balance is stake_accounts_balance - unstake_accounts_balance.
   // The result is stored on-chain to optimize compute budget
-  effective_stake_balance: BN;
+  effective_stake_balance: bigint;
   // Controls if a validator is allowed to have new stake deposits
   active: boolean | 0 | 1;
 };
@@ -235,10 +237,10 @@ export type AccountInfoV2 = {
   account_type: AccountType;
 
   // Manager of the Lido program, able to execute administrative functions
-  manager: PublicKey;
+  manager: UintArray32;
 
   // The SPL Token mint address for stSOL
-  st_sol_mint: PublicKey;
+  st_sol_mint: UintArray32;
 
   // Exchange rate to use when depositing.
   exchange_rate: ExchangeRate;
@@ -258,9 +260,9 @@ export type AccountInfoV2 = {
   metrics: AccountInfoMetrics;
 
   // Validator list account
-  validator_list: PublicKey;
+  validator_list: UintArray32;
   // Maintainer list account
-  maintainer_list: PublicKey;
+  maintainer_list: UintArray32;
 
   // Maximum validation commission percentage in [0, 100]
   max_commission_percentage: number;

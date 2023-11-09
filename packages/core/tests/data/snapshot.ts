@@ -1,25 +1,24 @@
-import BN from 'bn.js';
 import { PublicKey } from '@solana/web3.js';
 import { TestValidator } from '../updateSnapshot';
 
 export const validators: TestValidator[] = [
   {
-    vote_account_address: new PublicKey('69rUCD1qk6hJ3AqEkCi236QaceHTBSv1isiCEW6EZnVa'),
-    stake_seeds: { begin: new BN('3'), end: new BN('4') },
-    unstake_seeds: { begin: new BN('0'), end: new BN('0') },
-    stake_accounts_balance: new BN('15881359081'),
-    unstake_accounts_balance: new BN('0'),
-    effective_stake_balance: new BN('15881359081'),
+    vote_account_address: Array.from(new PublicKey('69rUCD1qk6hJ3AqEkCi236QaceHTBSv1isiCEW6EZnVa').toBytes()),
+    stake_seeds: { begin: BigInt('3'), end: BigInt('4') },
+    unstake_seeds: { begin: BigInt('0'), end: BigInt('0') },
+    stake_accounts_balance: BigInt('15881359081'),
+    unstake_accounts_balance: BigInt('0'),
+    effective_stake_balance: BigInt('15881359081'),
     active: 1,
     stake_account_address: new PublicKey('7Z71Y3HQqWzbcQu3DnNVLdShWsBsF5K8yGxKtMtQVUNM'),
   },
   {
-    vote_account_address: new PublicKey('AKEi12v5czReh65rUmhBGqvm71vQgRjz4vPrCjnVDSsA'),
-    stake_seeds: { begin: new BN('2'), end: new BN('3') },
-    unstake_seeds: { begin: new BN('0'), end: new BN('0') },
-    stake_accounts_balance: new BN('15844159777'),
-    unstake_accounts_balance: new BN('0'),
-    effective_stake_balance: new BN('15844159777'),
+    vote_account_address: Array.from(new PublicKey('AKEi12v5czReh65rUmhBGqvm71vQgRjz4vPrCjnVDSsA').toBytes()),
+    stake_seeds: { begin: BigInt('2'), end: BigInt('3') },
+    unstake_seeds: { begin: BigInt('0'), end: BigInt('0') },
+    stake_accounts_balance: BigInt('15844159777'),
+    unstake_accounts_balance: BigInt('0'),
+    effective_stake_balance: BigInt('15844159777'),
     active: 1,
     stake_account_address: new PublicKey('2xFUjXVatLehWbjoUc5ogVApKQAUGP3tnY66BJcYhEMi'),
   },

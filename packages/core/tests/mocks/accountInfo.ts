@@ -8,6 +8,7 @@ export const mockReserveAccountInfo = (connection: Connection) => {
   const spiedGetAccountInfo = jest.spyOn(connection, 'getAccountInfo');
   when(spiedGetAccountInfo)
     .calledWith(reserveAccount)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     .mockReturnValueOnce(ReserveAccountInfoDump);
 };

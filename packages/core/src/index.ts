@@ -1,65 +1,59 @@
-import { Connection, PublicKey, TransactionSignature } from '@solana/web3.js';
+import { Connection } from '@solana/web3.js';
 
-import {
-  AccountInfoV2,
-  ProgramAddresses,
-  SignAndConfirmTransactionProps,
-  StakeProps,
-  SupportedClusters,
-} from '@/types';
-import { clusterProgramAddresses, LidoVersion, TX_STAGE } from '@/constants';
-import { ERROR_CODE } from '@common/constants';
-
+import { getAccountInfo, getValidatorList, signAndConfirmTransaction } from '@/general';
 import {
   calculateMaxStakeAmount,
   findProgramAddress,
   getDepositInstruction,
+  getStSolAccountsForUser,
   getStakeTransaction,
+  stake,
 } from '@/stake';
+import {
+  getExchangeRate,
+  getLidoStatistics,
+  getMarketCap,
+  getStakersCount,
+  getStakingRewardsFee,
+  getTotalRewards,
+  getTotalStaked,
+  getTransactionCost,
+  getTransactionInfo,
+} from '@/statistics';
 import {
   calculateMaxUnStakeAmount,
   calculateMinUnStakeAmount,
   calculateStakeAccountAddress,
-  getAccountInfo,
   getUnStakeTransaction,
+  getValidators,
   getWithdrawInstruction,
   isUnStakeAvailable,
+  unStake,
 } from '@/unstake';
-import { getValidatorList } from '@/unstake/getValidatorList';
-
 import { getStakeAccounts, getWithdrawTransaction, isSolidoStakeAccount, withdraw } from '@/withdraw';
 
-import { getExchangeRate } from '@/statistics/getExchangeRate';
-import { getTransactionCost } from '@/statistics/getTransactionCost';
-import { getStakingRewardsFee } from '@/statistics/getStakingRewardsFee';
-import { getTransactionInfo } from '@/statistics/transactionInfo';
-
-import { getTotalStaked } from '@/statistics/getTotalStaked';
-import { getStakersCount } from '@/statistics/getStakersCount';
-import { getMarketCap } from '@/statistics/getMarketCap';
-import { getLidoStatistics } from '@/statistics/lidoStatistics';
-import { getTotalRewards } from '@/statistics/getTotalRewards';
-import { getStSolAccountsForUser } from '@/stake/getStSolAccountsForUser';
+import { LidoVersion, clusterProgramAddresses } from '@/constants';
+import { ProgramAddresses, SupportedClusters } from '@/types';
+import { withCache } from '@/utils/withCache';
+import { ERROR_CODE } from '@common/constants';
 import { ErrorWrapper } from '@common/errorWrapper';
 
-export { getStakeApy } from '@common/stakeApy';
 export {
-  MAINNET_PROGRAM_ADDRESSES,
-  TESTNET_PROGRAM_ADDRESSES,
   INSTRUCTION,
-  TX_STAGE,
-  MAX_WITHDRAW_COUNT,
   LidoVersion,
+  MAINNET_PROGRAM_ADDRESSES,
+  MAX_WITHDRAW_COUNT,
+  TESTNET_PROGRAM_ADDRESSES,
+  TX_STAGE,
 } from '@/constants';
 export * from '@/utils/formatters';
+export { getStakeApy } from '@common/stakeApy';
 export { SupportedClusters };
 
 export class SolidoSDK {
   protected connection: Connection;
 
   protected referrerId?: string;
-
-  protected solidoAccountInfo?: AccountInfoV2;
 
   public lidoVersion: LidoVersion = LidoVersion.v2;
 
@@ -76,66 +70,12 @@ export class SolidoSDK {
     this.referrerId = referrerId;
   }
 
-  public async signAndConfirmTransaction(
-    props: SignAndConfirmTransactionProps,
-  ): Promise<TransactionSignature | undefined> {
-    const { transaction, wallet, setTxStage } = props;
-
-    try {
-      const signed = await wallet.signTransaction(transaction);
-
-      const transactionHash = await this.connection.sendRawTransaction(signed.serialize());
-
-      setTxStage?.({ txStage: TX_STAGE.AWAITING_BLOCK, transactionHash });
-
-      const { blockhash, lastValidBlockHeight } = await this.connection.getLatestBlockhash();
-
-      const { value: status } = await this.connection.confirmTransaction({
-        blockhash,
-        lastValidBlockHeight,
-        signature: transactionHash,
-      });
-
-      if (status?.err) {
-        throw status.err;
-      }
-
-      setTxStage?.({ txStage: TX_STAGE.SUCCESS });
-      return transactionHash;
-    } catch (error) {
-      console.error(error);
-      setTxStage?.({ txStage: TX_STAGE.ERROR });
-
-      throw new ErrorWrapper({ error, code: ERROR_CODE.CANNOT_CONFIRM_TRANSACTION });
-    }
-  }
+  public signAndConfirmTransaction = signAndConfirmTransaction.bind(this);
 
   public getStSolAccountsForUser = getStSolAccountsForUser.bind(this);
 
   // Staking functions
-  public async stake(props: StakeProps) {
-    const { amount, wallet, setTxStage, allowOwnerOffCurve } = props;
-
-    if (wallet.publicKey === null) {
-      throw new ErrorWrapper({ code: ERROR_CODE.NO_PUBLIC_KEY });
-    }
-
-    const { transaction, stSolAccountAddress } = await this.getStakeTransaction({
-      amount: +amount,
-      payerAddress: new PublicKey(wallet.publicKey),
-      allowOwnerOffCurve,
-    });
-
-    setTxStage?.({ txStage: TX_STAGE.AWAITING_SIGNING, stSolAccountAddress });
-
-    const transactionHash = await this.signAndConfirmTransaction({
-      transaction,
-      wallet,
-      setTxStage,
-    });
-
-    return { transactionHash, stSolAccountAddress };
-  }
+  public stake = stake.bind(this);
 
   public getStakeTransaction = getStakeTransaction.bind(this);
 
@@ -146,31 +86,7 @@ export class SolidoSDK {
   protected getDepositInstruction = getDepositInstruction.bind(this);
 
   // UnStaking functions
-  public async unStake(props: StakeProps) {
-    const { amount, wallet, setTxStage } = props;
-
-    if (wallet.publicKey === null) {
-      throw new ErrorWrapper({ code: ERROR_CODE.NO_PUBLIC_KEY });
-    }
-
-    const { transaction, deactivatingSolAccountAddress } = await this.getUnStakeTransaction({
-      amount: +amount,
-      payerAddress: new PublicKey(wallet.publicKey),
-    });
-
-    setTxStage?.({ txStage: TX_STAGE.AWAITING_SIGNING, deactivatingSolAccountAddress });
-
-    const transactionHash = await this.signAndConfirmTransaction({
-      transaction,
-      wallet,
-      setTxStage,
-    });
-
-    return {
-      transactionHash,
-      deactivatingSolAccountAddress,
-    };
-  }
+  public unStake = unStake.bind(this);
 
   public getUnStakeTransaction = getUnStakeTransaction.bind(this);
 
@@ -182,9 +98,7 @@ export class SolidoSDK {
 
   protected getWithdrawInstruction = getWithdrawInstruction.bind(this);
 
-  protected getAccountInfo = getAccountInfo.bind(this);
-
-  protected getValidatorList = getValidatorList.bind(this);
+  protected getValidatorList = getValidators.bind(this);
 
   protected calculateStakeAccountAddress = calculateStakeAccountAddress.bind(this);
 
@@ -217,4 +131,9 @@ export class SolidoSDK {
   public getMarketCap = getMarketCap.bind(this);
 
   public getTotalRewards = getTotalRewards.bind(this);
+
+  // General
+  protected getAccountInfo = withCache(getAccountInfo.bind(this), 'solidoAccountInfo', 7 * 1000);
+
+  public getValidatorsInfo = getValidatorList.bind(this);
 }

@@ -12,7 +12,7 @@ export const ensureTokenAccount = async (
   transaction: Transaction,
   payer: PublicKey,
   stSolMint: PublicKey,
-  allowOwnerOffCurve: boolean = false,
+  allowOwnerOffCurve = false,
 ) => {
   try {
     // Creating the associated token account if not already exist

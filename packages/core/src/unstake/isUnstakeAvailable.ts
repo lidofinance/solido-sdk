@@ -6,7 +6,7 @@ export async function isUnStakeAvailable(this: SolidoSDK) {
   const areValidatorsEmpty = validators.length === 0;
   const areExistSomeActiveValidators = validators.some(({ active }) => active);
   const isExistOneValidatorWithPositiveBalance = validators.some(
-    ({ effective_stake_balance }) => !effective_stake_balance.isZero(),
+    (v) => !(v.effective_stake_balance === BigInt(0)),
   );
 
   return !areValidatorsEmpty && areExistSomeActiveValidators && isExistOneValidatorWithPositiveBalance;

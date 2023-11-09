@@ -28,7 +28,8 @@
   },
   "homepage": "https://github.com/lidofinance/solido-sdk#readme",
   "dependencies": {
-    "borsh": "^0.7.0",
+    "bigint-buffer": "^1.1.5",
+    "borsh": "^1.0.0",
     "bs58": "^4.0.1"
   },
   "devDependencies": {
@@ -47,5 +48,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "volta": {
+    "node": "14.21.3"
   }
 }
