@@ -1,4 +1,4 @@
-import { Keypair, TransactionInstruction } from '@solana/web3.js';
+import { Keypair, PublicKey, TransactionInstruction } from '@solana/web3.js';
 import { SolidoSDK, solToLamports } from '@/index';
 import { clusterProgramAddresses } from '@/constants';
 import {
@@ -63,7 +63,7 @@ describe('getWithdrawInstruction', () => {
     expect(keys[1].pubkey).toStrictEqual(payerAddress);
     expect(keys[2].pubkey).toStrictEqual(senderStSolAccountAddress);
     expect(keys[3].pubkey).toStrictEqual(stSolMintAddress);
-    expect(keys[4].pubkey).toStrictEqual(heaviestValidator.vote_account_address);
+    expect(keys[4].pubkey).toStrictEqual(new PublicKey(heaviestValidator.vote_account_address));
     expect(keys[5].pubkey).toStrictEqual(heaviestValidator.stake_account_address);
     expect(keys[6].pubkey).toStrictEqual(stakeAccount);
     expect(keys[7].pubkey).toStrictEqual(stakeAuthority);

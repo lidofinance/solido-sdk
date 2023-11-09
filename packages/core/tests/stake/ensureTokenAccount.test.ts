@@ -3,8 +3,8 @@ import { Keypair, PublicKey, Transaction, TransactionInstruction } from '@solana
 import { ensureTokenAccount } from '@/stake/ensureTokenAccount';
 
 import { clusterProgramAddresses } from '@/constants';
-import { CLUSTER, examplePDAAccount } from '../constants';
 import { ERROR_CODE, ERROR_CODE_DESC, ERROR_MESSAGE } from '@common/constants';
+import { CLUSTER, examplePDAAccount } from '../constants';
 
 describe('ensureTokenAccount', () => {
   const payerAddress = Keypair.generate().publicKey;

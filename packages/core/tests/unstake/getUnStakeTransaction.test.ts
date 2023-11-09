@@ -7,7 +7,8 @@ import { getConnection } from '../helpers';
 import { CLUSTER, stSolTokenAccount, walletWithStSolTokenAccount } from '../constants';
 
 describe('getUnStakeTransaction', () => {
-  let sdk: SolidoSDK, connection: Connection;
+  let sdk: SolidoSDK;
+  let connection: Connection;
 
   beforeAll(() => {
     connection = getConnection();

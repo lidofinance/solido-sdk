@@ -6,7 +6,8 @@ import { getConnection } from '../helpers';
 import { CLUSTER } from '../constants';
 
 describe('getExchangeRate', () => {
-  let sdk: SolidoSDK, connection: Connection;
+  let sdk: SolidoSDK;
+  let connection: Connection;
 
   beforeAll(() => {
     connection = getConnection();
