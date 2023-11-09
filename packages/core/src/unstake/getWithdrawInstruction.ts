@@ -13,7 +13,7 @@ import { INSTRUCTION_V2 } from '@/constants';
 import { Validator, WithdrawInstructionStruct } from '@/types';
 import { SolidoSDK } from '@/index';
 import { solToLamports } from '@/utils/formatters';
-import { toBufferLE } from 'bigint-buffer';
+import { biToUint8Array } from '@/utils/biToUint8Array';
 
 export const getHeaviestValidator = (validatorEntries: Validator[]): Validator =>
   validatorEntries.reduce((validatorB, validatorA) =>
@@ -42,7 +42,7 @@ export async function calculateStakeAccountAddress(this: SolidoSDK, heaviestVali
     solidoInstanceId.toBuffer(),
     validatorVoteAccount.toBuffer(),
     Buffer.from('validator_stake_account'),
-    toBufferLE(seed, 8),
+    biToUint8Array(seed),
   ];
 
   const [stakeAccountAddress] = await PublicKey.findProgramAddress(bufferArray, solidoProgramId);

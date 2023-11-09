@@ -2,6 +2,7 @@ import { Keypair, PublicKey, TransactionInstruction } from '@solana/web3.js';
 import { SolidoSDK, solToLamports } from '@/index';
 import { clusterProgramAddresses } from '@/constants';
 import {
+  calculateStakeAccountAddress,
   getHeaviestValidator,
   getValidatorIndex,
   getWithdrawInstruction,
@@ -27,6 +28,24 @@ describe('getValidatorIndex', () => {
     const index = getValidatorIndex(validators, validator);
 
     expect(index).toEqual(0);
+  });
+});
+
+describe('calculateStakeAccountAddress', () => {
+  let sdk;
+
+  beforeAll(() => {
+    const connection = getConnection();
+    sdk = new SolidoSDK(CLUSTER, connection);
+
+    mockValidatorList(connection);
+  });
+
+  test('return accountAddress', async () => {
+    const validator = getHeaviestValidator(validators);
+    const address = await calculateStakeAccountAddress.call(sdk, validator);
+
+    expect(address).toStrictEqual(new PublicKey('7Z71Y3HQqWzbcQu3DnNVLdShWsBsF5K8yGxKtMtQVUNM'));
   });
 });
 
