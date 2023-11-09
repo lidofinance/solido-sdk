@@ -1,4 +1,5 @@
 {
+  "root": true,
   "env": {
     "browser": true,
     "es2021": true,
@@ -6,35 +7,23 @@
   },
   "extends": ["airbnb", "@lidofinance", "prettier"],
   "plugins": ["prettier"],
+  "parser": "@typescript-eslint/parser",
   "rules": {
-    "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
-    "import/extensions": "off",
-    "import/no-mutable-exports": "off",
-    "react/prop-types": "off",
-    "react/destructuring-assignment": "off",
-    "react/require-default-props": "off",
-    "react/jsx-props-no-spreading": "off",
-    "react/function-component-definition": "off",
-    "react/jsx-one-expression-per-line": "off",
-    "react/jsx-no-duplicate-props": ["error", { "ignoreCase": false }],
-    "jsx-a11y/anchor-is-valid": "off",
-    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
-    "consistent-return": "off",
-    "no-bitwise": "off",
-    "no-nested-ternary": "off",
-    "no-restricted-syntax": "off",
-    "no-case-declarations": "off",
+    "prettier/prettier": "error",
+    "import/no-extraneous-dependencies": ["off"],
+    "camelcase": ["error", { "ignoreDestructuring": true, "properties": "never" }],
+    "no-console": ["error", { "allow": ["error"] }],
     "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/no-unsafe-member-access": ["warn"],
     "@typescript-eslint/no-explicit-any": ["warn"],
     "@typescript-eslint/no-floating-promises": ["warn"],
-    "@typescript-eslint/no-unsafe-argument": ["warn"],
-    "react/jsx-filename-extension": [1, {"extensions": [".jsx", ".tsx"]}],
-    "react/default-props-match-prop-types": "off"
+    "@typescript-eslint/no-unsafe-argument": ["warn"]
   },
   "settings": {
     "import/resolver": {
-      "typescript": {}
+      "typescript": {
+        "project": "packages/*/tsconfig.json"
+      }
     }
   }
 }
