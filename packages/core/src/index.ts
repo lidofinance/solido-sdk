@@ -1,14 +1,18 @@
 import { Connection } from '@solana/web3.js';
 
-import { getAccountInfo, getValidatorList, signAndConfirmTransaction } from '@/general';
 import {
-  calculateMaxStakeAmount,
+  createTransaction,
   findProgramAddress,
-  getDepositInstruction,
+  getAccountInfo,
   getStSolAccountsForUser,
-  getStakeTransaction,
-  stake,
-} from '@/stake';
+  getValidaror,
+  getValidatorList,
+  getValidatorStakeAccountAddress,
+  getValidatorsData,
+  getValidatorsWithBalance,
+  signAndConfirmTransaction,
+} from '@/general';
+import { calculateMaxStakeAmount, getDepositInstruction, getStakeTransaction, stake } from '@/stake';
 import {
   getExchangeRate,
   getLidoStatistics,
@@ -23,11 +27,11 @@ import {
 import {
   calculateMaxUnStakeAmount,
   calculateMinUnStakeAmount,
-  calculateStakeAccountAddress,
   getUnStakeTransaction,
-  getValidators,
   getWithdrawInstruction,
+  getWithdrawInstructions,
   isUnStakeAvailable,
+  prepareUnstake,
   unStake,
 } from '@/unstake';
 import { getStakeAccounts, getWithdrawTransaction, isSolidoStakeAccount, withdraw } from '@/withdraw';
@@ -47,6 +51,7 @@ export {
   TX_STAGE,
 } from '@/constants';
 export * from '@/utils/formatters';
+export * from '@/utils/getValidatorMaxUnstakeAmount';
 export { getStakeApy } from '@common/stakeApy';
 export { SupportedClusters };
 
@@ -74,6 +79,8 @@ export class SolidoSDK {
 
   public getStSolAccountsForUser = getStSolAccountsForUser.bind(this);
 
+  public createTransaction = createTransaction.bind(this);
+
   // Staking functions
   public stake = stake.bind(this);
 
@@ -98,9 +105,13 @@ export class SolidoSDK {
 
   protected getWithdrawInstruction = getWithdrawInstruction.bind(this);
 
-  protected getValidatorList = getValidators.bind(this);
+  protected getValidatorList = getValidatorList.bind(this);
 
-  protected calculateStakeAccountAddress = calculateStakeAccountAddress.bind(this);
+  protected getValidatorStakeAccountAddress = getValidatorStakeAccountAddress.bind(this);
+
+  protected getWithdrawInstructions = getWithdrawInstructions.bind(this);
+
+  protected prepareUnstake = prepareUnstake.bind(this);
 
   // Withdraw functions
 
@@ -135,5 +146,9 @@ export class SolidoSDK {
   // General
   protected getAccountInfo = withCache(getAccountInfo.bind(this), 'solidoAccountInfo', 7 * 1000);
 
-  public getValidatorsInfo = getValidatorList.bind(this);
+  public getValidatorsData = getValidatorsData.bind(this);
+
+  public getValidatorsWithBalance = getValidatorsWithBalance.bind(this);
+
+  public getValidaror = getValidaror.bind(this);
 }

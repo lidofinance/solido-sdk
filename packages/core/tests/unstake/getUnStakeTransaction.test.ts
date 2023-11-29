@@ -57,7 +57,7 @@ describe('getUnStakeTransaction', () => {
 
   test('deactivateTransaction correctness', async () => {
     jest.spyOn(sdk, 'calculateMaxUnStakeAmount').mockReturnValueOnce(Promise.resolve(2 * LAMPORTS_PER_SOL));
-    const { transaction, deactivatingSolAccountAddress } = await sdk.getUnStakeTransaction({
+    const { transaction, stakeAccounts } = await sdk.getUnStakeTransaction({
       payerAddress: walletWithStSolTokenAccount,
       amount: 1,
     });
@@ -71,6 +71,6 @@ describe('getUnStakeTransaction', () => {
     const stakeAccount = deactivateTransactionInstruction.keys[0].pubkey;
     const authorizedPubkey = deactivateTransactionInstruction.keys[2].pubkey;
     expect(authorizedPubkey).toStrictEqual(walletWithStSolTokenAccount);
-    expect(stakeAccount).toStrictEqual(deactivatingSolAccountAddress);
+    expect(stakeAccount).toStrictEqual(stakeAccounts[0]);
   });
 });

@@ -3,7 +3,7 @@ import { Transaction } from '@solana/web3.js';
 import { SolidoSDK } from '@/index';
 import { StakeAdditionalProps, TransactionProps } from '@/types';
 import { getMemoInstruction } from '@/utils/memo';
-import { checkMaxExceed } from '@/utils/checkMaxExceed';
+import { checkMaxExceed } from '@/utils/checks';
 import { ensureTokenAccount } from './ensureTokenAccount';
 
 export async function getStakeTransaction(this: SolidoSDK, props: TransactionProps & StakeAdditionalProps) {

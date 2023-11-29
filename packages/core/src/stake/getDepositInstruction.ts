@@ -1,12 +1,11 @@
+import { nu64, struct, u8 } from '@solana/buffer-layout';
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { PublicKey, SystemProgram, TransactionInstruction } from '@solana/web3.js';
-import { struct, u8, nu64 } from '@solana/buffer-layout';
 import BN from 'bn.js';
 
-import { InstructionStruct } from '@/types';
 import { INSTRUCTION } from '@/constants';
 import { SolidoSDK } from '@/index';
-import { solToLamports } from '@/utils/formatters';
+import { InstructionStruct } from '@/types';
 
 type DepositInstructionProps = {
   amount: number; // in SOL
@@ -14,20 +13,9 @@ type DepositInstructionProps = {
   recipientStSolAddress: PublicKey;
 };
 
-export async function findProgramAddress(
-  this: SolidoSDK,
-  bufferFrom: 'reserve_account' | 'mint_authority' | 'stake_authority',
-) {
-  const { solidoInstanceId, solidoProgramId } = this.programAddresses;
-  const bufferArray = [solidoInstanceId.toBuffer(), Buffer.from(bufferFrom)];
-
-  const [programAddress] = await PublicKey.findProgramAddress(bufferArray, solidoProgramId);
-
-  return programAddress;
-}
-
 export const depositDataLayout = struct<InstructionStruct>([u8('instruction'), nu64('amount')]);
 
+// eslint-disable-next-line @typescript-eslint/require-await
 export async function getDepositInstruction(this: SolidoSDK, props: DepositInstructionProps) {
   const { amount, payerAddress, recipientStSolAddress } = props;
   const { solidoProgramId, stSolMintAddress, solidoInstanceId, reserveAccount, mintAuthority } =
@@ -38,7 +26,7 @@ export async function getDepositInstruction(this: SolidoSDK, props: DepositInstr
   depositDataLayout.encode(
     {
       instruction: INSTRUCTION.STAKE,
-      amount: new BN(solToLamports(amount)),
+      amount: new BN(amount),
     },
     data,
   );

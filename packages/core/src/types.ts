@@ -16,7 +16,7 @@ export type SupportedClusters = Exclude<Cluster, 'devnet'>;
 type SetTxStageProps = {
   txStage: TX_STAGE;
   transactionHash?: TransactionSignature;
-  deactivatingSolAccountAddress?: PublicKey;
+  stakeAccounts?: PublicKey[];
   stSolAccountAddress?: PublicKey;
 };
 
@@ -47,7 +47,7 @@ export interface ProgramAddresses {
 
 export type TransactionProps = {
   /**
-   * The amount of (st)SOL which need to (un)stake
+   * The amount of (st)SOL in lamports which need to (un)stake
    */
   amount: number;
   /**
@@ -65,6 +65,10 @@ export type StakeAdditionalProps = {
 export type StakeProps = Omit<SignAndConfirmTransactionProps, 'transaction'> &
   Pick<TransactionProps, 'amount'> &
   StakeAdditionalProps;
+
+export type UnstakeProps = StakeProps & {
+  allowMultipleTransactions?: boolean;
+};
 
 export type InstructionStruct = {
   /**

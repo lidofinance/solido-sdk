@@ -1,7 +1,7 @@
 import { Connection } from '@solana/web3.js';
 
 import { SolidoSDK } from '@/index';
-import { getValidators } from '@/unstake';
+import { getValidatorList } from '@/unstake';
 
 import { mockValidatorList } from '../mocks/validators';
 import { getConnection } from '../helpers';
@@ -19,7 +19,7 @@ describe('getValidators', () => {
   test('getValidatorList parsed correctly', async () => {
     mockValidatorList(connection);
 
-    const validators = await getValidators.call(sdk);
+    const validators = await getValidatorList.call(sdk);
 
     expect(validators).toHaveLength(2); // definite length from dump
 
