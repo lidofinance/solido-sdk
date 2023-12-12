@@ -1,13 +1,8 @@
 import { Keypair, PublicKey, TransactionInstruction } from '@solana/web3.js';
 import { SolidoSDK, solToLamports } from '@/index';
 import { clusterProgramAddresses } from '@/constants';
-import {
-  calculateStakeAccountAddress,
-  getHeaviestValidator,
-  getValidatorIndex,
-  getWithdrawInstruction,
-  withdrawDataLayout,
-} from '@/unstake';
+import { getWithdrawInstruction, withdrawDataLayout } from '@/unstake';
+import { getHeaviestValidator, getValidatorIndex, getValidatorStakeAccountAddress } from '@/general';
 
 import { heaviestValidator, stakeAuthority, validators } from '../data/snapshot';
 import { mockValidatorList } from '../mocks/validators';
@@ -31,7 +26,7 @@ describe('getValidatorIndex', () => {
   });
 });
 
-describe('calculateStakeAccountAddress', () => {
+describe('getValidatorStakeAccountAddress', () => {
   let sdk;
 
   beforeAll(() => {
@@ -43,7 +38,7 @@ describe('calculateStakeAccountAddress', () => {
 
   test('return accountAddress', async () => {
     const validator = getHeaviestValidator(validators);
-    const address = await calculateStakeAccountAddress.call(sdk, validator);
+    const address = await getValidatorStakeAccountAddress.call(sdk, validator);
 
     expect(address).toStrictEqual(new PublicKey('7Z71Y3HQqWzbcQu3DnNVLdShWsBsF5K8yGxKtMtQVUNM'));
   });
@@ -54,7 +49,7 @@ describe('getWithdrawInstruction', () => {
   const payerAddress = Keypair.generate().publicKey;
   const senderStSolAccountAddress = Keypair.generate().publicKey;
   const stakeAccount = Keypair.generate().publicKey;
-  const amount = 10;
+  const amount = solToLamports(10);
   let sdk;
 
   const { solidoInstanceId, solidoProgramId, stSolMintAddress } = clusterProgramAddresses[CLUSTER];
@@ -97,7 +92,7 @@ describe('getWithdrawInstruction', () => {
     const data = withdrawDataLayout.decode(withdrawInstruction.data);
 
     expect(data.instruction).toBe(23);
-    expect(data.amount).toBe(solToLamports(amount));
+    expect(data.amount).toBe(amount);
   });
 });
 

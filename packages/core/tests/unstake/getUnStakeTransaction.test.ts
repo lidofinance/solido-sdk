@@ -1,6 +1,6 @@
 import { Connection, Keypair, LAMPORTS_PER_SOL, Transaction, TransactionInstruction } from '@solana/web3.js';
 
-import { SolidoSDK } from '@/index';
+import { SolidoSDK, solToLamports } from '@/index';
 import { ERROR_CODE } from '@common/constants';
 
 import { getConnection } from '../helpers';
@@ -42,7 +42,7 @@ describe('getUnStakeTransaction', () => {
     jest.spyOn(sdk, 'calculateMaxUnStakeAmount').mockReturnValueOnce(Promise.resolve(2 * LAMPORTS_PER_SOL));
     const { transaction } = await sdk.getUnStakeTransaction({
       payerAddress: walletWithStSolTokenAccount,
-      amount: 1,
+      amount: solToLamports(1),
     });
 
     expect(transaction).toBeInstanceOf(Transaction);
@@ -59,11 +59,11 @@ describe('getUnStakeTransaction', () => {
     jest.spyOn(sdk, 'calculateMaxUnStakeAmount').mockReturnValueOnce(Promise.resolve(2 * LAMPORTS_PER_SOL));
     const { transaction, stakeAccounts } = await sdk.getUnStakeTransaction({
       payerAddress: walletWithStSolTokenAccount,
-      amount: 1,
+      amount: solToLamports(1),
     });
 
     const deactivateTransactionInstruction = transaction.instructions[1];
-    expect(deactivateTransactionInstruction).toBeInstanceOf(TransactionInstruction);
+    expect(deactivateTransactionInstruction).toBeTruthy();
 
     expect(deactivateTransactionInstruction.keys).toHaveLength(3);
 

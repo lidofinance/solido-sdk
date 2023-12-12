@@ -1,15 +1,15 @@
 import { Connection, PublicKey } from '@solana/web3.js';
 import { when } from 'jest-when';
 
-import { LidoVersion, SolidoSDK } from '@/index';
 import { clusterProgramAddresses } from '@/constants';
-import { ERROR_CODE, ERROR_MESSAGE } from '@common/constants';
-import { AccountInfoV2, AccountType } from '@/types';
-
-import { mockValidatorList } from '../mocks/validators';
-import { getConnection } from '../helpers';
-import { CLUSTER, VALIDATOR_LIST } from '../constants';
 import { getAccountInfo } from '@/general';
+import { LidoVersion, SolidoSDK } from '@/index';
+import { AccountType } from '@/types';
+import { ERROR_CODE, ERROR_MESSAGE } from '@common/constants';
+
+import { CLUSTER, VALIDATOR_LIST } from '../constants';
+import { getConnection } from '../helpers';
+import { mockValidatorList } from '../mocks/validators';
 
 describe('getAccountInfo', () => {
   let sdk: SolidoSDK;
@@ -48,7 +48,7 @@ describe('getAccountInfo', () => {
   test('getAccountInfo success case, all fields parsed as expected', async () => {
     mockValidatorList(connection); // because it's not important here
 
-    const accountInfo = (await getAccountInfo.call(sdk)) as AccountInfoV2;
+    const accountInfo = await getAccountInfo.call(sdk);
 
     expect(accountInfo.lido_version).toEqual(LidoVersion.v2);
     expect(accountInfo.account_type).toEqual(AccountType.Lido);

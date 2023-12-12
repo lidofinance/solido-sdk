@@ -1,7 +1,7 @@
 import { Connection } from '@solana/web3.js';
 
 import { SolidoSDK } from '@/index';
-import { getValidatorList } from '@/unstake';
+import { getValidatorList } from '@/general';
 
 import { mockValidatorList } from '../mocks/validators';
 import { getConnection } from '../helpers';

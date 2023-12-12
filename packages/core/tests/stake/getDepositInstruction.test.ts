@@ -12,7 +12,7 @@ describe('getDepositInstruction', () => {
   let depositInstruction: TransactionInstruction;
   const payerAddress = Keypair.generate().publicKey;
   const recipientStSolAddress = Keypair.generate().publicKey;
-  const amount = 10;
+  const amount = solToLamports(10);
   let sdk: SolidoSDK;
 
   const { solidoInstanceId, solidoProgramId, stSolMintAddress } = clusterProgramAddresses[CLUSTER];
@@ -49,6 +49,6 @@ describe('getDepositInstruction', () => {
     const data = depositDataLayout.decode(depositInstruction.data);
 
     expect(data.instruction).toBe(1);
-    expect(data.amount).toBe(solToLamports(amount));
+    expect(data.amount).toBe(amount);
   });
 });

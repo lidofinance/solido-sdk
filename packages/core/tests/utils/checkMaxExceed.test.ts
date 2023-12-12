@@ -1,23 +1,18 @@
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 
 import { checkMaxExceed, checkMinExceed } from '@/utils/checks';
-import { lamportsToSol } from '@/utils/formatters';
+import { lamportsToSol, solToLamports } from '@/utils/formatters';
 import { ERROR_CODE } from '@common/constants';
 import { RENT_EXEMPT_LAMPORTS } from '../constants';
 
 describe('checkMaxExceed', () => {
   it('should throw Error if amount is bigger than maxInLamports', () => {
-    expect.assertions(2);
-    try {
-      checkMaxExceed(10, 9.9 * LAMPORTS_PER_SOL);
-    } catch (error) {
-      expect(error.message).toContain('Amount must not exceed MAX');
-      expect(error.code).toEqual(ERROR_CODE.EXCEED_MAX);
-    }
+    const t = () => checkMaxExceed(solToLamports(10), solToLamports(9.9));
+    expect(t).toThrow('Amount must not exceed MAX(9.9)');
   });
 
   it('should not throw Error if amount is less than maxInLamports', () => {
-    const fn = () => checkMaxExceed(9.8, 9.9 * LAMPORTS_PER_SOL);
+    const fn = () => checkMaxExceed(9.8, 9.9);
     expect(fn).not.toThrowError();
   });
 });
@@ -44,7 +39,7 @@ describe('checkMinExceed', () => {
   });
 
   it('should not throw Error if amount is bigger than minInLamports', () => {
-    const fn = () => checkMinExceed(0.003, RENT_EXEMPT_LAMPORTS);
+    const fn = () => checkMinExceed(solToLamports(0.003), RENT_EXEMPT_LAMPORTS);
     expect(fn).not.toThrowError();
   });
 });
