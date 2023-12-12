@@ -32,9 +32,6 @@ export async function signAndConfirmTransaction(
     setTxStage?.({ txStage: TX_STAGE.SUCCESS });
     return transactionHash;
   } catch (error) {
-    console.error(error);
-    setTxStage?.({ txStage: TX_STAGE.ERROR });
-
     throw new ErrorWrapper({ error, code: ERROR_CODE.CANNOT_CONFIRM_TRANSACTION });
   }
 }

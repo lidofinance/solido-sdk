@@ -111,7 +111,7 @@ export class SolidoSDK {
 
   protected getWithdrawInstructions = getWithdrawInstructions.bind(this);
 
-  protected prepareUnstake = prepareUnstake.bind(this);
+  public prepareUnstake = prepareUnstake.bind(this);
 
   // Withdraw functions
 

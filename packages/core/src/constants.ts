@@ -17,6 +17,7 @@ export enum TX_STAGE {
   AWAITING_BLOCK = 2,
   SUCCESS = 3,
   ERROR = 4,
+  PREPARE = 5,
 }
 
 export enum LidoVersion {

@@ -7,6 +7,8 @@ import { PublicKey } from '@solana/web3.js';
 export async function stake(this: SolidoSDK, props: StakeProps) {
   const { amount, wallet, setTxStage, allowOwnerOffCurve } = props;
 
+  setTxStage?.({ txStage: TX_STAGE.PREPARE });
+
   if (wallet.publicKey === null) {
     throw new ErrorWrapper({ code: ERROR_CODE.NO_PUBLIC_KEY });
   }

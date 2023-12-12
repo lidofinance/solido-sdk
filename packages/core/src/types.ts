@@ -13,11 +13,14 @@ export enum AccountType {
 
 export type SupportedClusters = Exclude<Cluster, 'devnet'>;
 
-type SetTxStageProps = {
+export type SetTxStageProps = {
   txStage: TX_STAGE;
   transactionHash?: TransactionSignature;
-  stakeAccounts?: PublicKey[];
   stSolAccountAddress?: PublicKey;
+  stakeAccounts?: PublicKey[];
+  remainingCount?: number;
+  remainingAmount?: number;
+  unstakeAmount?: number;
 };
 
 export type SignAndConfirmTransactionProps = {

@@ -7,9 +7,6 @@ type Props = TransactionProps & Pick<UnstakeProps, 'allowMultipleTransactions'>;
 export async function getUnStakeTransaction(this: SolidoSDK, props: Props) {
   const { steps, ...rest } = await this.prepareUnstake(props);
 
-  // TODO: remove this
-  console.log(steps, rest);
-
   const { instructions, signers, stakeAccounts } = await this.getWithdrawInstructions({
     payerAddress: props.payerAddress,
     steps,
@@ -24,5 +21,5 @@ export async function getUnStakeTransaction(this: SolidoSDK, props: Props) {
   transaction.add(...instructions, ...deactivateInstructions);
   transaction.partialSign(...signers);
 
-  return { transaction, stakeAccounts: deactivatingStakeAccounts };
+  return { transaction, stakeAccounts: deactivatingStakeAccounts, ...rest };
 }

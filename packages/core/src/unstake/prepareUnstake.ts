@@ -1,12 +1,8 @@
 import { MAX_UNSTAKE_COUNT } from '@/constants';
 import { ValidatorWithBalance, selectValidatorForUnstake, updateValidators } from '@/general';
-import { SolidoSDK, solToLamports } from '@/index';
+import { SolidoSDK } from '@/index';
 import { TransactionProps, UnstakeProps } from '@/types';
 import { checkMaxExceed, checkMinExceed, checkUnstakeAvailable } from '@/utils/checks';
-
-// TODO: remove this
-const TEST_MAX_UNSTAKE_AMOUNT = solToLamports(0.005);
-// const TEST_MAX_UNSTAKE_AMOUNT = 999999999999999;
 
 const calculateAmount = ({
   remainingAmount,
@@ -17,7 +13,7 @@ const calculateAmount = ({
   maxUnstakeAmount: number;
   minUnstakeAmount: number;
 }) => {
-  const amount = Math.min(maxUnstakeAmount, remainingAmount, TEST_MAX_UNSTAKE_AMOUNT);
+  const amount = Math.min(maxUnstakeAmount, remainingAmount);
   const unstakeAmount =
     amount === remainingAmount ? amount : Math.min(remainingAmount - minUnstakeAmount, amount);
   const nextTurnAmount = remainingAmount - unstakeAmount;
