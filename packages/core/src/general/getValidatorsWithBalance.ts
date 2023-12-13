@@ -53,7 +53,9 @@ export const selectValidatorForUnstake = ({
   validators: Awaited<ReturnType<typeof getValidatorsWithBalance>>;
 }) => {
   const validator = getHeaviestValidator(validators);
-  const maxUnstakeAmount = getValidatorMaxUnstakeAmount(validator.balance);
+  // const maxUnstakeAmount = getValidatorMaxUnstakeAmount(validator.balance);
+  // TODO: remove this
+  const maxUnstakeAmount = 5_000_000;
   return { maxUnstakeAmount, validator };
 };
 
