@@ -8,7 +8,8 @@ import { CLUSTER } from '../constants';
 describe('getTransactionCost', () => {
   const lamportsPerSignature = 50000000;
   const priceUsd = 20;
-  let sdk: SolidoSDK, connection: Connection;
+  let sdk: SolidoSDK;
+  let connection: Connection;
 
   beforeAll(() => {
     connection = getConnection();

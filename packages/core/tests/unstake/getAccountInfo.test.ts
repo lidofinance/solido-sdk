@@ -1,18 +1,19 @@
 import { Connection, PublicKey } from '@solana/web3.js';
 import { when } from 'jest-when';
 
-import { LidoVersion, SolidoSDK } from '@/index';
 import { clusterProgramAddresses } from '@/constants';
+import { getAccountInfo } from '@/general';
+import { LidoVersion, SolidoSDK } from '@/index';
+import { AccountType } from '@/types';
 import { ERROR_CODE, ERROR_MESSAGE } from '@common/constants';
-import { ExchangeRate, getAccountInfo, RewardDistribution, FeeRecipients, Metrics } from '@/unstake';
-import { AccountInfoV2, AccountType } from '@/types';
 
-import { mockValidatorList } from '../mocks/validators';
-import { getConnection } from '../helpers';
 import { CLUSTER, VALIDATOR_LIST } from '../constants';
+import { getConnection } from '../helpers';
+import { mockValidatorList } from '../mocks/validators';
 
 describe('getAccountInfo', () => {
-  let sdk: SolidoSDK, connection: Connection;
+  let sdk: SolidoSDK;
+  let connection: Connection;
 
   const { solidoInstanceId, stSolMintAddress } = clusterProgramAddresses[CLUSTER];
 
@@ -47,7 +48,7 @@ describe('getAccountInfo', () => {
   test('getAccountInfo success case, all fields parsed as expected', async () => {
     mockValidatorList(connection); // because it's not important here
 
-    let accountInfo = (await getAccountInfo.call(sdk)) as AccountInfoV2;
+    const accountInfo = await getAccountInfo.call(sdk);
 
     expect(accountInfo.lido_version).toEqual(LidoVersion.v2);
     expect(accountInfo.account_type).toEqual(AccountType.Lido);
@@ -55,15 +56,10 @@ describe('getAccountInfo', () => {
     expect(new PublicKey(accountInfo.st_sol_mint)).toStrictEqual(stSolMintAddress);
     expect(new PublicKey(accountInfo.validator_list)).toStrictEqual(VALIDATOR_LIST);
 
-    expect(accountInfo.exchange_rate).toBeInstanceOf(ExchangeRate);
-    expect(accountInfo.reward_distribution).toBeInstanceOf(RewardDistribution);
-    expect(accountInfo.fee_recipients).toBeInstanceOf(FeeRecipients);
-    expect(accountInfo.metrics).toBeInstanceOf(Metrics);
-
-    expect(accountInfo.maintainer_list).toBeInstanceOf(Uint8Array);
+    expect(accountInfo.maintainer_list).toBeInstanceOf(Array);
     expect(accountInfo.maintainer_list).toHaveLength(32);
 
-    expect(accountInfo.manager).toBeInstanceOf(Uint8Array);
+    expect(accountInfo.manager).toBeInstanceOf(Array);
     expect(accountInfo.manager).toHaveLength(32);
 
     expect(typeof accountInfo.sol_reserve_account_bump_seed).toBe('number');

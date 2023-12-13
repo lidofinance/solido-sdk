@@ -1,16 +1,15 @@
 import fs from 'fs';
 import path from 'path';
-import util from 'util';
+import { inspect } from 'util';
 
-import BN from 'bn.js';
 import { PublicKey } from '@solana/web3.js';
+import BN from 'bn.js';
 
+import { findProgramAddress, getValidatorList, getValidatorStakeAccountAddress } from '@/general';
 import { SolidoSDK } from '@/index';
-import { calculateStakeAccountAddress, getValidatorList } from '@/unstake';
 import { Validator } from '@/types';
-import { findProgramAddress } from '@/stake';
-import { getConnection } from './helpers';
 import { CLUSTER } from './constants';
+import { getConnection } from './helpers';
 
 export type TestValidator = Validator & { stake_account_address: PublicKey };
 
@@ -39,24 +38,24 @@ const updateSnapshot = async () => {
   const validators = await getValidatorList.call(sdk);
 
   const validatorsToDump: TestValidator[] = [];
-  for (let validator of validators) {
+  // eslint-disable-next-line no-restricted-syntax
+  for await (const validator of validators) {
     const { vote_account_address } = validator;
-
-    const stake_account_address = await calculateStakeAccountAddress.call(sdk, validator);
 
     validatorsToDump.push({
       ...validator,
-      vote_account_address: new PublicKey(vote_account_address),
-      stake_account_address,
+      vote_account_address,
+      stake_account_address: await getValidatorStakeAccountAddress.call(sdk, validator),
     });
   }
 
-  let rawString = util.inspect(validatorsToDump);
+  let rawString = inspect(validatorsToDump);
 
   // Replace the ugly <BN: ...> public keys with readable ones
-  rawString = rawString.replace(/PublicKey {\s+_bn: <BN: (\w+)>\s+}/g, (_match, tag: string) => {
-    return `new PublicKey('${new PublicKey(new BN(tag.trim(), 'hex')).toString()}')`;
-  });
+  rawString = rawString.replace(
+    /PublicKey {\s+_bn: <BN: (\w+)>\s+}/g,
+    (_match, tag: string) => `new PublicKey('${new PublicKey(new BN(tag.trim(), 'hex')).toString()}')`,
+  );
 
   // Removed all type inferences
   // eg., reward_distribution: RewardDistribution {...}
@@ -73,11 +72,11 @@ const updateSnapshot = async () => {
   rawString = `import BN from 'bn.js';
   import { PublicKey } from '@solana/web3.js';
   import { TestValidator } from '../updateSnapshot';
-  
+
   export const validators: TestValidator[] = ${rawString};
 
   export const heaviestValidator = validators[0];
-  
+
   ${await programAddresses()}
   `;
 

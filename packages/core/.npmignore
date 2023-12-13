@@ -1,3 +1,4 @@
 tsconfig.json
 rollup.config.mjs
 /src
+/tests

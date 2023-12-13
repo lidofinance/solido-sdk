@@ -1,6 +1,6 @@
 import { SolidoSDK } from '@/index';
 import { WithdrawProps } from '@/types';
-import { StakeProgram, Transaction, TransactionInstruction } from '@solana/web3.js';
+import { StakeProgram, TransactionInstruction } from '@solana/web3.js';
 
 export async function getWithdrawTransaction(this: SolidoSDK, { accounts, payerAddress }: WithdrawProps) {
   const instructions = accounts.reduce((acc, { pubkey: stakePubkey, lamports }) => {
@@ -13,13 +13,8 @@ export async function getWithdrawTransaction(this: SolidoSDK, { accounts, payerA
     return [...acc, ...tx.instructions];
   }, [] as TransactionInstruction[]);
 
-  const transaction = new Transaction({ feePayer: payerAddress });
-  const { blockhash } = await this.connection.getLatestBlockhash();
-  transaction.recentBlockhash = blockhash;
-
-  instructions.forEach((instruction) => {
-    transaction.add(new TransactionInstruction(instruction));
-  });
+  const transaction = await this.createTransaction({ feePayer: payerAddress });
+  transaction.add(...instructions);
 
   return { transaction };
 }

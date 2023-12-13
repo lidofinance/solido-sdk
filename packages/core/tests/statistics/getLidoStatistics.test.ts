@@ -11,7 +11,8 @@ describe('getLidoStatistics', () => {
   const marketCap = 30000;
   const totalRewards = 25;
 
-  let sdk: SolidoSDK, connection: Connection;
+  let sdk: SolidoSDK;
+  let connection: Connection;
 
   beforeAll(() => {
     connection = getConnection();

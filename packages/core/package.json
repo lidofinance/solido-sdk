@@ -1,6 +1,6 @@
 {
   "name": "@lidofinance/solido-sdk",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "Lido on Solana frontend sdk",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/lidofinance/solido-sdk#readme",
   "dependencies": {
-    "borsh": "^0.7.0",
+    "borsh": "^1.0.0",
     "bs58": "^4.0.1"
   },
   "devDependencies": {
@@ -47,5 +47,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "volta": {
+    "node": "14.21.3"
   }
 }

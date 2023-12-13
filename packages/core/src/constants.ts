@@ -17,6 +17,7 @@ export enum TX_STAGE {
   AWAITING_BLOCK = 2,
   SUCCESS = 3,
   ERROR = 4,
+  PREPARE = 5,
 }
 
 export enum LidoVersion {
@@ -26,6 +27,12 @@ export enum LidoVersion {
 
 // Max count of withdraw instructions in one transaction
 export const MAX_WITHDRAW_COUNT = 15;
+
+// Max count of unstake instruction in one transaction
+export const MAX_UNSTAKE_COUNT = 5;
+
+// 1 tx = 5 unstake + 3 merge + 2 deactivate
+export const MAX_UNSTAKE_MERGE_CONT = 3;
 
 export const MAINNET_PROGRAM_ADDRESSES: ProgramAddresses = Object.freeze({
   solidoProgramId: new PublicKey('CrX7kMhLC3cSsXJdT7JDgqrRVWGnUpX3gfEfxxU2NVLi'),

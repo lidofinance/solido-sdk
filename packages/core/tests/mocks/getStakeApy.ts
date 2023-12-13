@@ -47,6 +47,7 @@ export const maxApy = mockedApyResponse.data.twoWeeks;
 
 export const getStakeApyMock = (error?: boolean) => {
   jest.spyOn(global, 'fetch').mockReturnValueOnce(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     Promise.resolve({
       json: () => Promise.resolve(error ? null : mockedApyResponse),

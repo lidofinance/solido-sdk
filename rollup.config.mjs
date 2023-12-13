@@ -29,6 +29,7 @@ export default (extensions) => ({
     typescript({
       typescript: ttypescript,
       tsconfig: 'tsconfig.json',
+      exclude: '**/tests/**',
     }),
     url({
       fileName: '[dirname][hash][extname]',

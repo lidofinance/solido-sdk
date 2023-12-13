@@ -6,7 +6,8 @@ import { getConnection } from '../helpers';
 import { CLUSTER } from '../constants';
 
 describe('getMarketCap', () => {
-  let sdk: SolidoSDK, connection: Connection;
+  let sdk: SolidoSDK;
+  let connection: Connection;
 
   beforeAll(() => {
     connection = getConnection();

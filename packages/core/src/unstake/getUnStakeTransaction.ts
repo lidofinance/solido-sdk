@@ -1,46 +1,25 @@
-import { Keypair, StakeProgram, Transaction, TransactionInstruction } from '@solana/web3.js';
-
 import { SolidoSDK } from '@/index';
-import { TransactionProps } from '@/types';
-import { checkMaxExceed } from '@/utils/checkMaxExceed';
-import { checkMinExceed } from '@/utils/checkMinExceed';
+import { TransactionProps, UnstakeProps } from '@/types';
+import { getDeactivateInstructions } from './getDeactivateInstructions';
 
-export async function getUnStakeTransaction(this: SolidoSDK, props: TransactionProps) {
-  const { payerAddress, amount } = props;
+type Props = TransactionProps & Pick<UnstakeProps, 'allowMultipleTransactions'>;
 
-  const maxInLamports = await this.calculateMaxUnStakeAmount(payerAddress);
-  checkMaxExceed(amount, maxInLamports);
+export async function getUnStakeTransaction(this: SolidoSDK, props: Props) {
+  const { steps, ...rest } = await this.prepareUnstake(props);
 
-  const minInLamports = await this.calculateMinUnStakeAmount();
-  checkMinExceed(amount, minInLamports);
-
-  const newStakeAccount = Keypair.generate();
-  const newStakeAccountPubkey = newStakeAccount.publicKey;
-
-  const transaction = new Transaction({ feePayer: payerAddress });
-  const { blockhash } = await this.connection.getLatestBlockhash();
-  transaction.recentBlockhash = blockhash;
-
-  const [stSolAccount] = await this.getStSolAccountsForUser(payerAddress);
-
-  const withdrawInstruction = await this.getWithdrawInstruction({
-    ...props,
-    senderStSolAccountAddress: stSolAccount.address,
-    stakeAccount: newStakeAccountPubkey,
-  });
-  transaction.add(withdrawInstruction);
-
-  const deactivateTransaction = StakeProgram.deactivate({
-    authorizedPubkey: payerAddress,
-    stakePubkey: newStakeAccountPubkey,
+  const { instructions, signers, stakeAccounts } = await this.getWithdrawInstructions({
+    payerAddress: props.payerAddress,
+    steps,
   });
 
-  deactivateTransaction.instructions.forEach((instruction) => {
-    const txInstruction = new TransactionInstruction(instruction);
-    transaction.add(txInstruction);
+  const { instructions: deactivateInstructions, deactivatingStakeAccounts } = getDeactivateInstructions({
+    stakeAccounts,
+    payerAddress: props.payerAddress,
   });
 
-  transaction.partialSign(newStakeAccount);
+  const transaction = await this.createTransaction({ feePayer: props.payerAddress });
+  transaction.add(...instructions, ...deactivateInstructions);
+  transaction.partialSign(...signers);
 
-  return { transaction, deactivatingSolAccountAddress: newStakeAccountPubkey };
+  return { transaction, stakeAccounts: deactivatingStakeAccounts, ...rest };
 }

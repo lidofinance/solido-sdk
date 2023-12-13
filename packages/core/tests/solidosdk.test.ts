@@ -8,7 +8,9 @@ import { CLUSTER, walletWithStSolTokenAccount } from './constants';
 
 describe('SolidoSDK', () => {
   const hash = 'hash_of_transaction';
-  let sdk: SolidoSDK, connection: Connection, transaction: Transaction;
+  let sdk: SolidoSDK;
+  let connection: Connection;
+  let transaction: Transaction;
   const wallet = {
     signTransaction: () => ({
       serialize: () => '',

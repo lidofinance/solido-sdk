@@ -1,13 +1,14 @@
 import { Connection, Keypair, LAMPORTS_PER_SOL, Transaction, TransactionInstruction } from '@solana/web3.js';
 
-import { SolidoSDK } from '@/index';
+import { SolidoSDK, solToLamports } from '@/index';
 import { ERROR_CODE } from '@common/constants';
 
 import { getConnection } from '../helpers';
 import { CLUSTER, stSolTokenAccount, walletWithStSolTokenAccount } from '../constants';
 
 describe('getUnStakeTransaction', () => {
-  let sdk: SolidoSDK, connection: Connection;
+  let sdk: SolidoSDK;
+  let connection: Connection;
 
   beforeAll(() => {
     connection = getConnection();
@@ -41,7 +42,7 @@ describe('getUnStakeTransaction', () => {
     jest.spyOn(sdk, 'calculateMaxUnStakeAmount').mockReturnValueOnce(Promise.resolve(2 * LAMPORTS_PER_SOL));
     const { transaction } = await sdk.getUnStakeTransaction({
       payerAddress: walletWithStSolTokenAccount,
-      amount: 1,
+      amount: solToLamports(1),
     });
 
     expect(transaction).toBeInstanceOf(Transaction);
@@ -56,13 +57,13 @@ describe('getUnStakeTransaction', () => {
 
   test('deactivateTransaction correctness', async () => {
     jest.spyOn(sdk, 'calculateMaxUnStakeAmount').mockReturnValueOnce(Promise.resolve(2 * LAMPORTS_PER_SOL));
-    const { transaction, deactivatingSolAccountAddress } = await sdk.getUnStakeTransaction({
+    const { transaction, stakeAccounts } = await sdk.getUnStakeTransaction({
       payerAddress: walletWithStSolTokenAccount,
-      amount: 1,
+      amount: solToLamports(1),
     });
 
     const deactivateTransactionInstruction = transaction.instructions[1];
-    expect(deactivateTransactionInstruction).toBeInstanceOf(TransactionInstruction);
+    expect(deactivateTransactionInstruction).toBeTruthy();
 
     expect(deactivateTransactionInstruction.keys).toHaveLength(3);
 
@@ -70,6 +71,6 @@ describe('getUnStakeTransaction', () => {
     const stakeAccount = deactivateTransactionInstruction.keys[0].pubkey;
     const authorizedPubkey = deactivateTransactionInstruction.keys[2].pubkey;
     expect(authorizedPubkey).toStrictEqual(walletWithStSolTokenAccount);
-    expect(stakeAccount).toStrictEqual(deactivatingSolAccountAddress);
+    expect(stakeAccount).toStrictEqual(stakeAccounts[0]);
   });
 });

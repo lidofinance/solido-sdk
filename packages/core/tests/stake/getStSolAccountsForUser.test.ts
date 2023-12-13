@@ -1,7 +1,7 @@
 import { PublicKey } from '@solana/web3.js';
 
 import { SolidoSDK } from '@/index';
-import { getStSolAccountsForUser } from '@/stake/getStSolAccountsForUser';
+import { getStSolAccountsForUser } from '@/general/getStSolAccountsForUser';
 
 import { getConnection } from '../helpers';
 import {

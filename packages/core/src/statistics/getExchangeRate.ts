@@ -4,8 +4,8 @@ import { toPrecision } from '@/utils/formatters';
 export async function getExchangeRate(this: SolidoSDK, precision = 4) {
   const accountInfo = await this.getAccountInfo();
 
-  const totalSolInLamports = accountInfo.exchange_rate.sol_balance.toNumber();
-  const stSolSupplyInLamports = accountInfo.exchange_rate.st_sol_supply.toNumber();
+  const totalSolInLamports = Number(accountInfo.exchange_rate.sol_balance);
+  const stSolSupplyInLamports = Number(accountInfo.exchange_rate.st_sol_supply);
 
   const stSOLToSOL = totalSolInLamports / stSolSupplyInLamports;
   const SOLToStSOL = stSolSupplyInLamports / totalSolInLamports;

@@ -5,7 +5,8 @@ import { getConnection } from '../helpers';
 import { CLUSTER } from '../constants';
 
 describe('getStakersCount', () => {
-  let sdk: SolidoSDK, connection: Connection;
+  let sdk: SolidoSDK;
+  let connection: Connection;
 
   beforeAll(async () => {
     connection = getConnection();

@@ -22,6 +22,7 @@ export const mockValidatorList = (connection: Connection, dumpType: ValidatorsDu
   const spiedGetAccountInfo = jest.spyOn(connection, 'getAccountInfo');
   when(spiedGetAccountInfo)
     .calledWith(VALIDATOR_LIST)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     .mockReturnValueOnce({ data: Buffer.from(validatorsDumpMap[dumpType].data) });
 };

@@ -8,6 +8,8 @@ type Props = Omit<SignAndConfirmTransactionProps, 'transaction'> & Pick<Withdraw
 export async function withdraw(this: SolidoSDK, props: Props) {
   const { wallet, setTxStage, accounts } = props;
 
+  setTxStage?.({ txStage: TX_STAGE.PREPARE });
+
   if (wallet.publicKey === null) {
     throw new ErrorWrapper({ code: ERROR_CODE.NO_PUBLIC_KEY });
   }

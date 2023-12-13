@@ -1,21 +1,24 @@
-import { PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js';
+import { MAX_UNSTAKE_COUNT } from '@/constants';
+import { selectValidatorForUnstake, updateValidators } from '@/general';
 import { SolidoSDK } from '@/index';
 
-export async function calculateMaxUnStakeAmount(this: SolidoSDK, address: PublicKey) {
-  const [stSolAccount] = await this.getStSolAccountsForUser(address);
-
+export async function calculateMaxUnStakeAmount(this: SolidoSDK) {
   const isUnStakeAvailable = await this.isUnStakeAvailable();
 
-  if (!stSolAccount || !isUnStakeAvailable) {
+  if (!isUnStakeAvailable) {
     return 0;
   }
 
-  const sourceStakeAccount = await this.calculateStakeAccountAddress();
-
-  const stakeAccountBalance = await this.connection.getBalance(sourceStakeAccount);
-
-  // https://github.com/ChorusOne/solido/blob/v0.5.0/program/src/processor.rs#L799
-  const maxWithdrawAmount = stakeAccountBalance * 0.1 + 10 * LAMPORTS_PER_SOL;
-
-  return Math.min(stSolAccount.balanceInLamports, maxWithdrawAmount);
+  let validators = await this.getValidatorsWithBalance();
+  let txAmount = 0;
+  for (let i = 0; i < MAX_UNSTAKE_COUNT; i += 1) {
+    const { maxUnstakeAmount: unstakeAmount, validator } = selectValidatorForUnstake({ validators });
+    validators = updateValidators({
+      validators,
+      validatorIndex: validator.index,
+      unstakeAmount,
+    });
+    txAmount += unstakeAmount;
+  }
+  return txAmount;
 }
