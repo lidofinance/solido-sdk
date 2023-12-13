@@ -6,8 +6,8 @@
     "build": "lerna run build",
     "lint": "eslint --ext .js,.ts,.tsx,.jsx ./packages/common/ ./packages/core/src",
     "lint:fix": "npm run lint -- --fix",
-    "publish": "lerna publish from-package --dist-tag rc --yes",
-    "publish:rc": "lerna publish from-package --dist-tag latest --yes",
+    "publish": "lerna publish from-package --dist-tag latest --yes",
+    "publish:rc": "lerna publish from-package --dist-tag rc --yes",
     "postinstall": "lerna exec npm install"
   },
   "repository": {
