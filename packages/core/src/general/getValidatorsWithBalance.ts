@@ -47,6 +47,9 @@ export async function getValidatorsWithBalance(this: SolidoSDK) {
   );
 }
 
+/**
+ * Returns heaviest validator index and max amount to unstake in SOL
+ */
 export const selectValidatorForUnstake = ({
   validators,
 }: {

@@ -29,10 +29,10 @@ export enum LidoVersion {
 export const MAX_WITHDRAW_COUNT = 15;
 
 // Max count of unstake instruction in one transaction
-export const MAX_UNSTAKE_COUNT = 5;
+export const MAX_UNSTAKE_COUNT = 3;
 
-// 1 tx = 5 unstake + 3 merge + 2 deactivate
-export const MAX_UNSTAKE_MERGE_CONT = 3;
+// 1 tx = 3 unstake + 0 merge + 3 deactivate
+export const MAX_UNSTAKE_MERGE_CONT = 0;
 
 export const MAINNET_PROGRAM_ADDRESSES: ProgramAddresses = Object.freeze({
   solidoProgramId: new PublicKey('CrX7kMhLC3cSsXJdT7JDgqrRVWGnUpX3gfEfxxU2NVLi'),
