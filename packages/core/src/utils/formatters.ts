@@ -16,4 +16,4 @@ export const lamportsToSol = (balanceInLamports: number, precision = 4) =>
 export const lamportsToSolUp = (balanceInLamports: number, precision = 4) =>
   toPrecisionUp(balanceInLamports / LAMPORTS_PER_SOL, precision);
 
-export const solToLamports = (balanceInSol: number) => balanceInSol * LAMPORTS_PER_SOL;
+export const solToLamports = (balanceInSol: number) => Math.floor(balanceInSol * LAMPORTS_PER_SOL);

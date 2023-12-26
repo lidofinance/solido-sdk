@@ -4,6 +4,7 @@ import { SolidoSDK } from '@/index';
 
 export async function calculateMaxUnStakeAmount(this: SolidoSDK) {
   const isUnStakeAvailable = await this.isUnStakeAvailable();
+  const exchangeRate = await this.getExchangeRate();
 
   if (!isUnStakeAvailable) {
     return 0;
@@ -20,5 +21,5 @@ export async function calculateMaxUnStakeAmount(this: SolidoSDK) {
     });
     txAmount += unstakeAmount;
   }
-  return txAmount;
+  return Math.floor(txAmount * exchangeRate.SOLToStSOL);
 }

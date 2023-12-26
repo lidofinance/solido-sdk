@@ -35,6 +35,7 @@ export async function prepareUnstake(this: SolidoSDK, props: PrepareUnstakeProps
   checkMinExceed(props.amount, minUnstakeAmount);
 
   let validators = await this.getValidatorsWithBalance();
+  const exchangeRate = await this.getExchangeRate();
 
   const steps: UnstakeStep[] = [];
   let remainingAmount = props.amount;
@@ -45,14 +46,14 @@ export async function prepareUnstake(this: SolidoSDK, props: PrepareUnstakeProps
     const { maxUnstakeAmount, validator } = selectValidatorForUnstake({ validators });
     const { nextTurnAmount, unstakeAmount } = calculateAmount({
       minUnstakeAmount,
-      maxUnstakeAmount,
+      maxUnstakeAmount: Math.floor(maxUnstakeAmount * exchangeRate.SOLToStSOL),
       remainingAmount,
     });
 
     validators = updateValidators({
       validators,
       validatorIndex: validator.index,
-      unstakeAmount,
+      unstakeAmount: Math.ceil(unstakeAmount * exchangeRate.stSOLToSOL),
     });
 
     if (count < MAX_UNSTAKE_COUNT) {
