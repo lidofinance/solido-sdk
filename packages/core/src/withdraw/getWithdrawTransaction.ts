@@ -13,8 +13,7 @@ export async function getWithdrawTransaction(this: SolidoSDK, { accounts, payerA
     return [...acc, ...tx.instructions];
   }, [] as TransactionInstruction[]);
 
-  const transaction = await this.createTransaction({ feePayer: payerAddress });
-  transaction.add(...instructions);
+  const transaction = await this.createTransaction({ feePayer: payerAddress, instructions });
 
   return { transaction };
 }

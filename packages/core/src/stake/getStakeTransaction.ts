@@ -41,8 +41,7 @@ export async function getStakeTransaction(this: SolidoSDK, props: TransactionPro
     instructions.push(getMemoInstruction({ referrer: memoData }, payerAddress));
   }
 
-  const transaction = await this.createTransaction({ feePayer: payerAddress });
-  transaction.add(...instructions);
+  const transaction = await this.createTransaction({ feePayer: payerAddress, instructions });
 
   return { transaction, stSolAccountAddress };
 }

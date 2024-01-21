@@ -17,9 +17,11 @@ export async function getUnStakeTransaction(this: SolidoSDK, props: Props) {
     payerAddress: props.payerAddress,
   });
 
-  const transaction = await this.createTransaction({ feePayer: props.payerAddress });
-  transaction.add(...instructions, ...deactivateInstructions);
-  transaction.partialSign(...signers);
+  const transaction = await this.createTransaction({
+    feePayer: props.payerAddress,
+    instructions: [...instructions, ...deactivateInstructions],
+    signers,
+  });
 
   return { transaction, stakeAccounts: deactivatingStakeAccounts, ...rest };
 }
