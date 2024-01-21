@@ -17,8 +17,12 @@ export async function createTransaction(
   transaction.feePayer = feePayer;
   transaction.recentBlockhash = blockhash;
 
-  transaction.add(...instructions.map((i) => new TransactionInstruction(i)));
-  transaction.partialSign(...signers);
+  if (instructions.length > 0) {
+    transaction.add(...instructions.map((i) => new TransactionInstruction(i)));
+  }
+  if (signers.length > 0) {
+    transaction.partialSign(...signers);
+  }
 
   return transaction;
 }
