@@ -1,5 +1,3 @@
-export const SOL_API_HOST = 'https://sol-api-pub.lido.fi';
-
 // 1xx - blockchain error
 // 2xx - protocol errors
 // 3xx - sdk errors

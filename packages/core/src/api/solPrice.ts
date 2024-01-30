@@ -1,19 +1,15 @@
-import { SOL_API_HOST } from '@common/constants';
-import { hasAPIError } from '@/utils/errors';
-
 import { SolApiPriceResponse } from '@/types';
+
+const SOL_PRICE_URL = 'https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd';
 
 export const getSolPrice = async () => {
   try {
-    const resp = await fetch(`${SOL_API_HOST}/v1/prices?tokens=SOL`, { mode: 'cors' });
-    const { batchData, batchError, error } = (await resp.json()) as SolApiPriceResponse<'SOL'>;
+    const resp = await fetch(SOL_PRICE_URL);
+    const jsonResponse = (await resp.json()) as SolApiPriceResponse;
+    const price = jsonResponse.solana?.usd;
 
-    if (hasAPIError(batchError, error)) {
-      return 0; // TODO fallback
-    }
-
-    return batchData.SOL.priceUsd;
+    return price || 0;
   } catch {
-    return 0; // TODO think fallback
+    return 0;
   }
 };

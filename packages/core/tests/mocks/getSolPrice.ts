@@ -3,7 +3,7 @@ export const getSolPriceMock = (priceUsd: number) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     Promise.resolve({
-      json: () => Promise.resolve({ batchData: { SOL: { priceUsd } } }),
+      json: () => Promise.resolve({ solana: { usd: priceUsd } }),
     }),
   );
 };

@@ -1,10 +1,9 @@
 import { SolidoSDK } from '@/index';
-import { getStakeApy } from '@common/stakeApy';
 import { formatWithCommas } from '@/utils/formatters';
+import { STATIC_DEFAULT_APY } from '@common/stakeApy';
 
 export async function getLidoStatistics(this: SolidoSDK) {
-  const [stakeApy, totalStaked, stakers, marketCap, totalRewards] = await Promise.all([
-    getStakeApy(),
+  const [totalStaked, stakers, marketCap, totalRewards] = await Promise.all([
     this.getTotalStaked(),
     this.getStakersCount(),
     this.getMarketCap(),
@@ -12,7 +11,7 @@ export async function getLidoStatistics(this: SolidoSDK) {
   ]);
 
   return {
-    apy: stakeApy.max.apy,
+    apy: STATIC_DEFAULT_APY,
     totalStaked: {
       value: totalStaked,
       formatted: formatWithCommas(totalStaked),
