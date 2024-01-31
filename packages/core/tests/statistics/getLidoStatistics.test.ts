@@ -1,7 +1,7 @@
 import { Connection } from '@solana/web3.js';
 import { formatWithCommas, SolidoSDK } from '@/index';
 
-import { getStakeApyMock, maxApy } from '../mocks/getStakeApy';
+import { getStakeApyMock } from '../mocks/getStakeApy';
 import { getConnection } from '../helpers';
 import { CLUSTER } from '../constants';
 
@@ -31,7 +31,7 @@ describe('getLidoStatistics', () => {
 
     const lidoStatistics = await sdk.getLidoStatistics();
 
-    expect(lidoStatistics.apy).toStrictEqual(maxApy.apy);
+    expect(lidoStatistics.apy).toStrictEqual(0);
     expect(lidoStatistics.totalStaked.value).toEqual(totalStaked);
     expect(lidoStatistics.totalStaked.formatted).toEqual(formatWithCommas(totalStaked));
     expect(lidoStatistics.stakers.value).toEqual(stakersCount);

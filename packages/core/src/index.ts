@@ -53,6 +53,7 @@ export {
 export * from '@/utils/formatters';
 export * from '@/utils/getValidatorMaxUnstakeAmount';
 export { getStakeApy } from '@common/stakeApy';
+export { getSolPrice } from '@/api/solPrice';
 export { SupportedClusters };
 
 export class SolidoSDK {

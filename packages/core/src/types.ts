@@ -89,31 +89,9 @@ export type WithdrawInstructionStruct = Pick<InstructionStruct, 'amount'> & {
   validator_index: number;
 };
 
-export type ApiError = {
-  code: string;
-  msg: string;
+export type SolApiPriceResponse = {
+  solana: { usd: number };
 };
-
-export type BatchError = Record<string, ApiError>;
-
-export type SolApiResponse<K extends string, T extends Record<string, any>> = {
-  batchData: {
-    [key in K]: T;
-  };
-  batchError: BatchError;
-  error: ApiError & {
-    detail: string;
-  };
-};
-
-export type SolApiPriceResponse<K extends string> = SolApiResponse<
-  K,
-  {
-    symbol: string;
-    symbolNotFormatted: string;
-    priceUsd: number;
-  }
->;
 
 type ListHeader = {
   max_entries: number;
