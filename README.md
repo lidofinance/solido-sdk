@@ -1,3 +1,6 @@
+> [!WARNING]
+> ***THIS PROJECT IS NOT SUPPORTED ANYMORE!***
+
 # Lido on Solana - Frontend SDK
 
 ### About us
